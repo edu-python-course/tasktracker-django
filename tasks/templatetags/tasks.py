@@ -20,3 +20,8 @@ def is_within_days(value: datetime.datetime, days: int) -> bool:
     """
 
     return timezone.now() - value <= datetime.timedelta(days=days)
+
+
+@register.inclusion_tag("widgets/task_row.html")
+def task_row(obj) -> dict:
+    return {"object": obj}
