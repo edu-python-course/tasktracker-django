@@ -6,6 +6,8 @@ Users application views
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
+from tasks.views import tasks
+
 
 def user_profile_view(request: HttpRequest) -> HttpResponse:
     """
@@ -19,7 +21,11 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "users/profile.html")
+    ctx = {
+        "assigned_tasks": tasks[:1]
+    }
+
+    return render(request, "users/profile.html", ctx)
 
 
 def auth_sign_up_view(request: HttpRequest) -> HttpResponse:
