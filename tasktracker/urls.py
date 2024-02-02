@@ -21,160 +21,20 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.http import HttpRequest, HttpResponse
 from django.urls import path
 
-
-def task_list_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to task list view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"task list view")
-
-
-def task_create_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to task create view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"task create view")
-
-
-def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
-    """
-    Handle requests to task detail view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-    :param pk: task primary key
-    :type pk: int
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"task detail view: %d" % pk)
-
-
-def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
-    """
-    Handle requests to task update view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-    :param pk: task primary key
-    :type pk: int
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"task update view: %d" % pk)
-
-
-def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
-    """
-    Handle requests to task delete view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-    :param pk: task primary key
-    :type pk: int
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"task delete view: %d" % pk)
-
-
-def user_profile_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to user profile view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"user profile view")
-
-
-def auth_sign_up_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to signup view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"auth sign up view")
-
-
-def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to signup view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"auth sign in view")
-
-
-def auth_sign_out_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to sign out view
-
-    :param request: HttpRequest object
-    :type request: :class: `django.http.HttpRequest`
-
-    :return: HttpResponse object
-    :rtype: :class:`django.http.HttpResponse`
-
-    """
-
-    return HttpResponse(b"auth sign out view")
-
+from tasks import views as tasks_views
+from users import views as users_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("profile/", user_profile_view, name="profile"),
-    path("sign-up/", auth_sign_up_view, name="sign-up"),
-    path("sign-in/", auth_sign_in_view, name="sign-in"),
-    path("sign-out/", auth_sign_out_view, name="sign-out"),
-    path("create/", task_create_view, name="create"),
-    path("<int:pk>/", task_detail_view, name="detail"),
-    path("<int:pk>/update/", task_update_view, name="update"),
-    path("<int:pk>/delete/", task_delete_view, name="delete"),
-    path("", task_list_view, name="list"),
+    path("profile/", users_views.user_profile_view, name="profile"),
+    path("sign-up/", users_views.auth_sign_up_view, name="sign-up"),
+    path("sign-in/", users_views.auth_sign_in_view, name="sign-in"),
+    path("sign-out/", users_views.auth_sign_out_view, name="sign-out"),
+    path("create/", tasks_views.task_create_view, name="create"),
+    path("<int:pk>/", tasks_views.task_detail_view, name="detail"),
+    path("<int:pk>/update/", tasks_views.task_update_view, name="update"),
+    path("<int:pk>/delete/", tasks_views.task_delete_view, name="delete"),
+    path("", tasks_views.task_list_view, name="list"),
 ]
