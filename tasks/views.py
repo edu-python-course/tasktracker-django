@@ -4,6 +4,7 @@ Tasks application views
 """
 
 from django.http import HttpRequest, HttpResponse
+from django.shortcuts import redirect, render
 
 
 def task_list_view(request: HttpRequest) -> HttpResponse:
@@ -18,7 +19,7 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse(b"task list view")
+    return render(request, "task_list.html")
 
 
 def task_create_view(request: HttpRequest) -> HttpResponse:
@@ -33,7 +34,7 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse(b"task create view")
+    return render(request, "task_form.html")
 
 
 def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -50,7 +51,7 @@ def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
 
     """
 
-    return HttpResponse(b"task detail view: %d" % pk)
+    return render(request, "task_detail.html")
 
 
 def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -67,7 +68,7 @@ def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
 
     """
 
-    return HttpResponse(b"task update view: %d" % pk)
+    return render(request, "task_form.html")
 
 
 def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -84,4 +85,4 @@ def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
 
     """
 
-    return HttpResponse(b"task delete view: %d" % pk)
+    return redirect("tasks:list")

@@ -5,43 +5,46 @@ from django.urls import reverse
 class TestUserProfileView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("users:profile")
+        self.template_name = "profile.html"
         self.client = test.Client()
 
     def test_response_200(self):
         response = self.client.get(self.url_path)
         self.assertEqual(response.status_code, 200)
 
-    def test_response(self):
+    def test_template_used(self):
         response = self.client.get(self.url_path)
-        self.assertEqual(response.content, b"user profile view")
+        self.assertTemplateUsed(response, self.template_name)
 
 
 class TestSignUpView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("users:sign-up")
+        self.template_name = "signup.html"
         self.client = test.Client()
 
     def test_response_200(self):
         response = self.client.get(self.url_path)
         self.assertEqual(response.status_code, 200)
 
-    def test_response(self):
+    def test_template_used(self):
         response = self.client.get(self.url_path)
-        self.assertEqual(response.content, b"auth sign up view")
+        self.assertTemplateUsed(response, self.template_name)
 
 
 class TestSignInView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("users:sign-in")
+        self.template_name = "signin.html"
         self.client = test.Client()
 
     def test_response_200(self):
         response = self.client.get(self.url_path)
         self.assertEqual(response.status_code, 200)
 
-    def test_response(self):
+    def test_template_used(self):
         response = self.client.get(self.url_path)
-        self.assertEqual(response.content, b"auth sign in view")
+        self.assertTemplateUsed(response, self.template_name)
 
 
 class TestSignOutView(test.TestCase):
@@ -49,10 +52,6 @@ class TestSignOutView(test.TestCase):
         self.url_path = reverse("users:sign-out")
         self.client = test.Client()
 
-    def test_response_200(self):
+    def test_redirect(self):
         response = self.client.get(self.url_path)
-        self.assertEqual(response.status_code, 200)
-
-    def test_response(self):
-        response = self.client.get(self.url_path)
-        self.assertEqual(response.content, b"auth sign out view")
+        self.assertRedirects(response, reverse("tasks:list"))
