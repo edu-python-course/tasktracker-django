@@ -36,6 +36,12 @@ class TaskModel(models.Model):
 
     """
 
+    class Meta:
+        db_table = "task"
+        ordering = ("-created_at", "-updated_at")
+        verbose_name = "task"
+        verbose_name_plural = "tasks"  # default behavior
+
     uuid = models.UUIDField(
         default=RandomUUID(),
         editable=False,
