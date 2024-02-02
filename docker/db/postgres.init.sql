@@ -1,8 +1,5 @@
-/* put database initialization script here */
+CREATE ROLE tasktracker WITH ENCRYPTED PASSWORD 'password' LOGIN CREATEDB;
+COMMENT ON ROLE tasktracker IS 'tasktracker database maintenance role';
 
--- example
-CREATE ROLE docker WITH ENCRYPTED PASSWORD 'docker' LOGIN;
-COMMENT ON ROLE docker IS 'docker user for tests';
-
-CREATE DATABASE docker OWNER docker;
-COMMENT ON DATABASE docker IS 'docker db for tests owned by docker user';
+CREATE DATABASE tasktracker OWNER tasktracker;
+COMMENT ON DATABASE tasktracker IS 'tasktracker project database';
