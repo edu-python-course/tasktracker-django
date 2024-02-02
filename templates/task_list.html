@@ -10,22 +10,28 @@
   <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
   <link rel="icon" type="image/png" href="../img/favicon.png">
   <title>Tasks List | Task Tracker</title>
-<script defer src="../js/main.bundle.js"></script><link href="../css/main.min.css" rel="stylesheet"></head>
+  <script defer src="../js/main.bundle.js"></script>
+  <link href="../css/main.min.css" rel="stylesheet">
+</head>
 <body>
 <div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3" aria-label="Site navigation">
+  <nav class="navbar navbar-expand-lg mb-3" aria-labelledby="navbarBrand">
     <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-              aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+              aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a href="" class="navbar-brand"><i class="bi bi-list-task"></i>&nbsp;Task Tracker</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <a href="{% url "tasks:list" %}" class="navbar-brand" id="navbarBrand">
+          <i class="bi bi-list-task"></i>&nbsp;Task Tracker
+        </a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                      
-              <li class="nav-item"><a href="" class="nav-link">Create new</a></li>
-              <li class="nav-item"><a href="" class="nav-link">Profile</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Sign Out</a></li>
+          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
+          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
+          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
+          <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
+          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
+          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
         </ul>
       </div>
     </div>
@@ -51,78 +57,92 @@
             <tbody id="taskContainer">
             <tr class="task" id="d5870f6d-8431-47ac-84e4-ef9de83ee622" data-task-completed="false">
               <td class="align-middle" aria-label="TaskAssignee">
-                <img src="https://i.pravatar.cc/?u&#x3D;DoraHeadstrong@dayrep.com" alt="avatar" class="rounded-circle shadow avatar">
+                <img src="https://i.pravatar.cc/?u&#x3D;DoraHeadstrong@dayrep.com" alt="avatar"
+                     class="rounded-circle shadow avatar">
                 <br>
                 <span class="d-none d-md-inline ms-2 text-nowrap">Dora Headstrong</span>
               </td>
               <td class="align-middle" aria-label="TaskDetails">
                 <div>
-                  <a href="" class="text-decoration-none fw-bold task-detail-ref">Shield at the holodeck was the energy of assimilation, lowered to a chemical c-beam.</a>
+                  <a href="" class="text-decoration-none fw-bold task-detail-ref">Shield at the holodeck was the energy
+                    of assimilation, lowered to a chemical c-beam.</a>
                 </div>
-                <p class="d-none d-lg-block fst-italic text-muted">The creature is more transformator now than starship. solid and always quirky.
-                        energy at the wormhole was the life of ellipse, grabed to a mysterious proton.
-                        adventure at the space station was the flight of honor, translated to a unrelated hur&#x27;q.
-                        Mermaids reproduce from pressures like sub-light hur&#x27;qs?</p>
+                <p class="d-none d-lg-block fst-italic text-muted">The creature is more transformator now than starship.
+                  solid and always quirky.
+                  energy at the wormhole was the life of ellipse, grabed to a mysterious proton.
+                  adventure at the space station was the flight of honor, translated to a unrelated hur&#x27;q.
+                  Mermaids reproduce from pressures like sub-light hur&#x27;qs?</p>
               </td>
               <td class="align-middle" aria-label="TaskActions">
                 <div class="d-flex flex-row justify-content-between align-items-center">
-                    <i class="bi bi-check-lg disabled" role="button"
-                       hx-patch="/api/v1/tasks/d5870f6d-8431-47ac-84e4-ef9de83ee622" hx-vals="js:{completed:true}" hx-swap="none"
-                       data-task-target="d5870f6d-8431-47ac-84e4-ef9de83ee622" data-task-action="patch"></i>
+                  <i class="bi bi-check-lg disabled" role="button"
+                     hx-patch="" hx-vals="js:{completed:true}"
+                     hx-swap="none"
+                     data-task-target="d5870f6d-8431-47ac-84e4-ef9de83ee622" data-task-action="patch"></i>
                   <i class="bi bi-trash disabled" role="button"
-                     hx-delete="/api/v1/tasks/d5870f6d-8431-47ac-84e4-ef9de83ee622" hx-target="closest tr" hx-swap="outerHTML"
+                     hx-delete="" hx-target="closest tr" hx-swap="outerHTML"
                      data-task-target="d5870f6d-8431-47ac-84e4-ef9de83ee622" data-task-action="delete"></i>
                 </div>
               </td>
             </tr>
             <tr class="task" id="1f380d72-ecf0-454a-99c8-7fde60c4d22f" data-task-completed="false">
               <td class="align-middle" aria-label="TaskAssignee">
-                <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar" class="rounded-circle shadow avatar">
+                <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar"
+                     class="rounded-circle shadow avatar">
                 <br>
                 <span class="d-none d-md-inline ms-2 text-nowrap">Pippin Sackville-Baggins</span>
               </td>
               <td class="align-middle" aria-label="TaskDetails">
                 <div>
-                  <a href="" class="text-decoration-none fw-bold task-detail-ref">Sensor at the universe was the pattern of love, empowered to a futile alien.</a>
+                  <a href="" class="text-decoration-none fw-bold task-detail-ref">Sensor at the universe was the pattern
+                    of love, empowered to a futile alien.</a>
                 </div>
-                <p class="d-none d-lg-block fst-italic text-muted">The nanomachine is more admiral now than processor. senior and patiently dead.
-                        pattern at the center was the death of attitude, loved to a biological ship.
-                        sensor at the space station was the assimilation of resistance, destroyed to an ancient crew.
-                        The collective admiral finally manifests the planet?</p>
+                <p class="d-none d-lg-block fst-italic text-muted">The nanomachine is more admiral now than processor.
+                  senior and patiently dead.
+                  pattern at the center was the death of attitude, loved to a biological ship.
+                  sensor at the space station was the assimilation of resistance, destroyed to an ancient crew.
+                  The collective admiral finally manifests the planet?</p>
               </td>
               <td class="align-middle" aria-label="TaskActions">
                 <div class="d-flex flex-row justify-content-between align-items-center">
-                    <i class="bi bi-check-lg" role="button"
-                       hx-patch="/api/v1/tasks/1f380d72-ecf0-454a-99c8-7fde60c4d22f" hx-vals="js:{completed:true}" hx-swap="none"
-                       data-task-target="1f380d72-ecf0-454a-99c8-7fde60c4d22f" data-task-action="patch"></i>
+                  <i class="bi bi-check-lg" role="button"
+                     hx-patch="/api/v1/tasks/1f380d72-ecf0-454a-99c8-7fde60c4d22f" hx-vals="js:{completed:true}"
+                     hx-swap="none"
+                     data-task-target="1f380d72-ecf0-454a-99c8-7fde60c4d22f" data-task-action="patch"></i>
                   <i class="bi bi-trash" role="button"
-                     hx-delete="/api/v1/tasks/1f380d72-ecf0-454a-99c8-7fde60c4d22f" hx-target="closest tr" hx-swap="outerHTML"
+                     hx-delete="/api/v1/tasks/1f380d72-ecf0-454a-99c8-7fde60c4d22f" hx-target="closest tr"
+                     hx-swap="outerHTML"
                      data-task-target="1f380d72-ecf0-454a-99c8-7fde60c4d22f" data-task-action="delete"></i>
                 </div>
               </td>
             </tr>
             <tr class="task" id="d04c3467-65a4-436e-82dd-5b81c954eb0f" data-task-completed="true">
               <td class="align-middle" aria-label="TaskAssignee">
-                <img src="https://i.pravatar.cc/?u&#x3D;TobyMugwort@armyspy.com" alt="avatar" class="rounded-circle shadow avatar">
+                <img src="https://i.pravatar.cc/?u&#x3D;TobyMugwort@armyspy.com" alt="avatar"
+                     class="rounded-circle shadow avatar">
                 <br>
                 <span class="d-none d-md-inline ms-2 text-nowrap">Toby Mugwort</span>
               </td>
               <td class="align-middle" aria-label="TaskDetails">
                 <div>
-                  <a href="" class="text-decoration-none fw-bold task-detail-ref">Flight at the ready room was the vision of alignment, empowered to a quirky vogon.</a>
+                  <a href="" class="text-decoration-none fw-bold task-detail-ref">Flight at the ready room was the
+                    vision of alignment, empowered to a quirky vogon.</a>
                 </div>
-                <p class="d-none d-lg-block fst-italic text-muted">The particle is more creature now than transformator. virtual and rudely lunar.
-                        starlight travel at the ready room was the powerdrain of faith, evacuated to a most unusual moon.
-                        courage at the alpha quadrant was the ionic cannon of tragedy, invaded to a modern space suit.
-                        The seismic admiral patiently fights the proton?</p>
+                <p class="d-none d-lg-block fst-italic text-muted">The particle is more creature now than transformator.
+                  virtual and rudely lunar.
+                  starlight travel at the ready room was the powerdrain of faith, evacuated to a most unusual moon.
+                  courage at the alpha quadrant was the ionic cannon of tragedy, invaded to a modern space suit.
+                  The seismic admiral patiently fights the proton?</p>
               </td>
               <td class="align-middle" aria-label="TaskActions">
                 <div class="d-flex flex-row justify-content-between align-items-center">
-                    <i class="bi bi-arrow-repeat" role="button"
-                       hx-patch="/api/v1/tasks/d04c3467-65a4-436e-82dd-5b81c954eb0f" hx-vals="js:{completed:false}" hx-swap="none"
-                       data-task-target="d04c3467-65a4-436e-82dd-5b81c954eb0f" data-task-action="patch"></i>
+                  <i class="bi bi-arrow-repeat" role="button"
+                     hx-patch="/api/v1/tasks/d04c3467-65a4-436e-82dd-5b81c954eb0f" hx-vals="js:{completed:false}"
+                     hx-swap="none"
+                     data-task-target="d04c3467-65a4-436e-82dd-5b81c954eb0f" data-task-action="patch"></i>
                   <i class="bi bi-trash" role="button"
-                     hx-delete="/api/v1/tasks/d04c3467-65a4-436e-82dd-5b81c954eb0f" hx-target="closest tr" hx-swap="outerHTML"
+                     hx-delete="/api/v1/tasks/d04c3467-65a4-436e-82dd-5b81c954eb0f" hx-target="closest tr"
+                     hx-swap="outerHTML"
                      data-task-target="d04c3467-65a4-436e-82dd-5b81c954eb0f" data-task-action="delete"></i>
                 </div>
               </td>

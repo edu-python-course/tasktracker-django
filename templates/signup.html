@@ -10,20 +10,28 @@
   <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
   <link rel="icon" type="image/png" href="../img/favicon.png">
   <title>Sign Up | Task Tracker</title>
-<script defer src="../js/main.bundle.js"></script><link href="../css/main.min.css" rel="stylesheet"></head>
+  <script defer src="../js/main.bundle.js"></script>
+  <link href="../css/main.min.css" rel="stylesheet">
+</head>
 <body>
 <div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3">
+  <nav class="navbar navbar-expand-lg mb-3" aria-labelledby="navbarBrand">
     <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-              aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+              aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a href="" class="navbar-brand"><i class="bi bi-list-task"></i>&nbsp;Task Tracker</a>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <a href="{% url "tasks:list" %}" class="navbar-brand" id="navbarBrand">
+          <i class="bi bi-list-task"></i>&nbsp;Task Tracker
+        </a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                                <li class="nav-item"><a href="" class="nav-link">Sign Up</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Sign In</a></li>
+          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
+          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
+          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
+          <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
+          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
+          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
         </ul>
       </div>
     </div>
