@@ -19,7 +19,7 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "profile.html")
+    return render(request, "users/profile.html")
 
 
 def auth_sign_up_view(request: HttpRequest) -> HttpResponse:
@@ -34,7 +34,7 @@ def auth_sign_up_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "signup.html")
+    return render(request, "auth/signup.html")
 
 
 def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
@@ -49,7 +49,7 @@ def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "signin.html")
+    return render(request, "auth/signin.html")
 
 
 def auth_sign_out_view(request: HttpRequest) -> HttpResponse:

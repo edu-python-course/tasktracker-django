@@ -5,7 +5,7 @@ from django.urls import reverse
 class TestTaskListView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("tasks:list")
-        self.template_name = "task_list.html"
+        self.template_name = "tasks/task_list.html"
         self.client = test.Client()
 
     def test_response_200(self):
@@ -20,7 +20,7 @@ class TestTaskListView(test.TestCase):
 class TestTaskCreateView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("tasks:create")
-        self.template_name = "task_form.html"
+        self.template_name = "tasks/task_form.html"
         self.client = test.Client()
 
     def test_response_200(self):
@@ -36,7 +36,7 @@ class TestTaskDetailView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("tasks:detail", args=(2,))
         self.url_404 = reverse("tasks:detail", args=(42,))
-        self.template_name = "task_detail.html"
+        self.template_name = "tasks/task_detail.html"
         self.client = test.Client()
 
     def test_response_200(self):
@@ -56,7 +56,7 @@ class TestTaskUpdateView(test.TestCase):
     def setUp(self) -> None:
         self.url_path = reverse("tasks:update", args=(2,))
         self.url_404 = reverse("tasks:update", args=(42,))
-        self.template_name = "task_form.html"
+        self.template_name = "tasks/task_form.html"
         self.client = test.Client()
 
     def test_response_200(self):
