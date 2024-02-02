@@ -1,72 +1,29 @@
-<!doctype html>
-<html lang="en" data-bs-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Task tracker templates package - EDU Python course">
-  <meta name="author" content="Serhii Horodilov <sgorodil@gmail.com>">
-  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="icon" type="image/png" href="../img/favicon.png">
-  <title>Sign Up | Task Tracker</title>
-  <script defer src="../js/main.bundle.js"></script>
-  <link href="../css/main.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3" aria-labelledby="navbarBrand">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-              aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <a href="{% url "tasks:list" %}" class="navbar-brand" id="navbarBrand">
-          <i class="bi bi-list-task"></i>&nbsp;Task Tracker
-        </a>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
-          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
-          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
-        </ul>
-      </div>
+{% extends "base.html" %}
+{% block title %}Sign Up | {{ block.super|default:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <form class="w-50 m-auto" id="formAuth" aria-label="Login Form">
+    <h1 class="h3 fw-normal mb-3 text-center">Register a new account</h1>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control shadow" id="username" name="username" placeholder="Username">
+      <label for="username">Username</label>
     </div>
-  </nav>
-</div>
-<div class="container">
-  <div class="row justify-content-center">
-    <main class="col col-md-10 col-lg-9">
-      <form class="w-50 m-auto" id="formAuth" aria-label="Login Form">
-        <h1 class="h3 fw-normal mb-3 text-center">Register a new account</h1>
-        <div class="form-floating mb-3">
-          <input type="text" class="form-control shadow" id="username" name="username" placeholder="Username">
-          <label for="username">Username</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control shadow" id="email" name="email" placeholder="Email">
-          <label for="email">Email</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="password" class="form-control shadow" id="password" name="password" placeholder="Password">
-          <label for="password">Password</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="password" class="form-control shadow" id="confirmPassword" name="confirm_password"
-                 placeholder="Confirm Password">
-          <label for="confirmPassword">Confirm Password</label>
-        </div>
-        <button class="btn btn-primary w-100 my-2 fs-5">Sign Up</button>
-        <p class="text-center mt-3">
-          Already have an account?
-          <a href="" class="text-body fw-bold">Login</a>
-        </p>
-      </form>
-    </main>
-  </div>
-</div>
-</body>
-</html>
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control shadow" id="email" name="email" placeholder="Email">
+      <label for="email">Email</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control shadow" id="password" name="password" placeholder="Password">
+      <label for="password">Password</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control shadow" id="confirmPassword" name="confirm_password"
+             placeholder="Confirm Password">
+      <label for="confirmPassword">Confirm Password</label>
+    </div>
+    <button class="btn btn-primary w-100 my-2 fs-5">Sign Up</button>
+    <p class="text-center mt-3">
+      Already have an account?
+      <a href="" class="text-body fw-bold">Login</a>
+    </p>
+  </form>
+{% endblock %}

@@ -1,126 +1,83 @@
+{% extends "base.html" %}
 {% load humanize %}
 {% load tasks %}
-<!doctype html>
-<html lang="en" data-bs-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Task tracker templates package - EDU Python course">
-  <meta name="author" content="Serhii Horodilov <sgorodil@gmail.com>">
-  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="icon" type="image/png" href="../img/favicon.png">
-  <title>Tasks Details | Task Tracker</title>
-  <script defer src="../js/main.bundle.js"></script>
-  <link href="../css/main.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3" aria-labelledby="navbarBrand">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-              aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <a href="{% url "tasks:list" %}" class="navbar-brand" id="navbarBrand">
-          <i class="bi bi-list-task"></i>&nbsp;Task Tracker
-        </a>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
-          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
-          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
-        </ul>
+{% block title %}Task Details | {{ block.super|default:"Task Tracker" }}{% endblock %}
+{% block main %}
+<div class="card shadow" id="taskDetailsContainer">
+  <div class="card-header">
+    <h1 class="card-title h3 text-center" id="summary">
+      <span>{{ object.summary }}</span>
+    </h1>
+    <hr class="border">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col">
+        <strong class="me-1">Assignee:</strong>
+        <span>{{ object.assignee.first_name }} {{ object.assignee.last_name }}</span>
+      </div>
+      <div class="col">
+        <strong class="me-1">Reporter:</strong>
+        <span><span>{{ object.reporter.first_name }} {{ object.reporter.last_name }}</span></span>
+      </div>
+      <div class="col">
+        <strong class="me-1">Created:</strong>
+        {% if object.created_at|is_within_days:5 %}
+          <span>{{ object.created_at|naturaltime }}</span>
+        {% else %}
+          <span>{{ object.created_at|naturalday }}</span>
+        {% endif %}
+      </div>
+      <div class="col">
+        <strong class="me-1">Updated:</strong>
+        {% if object.updated_at|is_within_days:5 %}
+          <span>{{ object.updated_at|naturaltime }}</span>
+        {% else %}
+          <span>{{ object.updated_at|naturalday }}</span>
+        {% endif %}
       </div>
     </div>
-  </nav>
-</div>
-<div class="container">
-  <div class="row justify-content-center">
-    <main class="col col-md-10 col-lg-9">
-      <div class="card shadow" id="taskDetailsContainer">
-        <div class="card-header">
-          <h1 class="card-title h3 text-center" id="summary">
-            <span>{{ object.summary }}</span>
-          </h1>
-          <hr class="border">
-          <div class="row row-cols-1 row-cols-md-2">
-            <div class="col">
-              <strong class="me-1">Assignee:</strong>
-              <span>{{ object.assignee.first_name }} {{ object.assignee.last_name }}</span>
-            </div>
-            <div class="col">
-              <strong class="me-1">Reporter:</strong>
-              <span><span>{{ object.reporter.first_name }} {{ object.reporter.last_name }}</span></span>
-            </div>
-            <div class="col">
-              <strong class="me-1">Created:</strong>
-              {% if object.created_at|is_within_days:5 %}
-                <span>{{ object.created_at|naturaltime }}</span>
-              {% else %}
-                <span>{{ object.created_at|naturalday }}</span>
-              {% endif %}
-            </div>
-            <div class="col">
-              <strong class="me-1">Updated:</strong>
-              {% if object.updated_at|is_within_days:5 %}
-                <span>{{ object.updated_at|naturaltime }}</span>
-              {% else %}
-                <span>{{ object.updated_at|naturalday }}</span>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-          {{ object.description|linebreaks }}
-        </div>
-        <div class="card-footer" aria-label="TaskActions">
-          <div class="d-flex justify-content-end align-items-center">
-            <button class="btn btn-outline-success mx-3"
-                {# hx-patch="" hx-swap="none" hx-vals="js:{completed:true}"#}
-                    data-task-target="{{ object.pk }}" data-task-action="patch">
-              Complete
-            </button>
-            <div class="btn-group" role="group">
-              <a href="" class="btn btn-outline-primary" role="button">Update</a>
-              <button class="btn btn-outline-danger"
-                      data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
+  </div>
+  <div class="card-body">
+    {{ object.description|linebreaks }}
+  </div>
+  <div class="card-footer" aria-label="TaskActions">
+    <div class="d-flex justify-content-end align-items-center">
+      <button class="btn btn-outline-success mx-3"
+          {# hx-patch="" hx-swap="none" hx-vals="js:{completed:true}"#}
+              data-task-target="{{ object.pk }}" data-task-action="patch">
+        Complete
+      </button>
+      <div class="btn-group" role="group">
+        <a href="" class="btn btn-outline-primary" role="button">Update</a>
+        <button class="btn btn-outline-danger"
+                data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
+          Delete
+        </button>
       </div>
-      <div class="modal fade" id="modalTaskDelete" tabindex="-1"
-           aria-labelledby="modalTaskDeleteLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="modalTaskDeleteLabel">Are you sure you want to delete task?</h1>
-            </div>
-            <div class="modal-body">
-              <p>Task will be permanently deleted.</p>
-              <p class="fw-bold text-center">{{ object.summary }}</p>
-              <div class="row row-cols-2">
-                <div class="col">Reporter: {{ object.reporter.first_name }} {{ object.reporter.last_name }}</div>
-                <div class="col">Assignee: {{ object.assignee.first_name }} {{ object.assignee.last_name }}</div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <form action="">
-                <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
-                <button class="btn btn-danger mx-1" type="submit">Confirm</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
+    </div>
   </div>
 </div>
-</body>
-</html>
+<div class="modal fade" id="modalTaskDelete" tabindex="-1"
+     aria-labelledby="modalTaskDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalTaskDeleteLabel">Are you sure you want to delete task?</h1>
+      </div>
+      <div class="modal-body">
+        <p>Task will be permanently deleted.</p>
+        <p class="fw-bold text-center">{{ object.summary }}</p>
+        <div class="row row-cols-2">
+          <div class="col">Reporter: {{ object.reporter.first_name }} {{ object.reporter.last_name }}</div>
+          <div class="col">Assignee: {{ object.assignee.first_name }} {{ object.assignee.last_name }}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form action="">
+          <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger mx-1" type="submit">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

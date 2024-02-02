@@ -1,119 +1,76 @@
-<!doctype html>
-<html lang="en" data-bs-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Task tracker templates package - EDU Python course">
-  <meta name="author" content="Serhii Horodilov <sgorodil@gmail.com>">
-  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="icon" type="image/png" href="../img/favicon.png">
-  <title>User Profile | Task Tracker</title>
-  <script defer src="../js/main.bundle.js"></script>
-  <link href="../css/main.min.css" rel="stylesheet">
-</head>
-<body>
-<div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3" aria-labelledby="navbarBrand">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-              aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <a href="{% url "tasks:list" %}" class="navbar-brand" id="navbarBrand">
-          <i class="bi bi-list-task"></i>&nbsp;Task Tracker
-        </a>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
-          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
-          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
-        </ul>
+{% extends "base.html" %}
+{% block title %}User Profile | {{ block.super|default:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <div class="card shadow">
+    <div class="card-header">
+      <h1 class="card-title text-center">Pippin Sackville-Baggins</h1>
+      <p class="h5 text-center">PippinSackville-Baggins@jourrapide.com</p>
+    </div>
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-lg-2">
+        <section class="col d-flex justify-content-center">
+          <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar"
+               class="rounded-circle shadow avatar">
+        </section>
+        <section class="col mt-3 mt-lg-0">
+          <ul class="nav nav-underline mb-3 justify-content-center" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks-tab-pane"
+                      type="button" role="tab" aria-controls="tasks-tab-pane" aria-selected="true">
+                Recent active tasks
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane"
+                      type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">
+                Edit profile
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="tasks-tab-pane"
+                 role="tabpanel" aria-labelledby="tasks-tab" tabindex="0">
+              <div class="list-group list-group-flush">
+                <a href="" class="list-group-item list-group-item-action">
+                  The delighted dosi proudly consumes the star.
+                </a>
+                <a href="" class="list-group-item list-group-item-action">
+                  Spacecrafts fly from attitudes like cold phenomenans.
+                </a>
+                <a href="" class="list-group-item list-group-item-action">
+                  Space suits die with attitude at the final parallel universe.
+                </a>
+                <a href="" class="list-group-item list-group-item-action">
+                  The ugly crewmate oddly deserves the alien.
+                </a>
+                <a href="" class="list-group-item list-group-item-action">
+                  The united pathway never observes the ship.
+                </a>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab"
+                 tabindex="0">
+              <form action="" id="formUserdata" aria-label="ChangeUserdata">
+                <div class="mb-2">
+                  <label for="firstName" class="form-label">First name</label>
+                  <input type="text" class="form-control" id="firstName" name="first_name">
+                </div>
+                <div class="mb-2">
+                  <label for="lastName" class="form-label">Last name</label>
+                  <input type="text" class="form-control" id="lastName" name="last_name">
+                </div>
+                <div class="mb-2">
+                  <label for="image" class="form-label">User image</label>
+                  <input type="file" class="form-control" id="image" name="image">
+                </div>
+                <div class="d-flex flex-row justify-content-end my-2">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
-  </nav>
-</div>
-<div class="container">
-  <div class="row justify-content-center">
-    <main class="col col-md-10 col-lg-9">
-      <div class="card shadow">
-        <div class="card-header">
-          <h1 class="card-title text-center">Pippin Sackville-Baggins</h1>
-          <p class="h5 text-center">PippinSackville-Baggins@jourrapide.com</p>
-        </div>
-        <div class="card-body">
-          <div class="row row-cols-1 row-cols-lg-2">
-            <section class="col d-flex justify-content-center">
-              <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar"
-                   class="rounded-circle shadow avatar">
-            </section>
-            <section class="col mt-3 mt-lg-0">
-              <ul class="nav nav-underline mb-3 justify-content-center" role="tablist">
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks-tab-pane"
-                          type="button" role="tab" aria-controls="tasks-tab-pane" aria-selected="true">
-                    Recent active tasks
-                  </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane"
-                          type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">
-                    Edit profile
-                  </button>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane fade show active" id="tasks-tab-pane"
-                     role="tabpanel" aria-labelledby="tasks-tab" tabindex="0">
-                  <div class="list-group list-group-flush">
-                    <a href="" class="list-group-item list-group-item-action">
-                      The delighted dosi proudly consumes the star.
-                    </a>
-                    <a href="" class="list-group-item list-group-item-action">
-                      Spacecrafts fly from attitudes like cold phenomenans.
-                    </a>
-                    <a href="" class="list-group-item list-group-item-action">
-                      Space suits die with attitude at the final parallel universe.
-                    </a>
-                    <a href="" class="list-group-item list-group-item-action">
-                      The ugly crewmate oddly deserves the alien.
-                    </a>
-                    <a href="" class="list-group-item list-group-item-action">
-                      The united pathway never observes the ship.
-                    </a>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab"
-                     tabindex="0">
-                  <form action="" id="formUserdata" aria-label="ChangeUserdata">
-                    <div class="mb-2">
-                      <label for="firstName" class="form-label">First name</label>
-                      <input type="text" class="form-control" id="firstName" name="first_name">
-                    </div>
-                    <div class="mb-2">
-                      <label for="lastName" class="form-label">Last name</label>
-                      <input type="text" class="form-control" id="lastName" name="last_name">
-                    </div>
-                    <div class="mb-2">
-                      <label for="image" class="form-label">User image</label>
-                      <input type="file" class="form-control" id="image" name="image">
-                    </div>
-                    <div class="d-flex flex-row justify-content-end my-2">
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </section>
-          </div>
-        </div>
-      </div>
-    </main>
   </div>
-</div>
-</body>
-</html>
+{% endblock %}
