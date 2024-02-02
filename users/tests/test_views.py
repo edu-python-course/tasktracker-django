@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class TestUserProfileView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("profile")
+        self.url_path = reverse("users:profile")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -18,7 +18,7 @@ class TestUserProfileView(test.TestCase):
 
 class TestSignUpView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("sign-up")
+        self.url_path = reverse("users:sign-up")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -32,7 +32,7 @@ class TestSignUpView(test.TestCase):
 
 class TestSignInView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("sign-in")
+        self.url_path = reverse("users:sign-in")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -46,7 +46,7 @@ class TestSignInView(test.TestCase):
 
 class TestSignOutView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("sign-out")
+        self.url_path = reverse("users:sign-out")
         self.client = test.Client()
 
     def test_response_200(self):

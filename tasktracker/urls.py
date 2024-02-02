@@ -21,20 +21,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-
-from tasks import views as tasks_views
-from users import views as users_views
+from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("profile/", users_views.user_profile_view, name="profile"),
-    path("sign-up/", users_views.auth_sign_up_view, name="sign-up"),
-    path("sign-in/", users_views.auth_sign_in_view, name="sign-in"),
-    path("sign-out/", users_views.auth_sign_out_view, name="sign-out"),
-    path("create/", tasks_views.task_create_view, name="create"),
-    path("<int:pk>/", tasks_views.task_detail_view, name="detail"),
-    path("<int:pk>/update/", tasks_views.task_update_view, name="update"),
-    path("<int:pk>/delete/", tasks_views.task_delete_view, name="delete"),
-    path("", tasks_views.task_list_view, name="list"),
+    path("", include("users.urls", namespace="users")),
+    path("", include("tasks.urls", namespace="tasks")),
 ]

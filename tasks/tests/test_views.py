@@ -4,7 +4,7 @@ from django.urls import reverse
 
 class TestTaskListView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("list")
+        self.url_path = reverse("tasks:list")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -18,7 +18,7 @@ class TestTaskListView(test.TestCase):
 
 class TestTaskCreateView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("create")
+        self.url_path = reverse("tasks:create")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -32,7 +32,7 @@ class TestTaskCreateView(test.TestCase):
 
 class TestTaskDetailView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("detail", args=(42,))
+        self.url_path = reverse("tasks:detail", args=(42,))
         self.client = test.Client()
 
     def test_response_200(self):
@@ -46,7 +46,7 @@ class TestTaskDetailView(test.TestCase):
 
 class TestTaskUpdateView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("update", args=(42,))
+        self.url_path = reverse("tasks:update", args=(42,))
         self.client = test.Client()
 
     def test_response_200(self):
@@ -60,7 +60,7 @@ class TestTaskUpdateView(test.TestCase):
 
 class TestTaskDeleteView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = reverse("delete", args=(42,))
+        self.url_path = reverse("tasks:delete", args=(42,))
         self.client = test.Client()
 
     def test_response_200(self):
