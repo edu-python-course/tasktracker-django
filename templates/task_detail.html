@@ -1,3 +1,5 @@
+{% load humanize %}
+{% load tasks %}
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
 <head>
@@ -57,11 +59,19 @@
             </div>
             <div class="col">
               <strong class="me-1">Created:</strong>
-              <span>{{ object.created_at }}</span>
+              {% if object.created_at|is_within_days:5 %}
+                <span>{{ object.created_at|naturaltime }}</span>
+              {% else %}
+                <span>{{ object.created_at|naturalday }}</span>
+              {% endif %}
             </div>
             <div class="col">
               <strong class="me-1">Updated:</strong>
-              <span>{{ object.updated_at }}</span>
+              {% if object.updated_at|is_within_days:5 %}
+                <span>{{ object.updated_at|naturaltime }}</span>
+              {% else %}
+                <span>{{ object.updated_at|naturalday }}</span>
+              {% endif %}
             </div>
           </div>
         </div>

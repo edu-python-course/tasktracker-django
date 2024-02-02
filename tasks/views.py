@@ -23,8 +23,8 @@ tasks = [
             "translated to a unrelated hurrah. Mermaids reproduce from "
             "pressures like sub-light humour's?",
         "completed": False,
-        "created_at": timezone.now() - timedelta(days=120),
-        "updated_at": timezone.now() - timedelta(days=30),
+        "created_at": timezone.now() - timedelta(days=30),
+        "updated_at": timezone.now() - timedelta(days=4),
         "assignee": {
             "image": "https://i.pravatar.cc/64?u=DoraHeadstrong@dayrep.com",
             "first_name": "Dora",
@@ -49,7 +49,7 @@ tasks = [
             "resistance, destroyed to an ancient crew. "
             "The collective admiral finally manifests the planet?",
         "completed": True,
-        "created_at": timezone.now() - timedelta(seconds=60 * 60 * 5),
+        "created_at": timezone.now() - timedelta(seconds=60 * 60 * 24 * 2),
         "updated_at": timezone.now() - timedelta(seconds=60 * 5),
         "assignee": {
             "image": "https://i.pravatar.cc/64?u=TobyMugwort@armyspy.com",
