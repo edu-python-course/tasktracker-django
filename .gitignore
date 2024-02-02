@@ -6,6 +6,9 @@
 /venv/
 /env/
 
+# environment settings file
+/.env
+
 # python byte-compiled
 __pycache__
 
