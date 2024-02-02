@@ -168,13 +168,13 @@ def auth_sign_out_view(request: HttpRequest) -> HttpResponse:
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("profile/", user_profile_view),
-    path("sign-up/", auth_sign_up_view),
-    path("sign-in/", auth_sign_in_view),
-    path("sign-out/", auth_sign_out_view),
-    path("create/", task_create_view),
-    path("<int:pk>/", task_detail_view),
-    path("<int:pk>/update/", task_update_view),
-    path("<int:pk>/delete/", task_delete_view),
-    path("", task_list_view),
+    path("profile/", user_profile_view, name="profile"),
+    path("sign-up/", auth_sign_up_view, name="sign-up"),
+    path("sign-in/", auth_sign_in_view, name="sign-in"),
+    path("sign-out/", auth_sign_out_view, name="sign-out"),
+    path("create/", task_create_view, name="create"),
+    path("<int:pk>/", task_detail_view, name="detail"),
+    path("<int:pk>/update/", task_update_view, name="update"),
+    path("<int:pk>/delete/", task_delete_view, name="delete"),
+    path("", task_list_view, name="list"),
 ]

@@ -4,11 +4,12 @@ Test project views
 """
 
 from django import test
+from django.urls import reverse
 
 
 class TestUserProfileView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/profile/"
+        self.url_path = reverse("profile")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -22,7 +23,7 @@ class TestUserProfileView(test.TestCase):
 
 class TestSignUpView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/sign-up/"
+        self.url_path = reverse("sign-up")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -36,7 +37,7 @@ class TestSignUpView(test.TestCase):
 
 class TestSignInView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/sign-in/"
+        self.url_path = reverse("sign-in")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -50,7 +51,7 @@ class TestSignInView(test.TestCase):
 
 class TestSignOutView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/sign-out/"
+        self.url_path = reverse("sign-out")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -64,7 +65,7 @@ class TestSignOutView(test.TestCase):
 
 class TestTaskListView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/"
+        self.url_path = reverse("list")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -78,7 +79,7 @@ class TestTaskListView(test.TestCase):
 
 class TestTaskCreateView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/create/"
+        self.url_path = reverse("create")
         self.client = test.Client()
 
     def test_response_200(self):
@@ -92,7 +93,7 @@ class TestTaskCreateView(test.TestCase):
 
 class TestTaskDetailView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/42/"
+        self.url_path = reverse("detail", args=(42,))
         self.client = test.Client()
 
     def test_response_200(self):
@@ -106,7 +107,7 @@ class TestTaskDetailView(test.TestCase):
 
 class TestTaskUpdateView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/42/update/"
+        self.url_path = reverse("update", args=(42,))
         self.client = test.Client()
 
     def test_response_200(self):
@@ -120,7 +121,7 @@ class TestTaskUpdateView(test.TestCase):
 
 class TestTaskDeleteView(test.TestCase):
     def setUp(self) -> None:
-        self.url_path = "/42/delete/"
+        self.url_path = reverse("delete", args=(42,))
         self.client = test.Client()
 
     def test_response_200(self):
