@@ -14,29 +14,7 @@
   <link href="../css/main.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3" aria-labelledby="navbarBrand">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-              aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <a href="{% url "tasks:list" %}" class="navbar-brand" id="navbarBrand">
-          <i class="bi bi-list-task"></i>&nbsp;Task Tracker
-        </a>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
-          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
-          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</div>
+{% include "_navbar.html" %}
 <div class="container">
   <div class="row justify-content-center">
     <main class="col col-md-10 col-lg-9">
