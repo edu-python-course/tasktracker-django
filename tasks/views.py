@@ -3,8 +3,11 @@ Tasks application views
 
 """
 
+from datetime import timedelta
+
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 
 tasks = [
     {
@@ -19,11 +22,19 @@ tasks = [
             "Adventure at the space station was the flight of honor, "
             "translated to a unrelated hurrah. Mermaids reproduce from "
             "pressures like sub-light humour's?",
+        "completed": False,
+        "created_at": timezone.now() - timedelta(days=120),
+        "updated_at": timezone.now() - timedelta(days=30),
         "assignee": {
-            "image": "https://i.pravatar.cc/?u=DoraHeadstrong@dayrep.com",
+            "image": "https://i.pravatar.cc/64?u=DoraHeadstrong@dayrep.com",
             "first_name": "Dora",
             "last_name": "Headstrong",
-        }
+        },
+        "reporter": {
+            "image": "https://i.pravatar.cc/64?u=TobyMugwort@armyspy.com",
+            "first_name": "Toby",
+            "last_name": "Mugwort",
+        },
     },
     {
         "pk": 2,
@@ -37,10 +48,18 @@ tasks = [
             "Sensor at the space station was the assimilation of "
             "resistance, destroyed to an ancient crew. "
             "The collective admiral finally manifests the planet?",
+        "completed": True,
+        "created_at": timezone.now() - timedelta(seconds=60 * 60 * 5),
+        "updated_at": timezone.now() - timedelta(seconds=60 * 5),
         "assignee": {
-            "image": "https://i.pravatar.cc/?u=TobyMugwort@armyspy.com",
+            "image": "https://i.pravatar.cc/64?u=TobyMugwort@armyspy.com",
             "first_name": "Toby",
             "last_name": "Mugwort",
+        },
+        "reporter": {
+            "image": "https://i.pravatar.cc/64?u=DoraHeadstrong@dayrep.com",
+            "first_name": "Dora",
+            "last_name": "Headstrong",
         }
     },
 ]
