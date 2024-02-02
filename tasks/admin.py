@@ -18,6 +18,7 @@ class TaskModelAdmin(admin.ModelAdmin):
     list_display = ("summary", "get_reporter", "get_assignee")
     list_display_links = ("summary",)
     list_filter = ("reporter", "assignee")
+    readonly_fields = ("uuid", )
 
     @admin.display(description="reported by")
     def get_reporter(self, obj):

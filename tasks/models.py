@@ -4,6 +4,7 @@ Tasks application models
 """
 
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.functions import RandomUUID
 from django.db import models
 
 UserModel = get_user_model()
@@ -13,6 +14,8 @@ class TaskModel(models.Model):
     """
     Task model implementation
 
+    :ivar uuid: primary key
+    :type uuid: :class: `uuid.UUID`
     :ivar summary: title, or short description (up to 128 characters).
     :type summary: str
     :ivar description: detailed description, defaults to None.
@@ -32,6 +35,13 @@ class TaskModel(models.Model):
     Each task updates its updated timestamp automatically on task save.
 
     """
+
+    uuid = models.UUIDField(
+        default=RandomUUID(),
+        editable=False,
+        primary_key=True,
+        verbose_name="primary key"
+    )
 
     summary = models.CharField(max_length=128)
     description = models.TextField(blank=True)
