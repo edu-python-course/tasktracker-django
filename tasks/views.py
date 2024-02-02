@@ -81,7 +81,7 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
         "object_list": tasks,
     }
 
-    return render(request, "task_list.html", ctx)
+    return render(request, "tasks/task_list.html", ctx)
 
 
 def task_create_view(request: HttpRequest) -> HttpResponse:
@@ -96,7 +96,7 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "task_form.html")
+    return render(request, "tasks/task_form.html")
 
 
 def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -123,7 +123,7 @@ def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
         "object": task,
     }
 
-    return render(request, "task_detail.html", ctx)
+    return render(request, "tasks/task_detail.html", ctx)
 
 
 def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -150,7 +150,7 @@ def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
         "object": task,
     }
 
-    return render(request, "task_form.html", ctx)
+    return render(request, "tasks/task_form.html", ctx)
 
 
 def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
