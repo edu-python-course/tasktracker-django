@@ -47,9 +47,10 @@
         Complete
       </button>
       <div class="btn-group" role="group">
-        <a href="" class="btn btn-outline-primary" role="button">Update</a>
-        <button class="btn btn-outline-danger"
-                data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
+        <a href="{% url "tasks:update" object.pk %}" class="btn btn-outline-primary" role="button">
+          Update
+        </a>
+        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
           Delete
         </button>
       </div>
