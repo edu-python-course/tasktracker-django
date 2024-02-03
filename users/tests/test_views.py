@@ -31,6 +31,11 @@ class TestSignUpView(test.TestCase):
         response = self.client.get(self.url_path)
         self.assertTemplateUsed(response, self.template_name)
 
+    def test_restricted_methods(self):
+        self.assertEqual(self.client.put(self.url_path).status_code, 405)
+        self.assertEqual(self.client.patch(self.url_path).status_code, 405)
+        self.assertEqual(self.client.delete(self.url_path).status_code, 405)
+
 
 class TestSignInView(test.TestCase):
     def setUp(self) -> None:
@@ -45,6 +50,11 @@ class TestSignInView(test.TestCase):
     def test_template_used(self):
         response = self.client.get(self.url_path)
         self.assertTemplateUsed(response, self.template_name)
+
+    def test_restricted_methods(self):
+        self.assertEqual(self.client.put(self.url_path).status_code, 405)
+        self.assertEqual(self.client.patch(self.url_path).status_code, 405)
+        self.assertEqual(self.client.delete(self.url_path).status_code, 405)
 
 
 class TestSignOutView(test.TestCase):
