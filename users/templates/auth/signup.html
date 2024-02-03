@@ -1,14 +1,11 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}Sign Up | {{ block.super|default:"Task Tracker" }}{% endblock %}
 {% block main %}
-  <form class="w-50 m-auto" id="formAuth" aria-label="SignUpForm" method="post">
     <h1 class="h3 fw-normal mb-3 text-center">Register a new account</h1>
-    {% csrf_token %}
-    {{ form.as_div }}
-    <button class="btn btn-primary w-100 my-2 fs-5">Sign Up</button>
+    {% crispy form %}
     <p class="text-center mt-3">
       Already have an account?
       <a href="{% url "users:sign-in" %}" class="text-body fw-bold">Login</a>
     </p>
-  </form>
 {% endblock %}
