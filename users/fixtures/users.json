@@ -1,0 +1,74 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$ExLitbqIxPO9zRIlZFk46r$/puC0kXqhYHxlVg5+ChGv3GK1N9FrOble+Svhf9qumU=",
+      "last_login": null,
+      "is_superuser": true,
+      "username": "butime",
+      "first_name": "",
+      "last_name": "",
+      "email": "WilcomeBrownlock@teleworm.us",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2024-01-31T17:05:02.136Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$KZaSCRC6vE7CCBEDuvA7NL$V9+7ZJVuDk/Fk3aPInaEYl8aPWdrmGFUaiA9Q8TFSwc=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "prombery87",
+      "first_name": "Dora",
+      "last_name": "Headstrong",
+      "email": "DoraHeadstrong@dayrep.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-31T17:06:46Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$oVmVyJZqRlILmK8mAeJPVG$VJKwhlJ/R17RMjZoqbIgLhW9UCbU+ehZeA278Gt130M=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "wheed1997",
+      "first_name": "Pippin",
+      "last_name": "Sackville-Baggins",
+      "email": "PippinSackville-Baggins@jourrapide.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-31T17:06:46Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$vVoa747diiSbD61vLfjQgr$P9doTioS25kr1h4QumOnWfvE4zzP4UZgsiteJiRZJ1Q=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "acen1999",
+      "first_name": "Toby",
+      "last_name": "Mugwort",
+      "email": "TobyMugwort@armyspy.com",
+      "is_staff": false,
+      "is_active": false,
+      "date_joined": "2024-01-31T17:08:17Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
