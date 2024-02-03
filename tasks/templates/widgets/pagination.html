@@ -13,17 +13,17 @@
     {% endif %}
     {% for paginator_page in page.paginator %}
       {% if paginator_page.number == page.number %}
-      <li class="page-item active">
-        <a href="?page={{ paginator_page.number }}" class="page-link">
-          {{ paginator_page.number }}
-        </a>
-      </li>
-        {% elif paginator_page.number < page.number|add:3 and paginator_page.number > page.number|add:-3 %}
-      <li class="page-item">
-        <a href="?page={{ paginator_page.number }}" class="page-link">
-          {{ paginator_page.number }}
-        </a>
-      </li>
+        <li class="page-item active">
+          <a href="?page={{ paginator_page.number }}" class="page-link">
+            {{ paginator_page.number }}
+          </a>
+        </li>
+      {% elif paginator_page.number < page.number|add:3 and paginator_page.number > page.number|add:-3 %}
+        <li class="page-item">
+          <a href="?page={{ paginator_page.number }}" class="page-link">
+            {{ paginator_page.number }}
+          </a>
+        </li>
       {% endif %}
     {% endfor %}
     {% if page.has_next %}
