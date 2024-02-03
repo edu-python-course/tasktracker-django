@@ -63,7 +63,7 @@ def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
     """
 
     if request.method == "POST":
-        form = SignUpForm(request.POST)
+        form = SignInForm(request.POST)
         if form.is_valid():
             ...
 
