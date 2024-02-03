@@ -4,6 +4,10 @@ Users application forms
 """
 
 from django import forms
+from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
+
+UserModel = get_user_model()
 
 
 class SignUpForm(forms.Form):
@@ -17,6 +21,35 @@ class SignUpForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
 
+    def clean_username(self):
+        """
+        Validate username input before signing up
+
+        :raise: ValidationError if username is already taken
+
+        """
+
+        username = self.cleaned_data["username"]
+        if UserModel.objects.filter(username=username).exists():
+            raise ValidationError("username already taken")
+
+        return username
+
+    def clean_confirm_password(self):
+        """
+        Validate confirm password matches password input
+
+        """
+
+        password = self.cleaned_data["password"]
+        confirm_password = self.cleaned_data["confirm_password"]
+        if password != confirm_password:
+            error_msg = "passwords don't match"
+            self.add_error("password", error_msg)
+            self.add_error("confirm_password", error_msg)
+
+        return confirm_password
+
 
 class SignInForm(forms.Form):
     """
@@ -26,3 +59,17 @@ class SignInForm(forms.Form):
 
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        """
+        Check username and password to authenticate user
+
+        """
+
+        try:
+            user = UserModel.objects.get(username=self.cleaned_data["username"])
+        except UserModel.DoesNotExist:
+            raise ValidationError("invalid username or password")
+
+        if not user.check_password(self.cleaned_data["password"]):
+            raise ValidationError("invalid username or password")
