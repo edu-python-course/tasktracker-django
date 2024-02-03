@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Sign Up | {{ block.super|default:"Task Tracker" }}{% endblock %}
 {% block main %}
-  <form class="w-50 m-auto" id="formAuth" aria-label="Login Form">
+  <form class="w-50 m-auto" id="formAuth" aria-label="SignUpForm" method="post">
     <h1 class="h3 fw-normal mb-3 text-center">Register a new account</h1>
     {{ form.as_div }}
     <button class="btn btn-primary w-100 my-2 fs-5">Sign Up</button>
