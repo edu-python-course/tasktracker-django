@@ -1,8 +1,13 @@
+import uuid
+
 from django import test
 from django.urls import reverse
 
+from tasks import models
+
 
 class TestTaskListView(test.TestCase):
+
     def setUp(self) -> None:
         self.url_path = reverse("tasks:list")
         self.template_name = "tasks/task_list.html"
@@ -33,9 +38,12 @@ class TestTaskCreateView(test.TestCase):
 
 
 class TestTaskDetailView(test.TestCase):
+    fixtures = ["users", "tasks"]
+
     def setUp(self) -> None:
-        self.url_path = reverse("tasks:detail", args=(2,))
-        self.url_404 = reverse("tasks:detail", args=(42,))
+        instance_uuid = models.TaskModel.objects.first().uuid
+        self.url_path = reverse("tasks:detail", args=(instance_uuid,))
+        self.url_404 = reverse("tasks:detail", args=(uuid.uuid4(),))
         self.template_name = "tasks/task_detail.html"
         self.client = test.Client()
 
@@ -53,9 +61,12 @@ class TestTaskDetailView(test.TestCase):
 
 
 class TestTaskUpdateView(test.TestCase):
+    fixtures = ["users", "tasks"]
+
     def setUp(self) -> None:
-        self.url_path = reverse("tasks:update", args=(2,))
-        self.url_404 = reverse("tasks:update", args=(42,))
+        instance_uuid = models.TaskModel.objects.first().uuid
+        self.url_path = reverse("tasks:update", args=(instance_uuid,))
+        self.url_404 = reverse("tasks:update", args=(uuid.uuid4(),))
         self.template_name = "tasks/task_form.html"
         self.client = test.Client()
 
@@ -73,9 +84,12 @@ class TestTaskUpdateView(test.TestCase):
 
 
 class TestTaskDeleteView(test.TestCase):
+    fixtures = ["users", "tasks"]
+
     def setUp(self) -> None:
-        self.url_path = reverse("tasks:delete", args=(2,))
-        self.url_404 = reverse("tasks:delete", args=(42,))
+        instance_uuid = models.TaskModel.objects.first().uuid
+        self.url_path = reverse("tasks:delete", args=(instance_uuid,))
+        self.url_404 = reverse("tasks:delete", args=(uuid.uuid4(),))
         self.client = test.Client()
 
     def test_response_404(self):
