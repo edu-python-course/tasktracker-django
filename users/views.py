@@ -6,6 +6,8 @@ Users application views
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
+from users.forms import SignInForm, SignUpForm
+
 
 def user_profile_view(request: HttpRequest) -> HttpResponse:
     """
@@ -34,7 +36,9 @@ def auth_sign_up_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "auth/signup.html")
+    form = SignUpForm()
+
+    return render(request, "auth/signup.html", {"form": form})
 
 
 def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
@@ -49,7 +53,9 @@ def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "auth/signin.html")
+    form = SignInForm()
+
+    return render(request, "auth/signin.html", {"form": form})
 
 
 def auth_sign_out_view(request: HttpRequest) -> HttpResponse:
