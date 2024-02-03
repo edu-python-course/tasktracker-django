@@ -3,6 +3,7 @@
 {% block main %}
   <form class="w-50 m-auto" id="formAuth" aria-label="SignInForm" method="post">
     <h1 class="h3 fw-normal mb-3 text-center">Enter your credentials</h1>
+    {% csrf_token %}
     {{ form.as_div }}
     <button class="btn btn-primary w-100 my-2 fs-5">Sign In</button>
     <p class="text-center mt-3">
