@@ -10,6 +10,8 @@ readme = "README.md"
 python = "^3.10"
 Django = "^5.0.1"
 psycopg2-binary = "^2.9.9"
+django-crispy-forms = "^2.1"
+crispy-bootstrap5 = "^2023.10"
 
 [build-system]
 requires = ["poetry-core"]
