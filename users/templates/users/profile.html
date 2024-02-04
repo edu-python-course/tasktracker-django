@@ -3,13 +3,13 @@
 {% block main %}
   <div class="card shadow">
     <div class="card-header">
-      <h1 class="card-title text-center">{{ user.get_full_name }}</h1>
+      <h1 class="card-title text-center">{{ user }}</h1>
       <p class="h5 text-center">{{ user.email }}</p>
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-lg-2">
         <section class="col d-flex justify-content-center">
-          <img src="https://i.pravatar.cc/256?u=PippinSackville-Baggins@jourrapide.com" alt="avatar"
+          <img src="{{ user.image.url }}" alt="avatar"
                class="rounded-circle shadow avatar">
         </section>
         <section class="col mt-3 mt-lg-0">

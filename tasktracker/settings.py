@@ -112,6 +112,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Authentication
+
+AUTH_USER_MODEL = "users.UserModel"
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -129,6 +133,12 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [BASE_DIR / "assets"]
+
+# Media files
+
+MEDIA_ROOT = BASE_DIR / "media"
+
+MEDIA_URL = "media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
