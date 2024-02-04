@@ -4,6 +4,7 @@ Users application models
 """
 
 from django.contrib.auth.models import AbstractUser
+from django.db.models import ImageField
 
 
 # Current project may be not the best example to demonstrate custom user
@@ -22,6 +23,12 @@ class UserModel(AbstractUser):
         db_table = "user"
         verbose_name = "user"
         verbose_name_plural = "users"
+
+    image = ImageField(
+        upload_to="avatars",
+        default="avatars/default.svg",
+        blank=True,
+    )
 
     def __str__(self) -> str:
         """

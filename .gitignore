@@ -30,6 +30,10 @@ pgsql/
 /static/*
 !/static/index.html
 
+# media files storage
+/media/*
+!/media/avatars/default.svg
+
 # temporary files storage
 /temp/
 /tmp/
