@@ -10,12 +10,13 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
 
-from users.forms import SignInForm, SignUpForm
+from users.forms import SignInForm, SignUpForm, UserModelForm
 
 UserModel = get_user_model()
 
 
 @login_required(login_url=reverse_lazy("users:sign-in"))
+@require_http_methods(["GET", "POST"])
 def user_profile_view(request: HttpRequest) -> HttpResponse:
     """
     Handle requests to user profile view
@@ -28,7 +29,21 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "users/profile.html")
+    if request.method == "POST":
+        form = UserModelForm(
+            request.POST,
+            request.FILES,
+            instance=request.user
+        )
+        if form.is_valid():
+            form.save()
+
+            return redirect("users:profile")
+
+    else:
+        form = UserModelForm(instance=request.user)
+
+    return render(request, "users/profile.html", {"form": form})
 
 
 @require_http_methods(["GET", "POST"])

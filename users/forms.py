@@ -5,7 +5,7 @@ Users application forms
 
 from crispy_bootstrap5.bootstrap5 import FloatingField
 from crispy_forms.helper import FormHelper, Layout
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Field, Submit
 from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
@@ -106,3 +106,22 @@ class SignInForm(forms.Form):
 
         if not user.check_password(self.cleaned_data["password"]):
             raise ValidationError("invalid username or password")
+
+
+class UserModelForm(forms.ModelForm):
+    class Meta:
+        model = UserModel
+        fields = ("first_name", "last_name", "image")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field("first_name"),
+            Field("last_name"),
+            Field("image"),
+            Submit("submit", "Submit")
+        )
+
+    def clean_image(self):
+        return self.cleaned_data.get("image") or UserModel.get_default_image()
