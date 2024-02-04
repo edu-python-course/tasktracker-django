@@ -68,8 +68,8 @@
     <field name="completed" type="BooleanField">True</field>
     <field name="created_at" type="DateTimeField">2022-12-29T08:06:13+00:00</field>
     <field name="updated_at" type="DateTimeField">2023-08-03T04:21:15.947001+00:00</field>
-    <field name="assignee" rel="ManyToOneRel" to="auth.user">3</field>
-    <field name="reporter" rel="ManyToOneRel" to="auth.user">3</field>
+    <field name="assignee" rel="ManyToOneRel" to="auth.user">4</field>
+    <field name="reporter" rel="ManyToOneRel" to="auth.user">4</field>
   </object>
   <object model="tasks.taskmodel" pk="07d914c8-6d57-4a86-b6d5-c0674529fbba">
     <field name="summary" type="CharField">Fix broken checkout button</field>
@@ -164,7 +164,7 @@
     <field name="assignee" rel="ManyToOneRel" to="auth.user">
       <None></None>
     </field>
-    <field name="reporter" rel="ManyToOneRel" to="auth.user">3</field>
+    <field name="reporter" rel="ManyToOneRel" to="auth.user">2</field>
   </object>
   <object model="tasks.taskmodel" pk="0d4da835-3abf-464c-9be9-1fe058a04b70">
     <field name="summary" type="CharField">Fix formatting issues on blog posts</field>
@@ -174,7 +174,7 @@
     <field name="completed" type="BooleanField">True</field>
     <field name="created_at" type="DateTimeField">2023-03-23T08:02:46+00:00</field>
     <field name="updated_at" type="DateTimeField">2023-08-03T13:21:15.931000+00:00</field>
-    <field name="assignee" rel="ManyToOneRel" to="auth.user">3</field>
+    <field name="assignee" rel="ManyToOneRel" to="auth.user">2</field>
     <field name="reporter" rel="ManyToOneRel" to="auth.user">2</field>
   </object>
   <object model="tasks.taskmodel" pk="10de8225-89ee-4b40-b914-86febf28a3cc">
@@ -229,7 +229,7 @@
     <field name="completed" type="BooleanField">False</field>
     <field name="created_at" type="DateTimeField">2023-06-26T08:02:44+00:00</field>
     <field name="updated_at" type="DateTimeField">2022-10-13T03:27:32+00:00</field>
-    <field name="assignee" rel="ManyToOneRel" to="auth.user">2</field>
+    <field name="assignee" rel="ManyToOneRel" to="auth.user">4</field>
     <field name="reporter" rel="ManyToOneRel" to="auth.user">2</field>
   </object>
   <object model="tasks.taskmodel" pk="1aff638a-da0b-4835-872c-299bd6eaae41">
@@ -250,8 +250,8 @@
     <field name="completed" type="BooleanField">True</field>
     <field name="created_at" type="DateTimeField">2023-03-03T20:23:27+00:00</field>
     <field name="updated_at" type="DateTimeField">2023-03-03T20:23:27+00:00</field>
-    <field name="assignee" rel="ManyToOneRel" to="auth.user">3</field>
-    <field name="reporter" rel="ManyToOneRel" to="auth.user">2</field>
+    <field name="assignee" rel="ManyToOneRel" to="auth.user">4</field>
+    <field name="reporter" rel="ManyToOneRel" to="auth.user">4</field>
   </object>
   <object model="tasks.taskmodel" pk="1ba45043-1c22-4d21-8d6c-b3961329bf1b">
     <field name="summary" type="CharField">Add email verification for new sign-ups</field>
@@ -312,7 +312,7 @@
     <field name="created_at" type="DateTimeField">2023-05-11T18:48:51+00:00</field>
     <field name="updated_at" type="DateTimeField">2023-08-03T04:21:15.931362+00:00</field>
     <field name="assignee" rel="ManyToOneRel" to="auth.user">3</field>
-    <field name="reporter" rel="ManyToOneRel" to="auth.user">3</field>
+    <field name="reporter" rel="ManyToOneRel" to="auth.user">4</field>
   </object>
   <object model="tasks.taskmodel" pk="39d521bc-baba-4a4a-b4a1-cf6afce3da40">
     <field name="summary" type="CharField">Update privacy policy</field>
@@ -421,7 +421,7 @@
     <field name="completed" type="BooleanField">False</field>
     <field name="created_at" type="DateTimeField">2023-02-09T17:07:56+00:00</field>
     <field name="updated_at" type="DateTimeField">2023-02-09T17:07:56+00:00</field>
-    <field name="assignee" rel="ManyToOneRel" to="auth.user">3</field>
+    <field name="assignee" rel="ManyToOneRel" to="auth.user">2</field>
     <field name="reporter" rel="ManyToOneRel" to="auth.user">2</field>
   </object>
   <object model="tasks.taskmodel" pk="688b9971-3d7b-4540-94fe-e732c78520cf">
@@ -431,7 +431,7 @@
     <field name="created_at" type="DateTimeField">2023-04-08T01:34:40+00:00</field>
     <field name="updated_at" type="DateTimeField">2023-04-08T01:34:40+00:00</field>
     <field name="assignee" rel="ManyToOneRel" to="auth.user">3</field>
-    <field name="reporter" rel="ManyToOneRel" to="auth.user">2</field>
+    <field name="reporter" rel="ManyToOneRel" to="auth.user">4</field>
   </object>
   <object model="tasks.taskmodel" pk="7c937fb2-2fb1-422c-95b7-8a9930e43cac">
     <field name="summary" type="CharField">Implement user authentication</field>
