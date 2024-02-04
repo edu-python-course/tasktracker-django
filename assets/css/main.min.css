@@ -20256,13 +20256,13 @@ textarea.form-control-lg {
   margin-bottom: 0.5rem;
 }
 .task [aria-label=TaskActions] .disabled {
-  pointer-events: none;
-  color: var(--bs-secondary-color);
+  pointer-events: none !important;
+  color: var(--bs-secondary-color) !important;
 }
-.task [data-task-action=patch] {
+.task [hx-patch] {
   color: var(--bs-success);
 }
-.task [data-task-action=delete] {
+.task [hx-delete] {
   color: var(--bs-danger);
 }
 
@@ -20270,7 +20270,7 @@ textarea.form-control-lg {
   color: var(--bs-secondary-color) !important;
   text-decoration: line-through !important;
 }
-.task[data-task-completed=true] [data-task-action=patch] {
+.task[data-task-completed=true] [hx-patch] {
   color: var(--bs-warning);
 }
 /*!**************************************************************************************************************************************************************************************!*\
