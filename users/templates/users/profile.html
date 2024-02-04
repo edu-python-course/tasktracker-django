@@ -3,8 +3,8 @@
 {% block main %}
   <div class="card shadow">
     <div class="card-header">
-      <h1 class="card-title text-center">Pippin Sackville-Baggins</h1>
-      <p class="h5 text-center">PippinSackville-Baggins@jourrapide.com</p>
+      <h1 class="card-title text-center">{{ user.get_full_name }}</h1>
+      <p class="h5 text-center">{{ user.email }}</p>
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-lg-2">
@@ -30,7 +30,7 @@
           <div class="tab-content">
             <div class="tab-pane fade show active" id="tasks-tab-pane"
                  role="tabpanel" aria-labelledby="tasks-tab" tabindex="0">
-              {% include "widgets/task_list_group.html" with object_list=assigned_tasks %}
+              {% include "widgets/task_list_group.html" with object_list=user.tasks_assigned.all|slice:5 %}
             </div>
             <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab"
                  tabindex="0">
