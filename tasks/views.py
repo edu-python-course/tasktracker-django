@@ -6,6 +6,7 @@ Tasks application views
 import uuid
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -97,6 +98,8 @@ def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_detail.html", ctx)
 
 
+@login_required
+@require_http_methods(["GET", "POST"])
 def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to task update view
@@ -109,12 +112,23 @@ def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     :return: HttpResponse object
     :rtype: :class:`django.http.HttpResponse`
 
-    :raise: Http404
+    :raise: Http404, PermissionDenied
 
     """
 
     instance = get_object_or_404(TaskModel, pk=pk)
-    form = TaskModelForm(instance=instance)
+    if request.user != instance.reporter and request.user != instance.assignee:
+        raise PermissionDenied
+
+    if request.method == "POST":
+        form = TaskModelForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+
+            return redirect(form.instance.get_absolute_url())
+
+    else:
+        form = TaskModelForm(instance=instance)
 
     return render(request, "tasks/task_form.html", {"form": form})
 
