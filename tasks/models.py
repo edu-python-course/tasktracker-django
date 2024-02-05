@@ -6,6 +6,7 @@ Tasks application models
 from django.contrib.auth import get_user_model
 from django.contrib.postgres.functions import RandomUUID
 from django.db import models
+from django.urls import reverse
 
 UserModel = get_user_model()
 
@@ -73,3 +74,23 @@ class TaskModel(models.Model):
         """Return a string version of an instance"""
 
         return self.summary
+
+    def get_absolute_url(self) -> str:
+        """
+        Return a URL to the task detail page
+
+        :raise: `django.core.exceptions.ObjectDoesNotExist`
+
+        """
+
+        # Since RandomUUID function is used to generate primary key value,
+        # task instance should be fetched from the database first.
+        # You can avoid this behavior by using ``uuid.uuid4`` to generate
+        # uuid value.
+
+        fetched_obj = TaskModel.objects.get(
+            reporter_id=self.reporter_id,
+            created_at=self.created_at
+        )
+
+        return reverse("tasks:detail", args=(fetched_obj.pk,))
