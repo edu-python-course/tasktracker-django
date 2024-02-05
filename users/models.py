@@ -37,3 +37,12 @@ class UserModel(AbstractUser):
         """
 
         return self.get_full_name() or self.username
+
+    @classmethod
+    def get_default_image(cls) -> str:
+        """
+        Return the default image name
+
+        """
+
+        return cls._meta.get_field("image").get_default()

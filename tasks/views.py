@@ -5,10 +5,14 @@ Tasks application views
 
 import uuid
 
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
+from tasks.forms import TaskModelForm
 from tasks.models import TaskModel
 
 TASKS_PER_PAGE = 10
@@ -40,6 +44,8 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "tasks/task_list.html", ctx)
 
 
+@login_required
+@require_http_methods(["GET", "POST"])
 def task_create_view(request: HttpRequest) -> HttpResponse:
     """
     Handle requests to task create view
@@ -52,7 +58,18 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "tasks/task_form.html")
+    if request.method == "POST":
+        form = TaskModelForm(request.POST)
+        if form.is_valid():
+            form.instance.reporter = request.user
+            form.save()
+
+            return redirect(form.instance.get_absolute_url())
+
+    else:
+        form = TaskModelForm()
+
+    return render(request, "tasks/task_form.html", {"form": form})
 
 
 def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
@@ -81,6 +98,8 @@ def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_detail.html", ctx)
 
 
+@login_required
+@require_http_methods(["GET", "POST"])
 def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to task update view
@@ -93,13 +112,25 @@ def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     :return: HttpResponse object
     :rtype: :class:`django.http.HttpResponse`
 
-    :raise: Http404
+    :raise: Http404, PermissionDenied
 
     """
 
-    ctx = {"object": get_object_or_404(TaskModel, pk=pk)}
+    instance = get_object_or_404(TaskModel, pk=pk)
+    if request.user != instance.reporter and request.user != instance.assignee:
+        raise PermissionDenied
 
-    return render(request, "tasks/task_form.html", ctx)
+    if request.method == "POST":
+        form = TaskModelForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+
+            return redirect(form.instance.get_absolute_url())
+
+    else:
+        form = TaskModelForm(instance=instance)
+
+    return render(request, "tasks/task_form.html", {"form": form})
 
 
 def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
