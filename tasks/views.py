@@ -17,6 +17,7 @@ from django.views.generic import (
 )
 
 from tasks.forms import TaskModelForm
+from tasks.mixins import IsNotAdminMixin
 from tasks.models import TaskModel
 
 
@@ -26,23 +27,12 @@ class TaskListView(ListView):
     template_name = "tasks/task_list.html"
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, IsNotAdminMixin, CreateView):
     http_method_names = ["get", "post"]
     model = TaskModel
     form_class = TaskModelForm
     template_name = "tasks/task_form.html"
-
-    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not self.model.can_create(request.user):
-            raise PermissionDenied
-
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        if not self.model.can_create(request.user):
-            raise PermissionDenied
-
-        return super().post(request, *args, **kwargs)
+    login_url = reverse_lazy("users:sign-in")
 
     def form_valid(self, form):
         form.instance.reporter = self.request.user
@@ -61,6 +51,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskModel
     form_class = TaskModelForm
     template_name = "tasks/task_form.html"
+    login_url = reverse_lazy("users:sign-in")
 
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         if not self.get_object().can_edit(request.user):
