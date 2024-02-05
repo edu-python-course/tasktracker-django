@@ -75,6 +75,31 @@ class TaskModel(models.Model):
 
         return self.summary
 
+    @classmethod
+    def can_create(cls, user: UserModel) -> bool:
+        """
+        Check if user can create task instances
+
+        """
+
+        return not user.is_superuser
+
+    def can_delete(self, user: UserModel) -> bool:
+        """
+        Check if user can delete task instance
+
+        """
+
+        return user == self.reporter
+
+    def can_edit(self, user: UserModel) -> bool:
+        """
+        Check if user can edit task instance
+
+        """
+
+        return user == self.assignee or user == self.reporter
+
     def get_absolute_url(self) -> str:
         """
         Return a URL to the task detail page

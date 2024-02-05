@@ -4,6 +4,9 @@ Tasks application views
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
+from django.http.request import HttpRequest
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -29,6 +32,23 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskModelForm
     template_name = "tasks/task_form.html"
 
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not self.model.can_create(request.user):
+            raise PermissionDenied
+
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not self.model.can_create(request.user):
+            raise PermissionDenied
+
+        return super().post(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.reporter = self.request.user
+
+        return super().form_valid(form)
+
 
 class TaskDetailView(DetailView):
     http_method_names = ["get"]
@@ -42,8 +62,26 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     form_class = TaskModelForm
     template_name = "tasks/task_form.html"
 
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not self.get_object().can_edit(request.user):
+            raise PermissionDenied
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not self.get_object().can_edit(request.user):
+            raise PermissionDenied
+
+        return super().post(request, *args, **kwargs)
+
+
+class TaskDeleteView(DeleteView):
     http_method_names = ["post"]
     model = TaskModel
     success_url = reverse_lazy("tasks:list")
+
+    def post(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        if not self.get_object().can_delete(request.user):
+            raise PermissionDenied
+
+        return super().post(request, *args, **kwargs)
