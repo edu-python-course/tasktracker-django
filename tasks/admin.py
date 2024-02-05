@@ -28,3 +28,6 @@ class TaskModelAdmin(admin.ModelAdmin):
     @admin.display(description="assigned to")
     def get_assignee(self, obj):
         return obj.assignee
+
+    def has_add_permission(self, request):
+        return False
