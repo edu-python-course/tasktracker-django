@@ -5,10 +5,13 @@ Tasks application views
 
 import uuid
 
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_http_methods
 
+from tasks.forms import TaskModelForm
 from tasks.models import TaskModel
 
 TASKS_PER_PAGE = 10
@@ -40,6 +43,8 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "tasks/task_list.html", ctx)
 
 
+@login_required
+@require_http_methods(["GET", "POST"])
 def task_create_view(request: HttpRequest) -> HttpResponse:
     """
     Handle requests to task create view
@@ -52,7 +57,18 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "tasks/task_form.html")
+    if request.method == "POST":
+        form = TaskModelForm(request.POST)
+        if form.is_valid():
+            form.instance.reporter = request.user
+            form.save()
+
+            return redirect(form.instance.get_absolute_url())
+
+    else:
+        form = TaskModelForm()
+
+    return render(request, "tasks/task_form.html", {"form": form})
 
 
 def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
@@ -97,9 +113,10 @@ def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
 
     """
 
-    ctx = {"object": get_object_or_404(TaskModel, pk=pk)}
+    instance = get_object_or_404(TaskModel, pk=pk)
+    form = TaskModelForm(instance=instance)
 
-    return render(request, "tasks/task_form.html", ctx)
+    return render(request, "tasks/task_form.html", {"form": form})
 
 
 def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
