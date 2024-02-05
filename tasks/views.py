@@ -58,6 +58,9 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
 
     """
 
+    if request.user.is_superuser:
+        raise PermissionDenied
+
     if request.method == "POST":
         form = TaskModelForm(request.POST)
         if form.is_valid():
