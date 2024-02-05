@@ -67,6 +67,13 @@ class TestTaskCreateView(test.TestCase):
         instance = models.TaskModel.objects.first()
         self.assertEqual(instance.reporter, get_user(self.client))
 
+    def test_create_by_admin(self):
+        self.client.login(username="butime", password="Zeiriev1oo")
+        response = self.client.get(self.url_path)
+        self.assertEqual(response.status_code, 403)
+        response = self.client.post(self.url_path, self.data)
+        self.assertEqual(response.status_code, 403)
+
 
 class TestTaskDetailView(test.TestCase):
     fixtures = ["users", "tasks"]
