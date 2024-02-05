@@ -133,6 +133,7 @@ def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_form.html", {"form": form})
 
 
+@require_http_methods(["POST"])
 def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to task delete view
@@ -149,6 +150,10 @@ def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
 
     """
 
-    get_object_or_404(TaskModel, pk=pk)
+    instance = get_object_or_404(TaskModel, pk=pk)
+    if request.user != instance.reporter:
+        raise PermissionDenied
+
+    instance.delete()
 
     return redirect("tasks:list")
