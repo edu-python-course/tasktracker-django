@@ -16,18 +16,18 @@ class TestUserProfileView(test.TestCase):
         self.url_path = reverse(PROFILE_PATH_NAME)
         self.template_name = "users/profile.html"
         self.client = test.Client()
+        self.client.login(username="butime", password="Zeiriev1oo")
 
     def test_response_200(self):
-        self.client.login(username="butime", password="Zeiriev1oo")
         response = self.client.get(self.url_path)
         self.assertEqual(response.status_code, 200)
 
     def test_template_used(self):
-        self.client.login(username="butime", password="Zeiriev1oo")
         response = self.client.get(self.url_path)
         self.assertTemplateUsed(response, self.template_name)
 
     def test_anonymous_user_redirected(self):
+        self.client.logout()
         response = self.client.get(self.url_path)
         url = "".join([
             reverse(SIGN_IN_PATH_NAME),
@@ -35,6 +35,15 @@ class TestUserProfileView(test.TestCase):
             reverse(PROFILE_PATH_NAME)
         ])
         self.assertRedirects(response, url)
+
+    def test_user_updated(self):
+        self.client.post(self.url_path, {
+            "first_name": "John",
+            "last_name": "Doe"
+        })
+        self.assertTrue(UserModel.objects.filter(
+            first_name="John", last_name="Doe"
+        ).exists())
 
 
 class TestSignUpView(test.TestCase):
