@@ -28,7 +28,7 @@
            hx-patch="" hx-vals="js:{completed:true}" hx-swap="none"
            data-task-target="{{ pk }}" data-task-action="patch"></i>
       {% endif %}
-      <i class="bi bi-trash{% if not user == object.assignee and not user == object.reporter %} disabled{% endif %}"
+      <i class="bi bi-trash{% if not user == object.reporter %} disabled{% endif %}"
          role="button"
          hx-delete="" hx-target="closest tr" hx-swap="outerHTML"
          data-task-target="{{ pk }}" data-task-action="delete"></i>

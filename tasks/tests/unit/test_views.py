@@ -155,18 +155,35 @@ class TestTaskUpdateView(test.TestCase):
 
 
 class TestTaskDeleteView(test.TestCase):
-    fixtures = ["users", "tasks"]
+    fixtures = ["users"]
 
     def setUp(self) -> None:
-        instance_uuid = models.TaskModel.objects.first().uuid
-        self.url_path = reverse("tasks:delete", args=(instance_uuid,))
-        self.url_404 = reverse("tasks:delete", args=(uuid.uuid4(),))
         self.client = test.Client()
+        self.client.login(username="prombery87", password="ieZeiSh5k")
+        models.TaskModel.objects.create(
+            summary="Testing", reporter=get_user(self.client)
+        )
+        self.instance = models.TaskModel.objects.first()
+        self.url_path = reverse("tasks:delete", args=(self.instance.pk,))
+        self.url_404 = reverse("tasks:delete", args=(uuid.uuid4(),))
 
     def test_response_404(self):
-        response = self.client.get(self.url_404)
+        response = self.client.post(self.url_404)
         self.assertEqual(response.status_code, 404)
 
-    def test_redirect(self):
-        response = self.client.get(self.url_path)
+    def test_task_deleted(self):
+        self.client.post(self.url_path)
+        qs = models.TaskModel.objects.filter(pk=self.instance.pk)
+        self.assertFalse(qs.exists())
+
+    def test_response_redirect(self):
+        response = self.client.post(self.url_path)
         self.assertRedirects(response, reverse("tasks:list"))
+
+    def test_permission_denied(self):
+        self.client.logout()
+        response = self.client.post(self.url_path)
+        self.assertEqual(response.status_code, 403)
+        self.client.login(username="wheed1997", password="enohR4cog")
+        response = self.client.post(self.url_path)
+        self.assertEqual(response.status_code, 403)
