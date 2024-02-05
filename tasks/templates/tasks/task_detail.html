@@ -3,82 +3,82 @@
 {% load tasks %}
 {% block title %}Task Details | {{ block.super|default:"Task Tracker" }}{% endblock %}
 {% block main %}
-<div class="card shadow" id="taskDetailsContainer">
-  <div class="card-header">
-    <h1 class="card-title h3 text-center" id="summary">
-      <span>{{ object.summary }}</span>
-    </h1>
-    <hr class="border">
-    <div class="row row-cols-1 row-cols-md-2">
-      <div class="col">
-        <strong class="me-1">Assignee:</strong>
-        <span>{{ object.assignee.first_name }} {{ object.assignee.last_name }}</span>
-      </div>
-      <div class="col">
-        <strong class="me-1">Reporter:</strong>
-        <span><span>{{ object.reporter.first_name }} {{ object.reporter.last_name }}</span></span>
-      </div>
-      <div class="col">
-        <strong class="me-1">Created:</strong>
-        {% if object.created_at|is_within_days:5 %}
-          <span>{{ object.created_at|naturaltime }}</span>
-        {% else %}
-          <span>{{ object.created_at|naturalday }}</span>
-        {% endif %}
-      </div>
-      <div class="col">
-        <strong class="me-1">Updated:</strong>
-        {% if object.updated_at|is_within_days:5 %}
-          <span>{{ object.updated_at|naturaltime }}</span>
-        {% else %}
-          <span>{{ object.updated_at|naturalday }}</span>
-        {% endif %}
-      </div>
-    </div>
-  </div>
-  <div class="card-body">
-    {{ object.description|linebreaks }}
-  </div>
-  <div class="card-footer" aria-label="TaskActions">
-    <div class="d-flex justify-content-end align-items-center">
-      <button class="btn btn-outline-success mx-3"
-          {# hx-patch="" hx-swap="none" hx-vals="js:{completed:true}"#}
-              data-task-target="{{ object.pk }}" data-task-action="patch">
-        Complete
-      </button>
-      <div class="btn-group" role="group">
-        <a href="{% url "tasks:update" object.pk %}" class="btn btn-outline-primary" role="button">
-          Update
-        </a>
-        <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
-          Delete
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalTaskDelete" tabindex="-1"
-     aria-labelledby="modalTaskDeleteLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="modalTaskDeleteLabel">Are you sure you want to delete task?</h1>
-      </div>
-      <div class="modal-body">
-        <p>Task will be permanently deleted.</p>
-        <p class="fw-bold text-center">{{ object.summary }}</p>
-        <div class="row row-cols-2">
-          <div class="col">Reporter: {{ object.reporter.first_name }} {{ object.reporter.last_name }}</div>
-          <div class="col">Assignee: {{ object.assignee.first_name }} {{ object.assignee.last_name }}</div>
+  <div class="card shadow" id="taskDetailsContainer">
+    <div class="card-header">
+      <h1 class="card-title h3 text-center" id="summary">
+        <span>{{ object.summary }}</span>
+      </h1>
+      <hr class="border">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col">
+          <strong class="me-1">Assignee:</strong>
+          <span>{{ object.assignee.first_name }} {{ object.assignee.last_name }}</span>
+        </div>
+        <div class="col">
+          <strong class="me-1">Reporter:</strong>
+          <span><span>{{ object.reporter.first_name }} {{ object.reporter.last_name }}</span></span>
+        </div>
+        <div class="col">
+          <strong class="me-1">Created:</strong>
+          {% if object.created_at|is_within_days:5 %}
+            <span>{{ object.created_at|naturaltime }}</span>
+          {% else %}
+            <span>{{ object.created_at|naturalday }}</span>
+          {% endif %}
+        </div>
+        <div class="col">
+          <strong class="me-1">Updated:</strong>
+          {% if object.updated_at|is_within_days:5 %}
+            <span>{{ object.updated_at|naturaltime }}</span>
+          {% else %}
+            <span>{{ object.updated_at|naturalday }}</span>
+          {% endif %}
         </div>
       </div>
-      <div class="modal-footer">
-        <form action="">
-          <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
-          <button class="btn btn-danger mx-1" type="submit">Confirm</button>
-        </form>
+    </div>
+    <div class="card-body">
+      {{ object.description|linebreaks }}
+    </div>
+    <div class="card-footer" aria-label="TaskActions">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="btn btn-outline-success mx-3"
+            {# hx-patch="" hx-swap="none" hx-vals="js:{completed:true}"#}
+                data-task-target="{{ object.pk }}" data-task-action="patch">
+          Complete
+        </button>
+        <div class="btn-group" role="group">
+          <a href="{% url "tasks:update" object.pk %}" class="btn btn-outline-primary" role="button">
+            Update
+          </a>
+          <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal fade" id="modalTaskDelete" tabindex="-1"
+       aria-labelledby="modalTaskDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalTaskDeleteLabel">Are you sure you want to delete task?</h1>
+        </div>
+        <div class="modal-body">
+          <p>Task will be permanently deleted.</p>
+          <p class="fw-bold text-center">{{ object.summary }}</p>
+          <div class="row row-cols-2">
+            <div class="col">Reporter: {{ object.reporter }}</div>
+            <div class="col">Assignee: {{ object.assignee }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <form action="{% url "tasks:delete" object.pk %}">
+            <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
+            <button class="btn btn-danger mx-1" type="submit">Confirm</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
