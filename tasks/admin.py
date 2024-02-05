@@ -5,6 +5,7 @@ Tasks application admin site
 
 from django.contrib import admin
 
+from tasks.forms import TaskModelForm
 from tasks.models import TaskModel
 
 
@@ -18,8 +19,9 @@ class TaskModelAdmin(admin.ModelAdmin):
     list_display = ("summary", "completed", "get_reporter", "get_assignee")
     list_display_links = ("summary",)
     list_filter = ("reporter", "assignee", "completed")
-    readonly_fields = ("uuid", )
+    readonly_fields = ("uuid",)
     list_per_page = 20
+    form = TaskModelForm
 
     @admin.display(description="reported by")
     def get_reporter(self, obj):
