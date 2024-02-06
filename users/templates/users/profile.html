@@ -10,34 +10,11 @@
     <div class="card-body">
       <div class="row row-cols-1 row-cols-lg-2">
         <section class="col d-flex justify-content-center">
-          <img src="{{ user.image.url }}" alt="avatar"
-               class="rounded-circle shadow avatar">
+          <img src="{{ user.image.url }}" alt="avatar" class="rounded-circle shadow avatar">
         </section>
-        <section class="col mt-3 mt-lg-0">
-          <ul class="nav nav-underline mb-3 justify-content-center" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active" id="tasks-tab" data-bs-toggle="tab" data-bs-target="#tasks-tab-pane"
-                      type="button" role="tab" aria-controls="tasks-tab-pane" aria-selected="true">
-                Recent active tasks
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit-tab-pane"
-                      type="button" role="tab" aria-controls="edit-tab-pane" aria-selected="false">
-                Edit profile
-              </button>
-            </li>
-          </ul>
-          <div class="tab-content">
-            <div class="tab-pane fade show active" id="tasks-tab-pane"
-                 role="tabpanel" aria-labelledby="tasks-tab" tabindex="0">
-              {% include "widgets/task_list_group.html" with object_list=user.tasks_assigned.all|slice:5 %}
-            </div>
-            <div class="tab-pane fade" id="edit-tab-pane" role="tabpanel" aria-labelledby="edit-tab"
-                 tabindex="0">
-              {% crispy form %}
-            </div>
-          </div>
+        <section class="col mt-3 mt-lg-0" aria-labelledby="formUserdata">
+          <h2 class="text-center">Change user data</h2>
+          {% crispy form %}
         </section>
       </div>
     </div>
