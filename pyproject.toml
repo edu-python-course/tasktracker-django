@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "django-template"
+name = "tasktracker-django"
 version = "1.0.1"
-description = "the django training project template"
+description = "the demo django project - todo application"
 authors = ["Serhii Horodilov <sgorodil@gmail.com>"]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 
 [tool.poetry.dependencies]
 python = "^3.10"
