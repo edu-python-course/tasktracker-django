@@ -18,16 +18,61 @@ jobs:
   sonarcloud:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: tasktracker
+          POSTGRES_PASSWORD: tasktracker
+          POSTGRES_DB: tasktracker
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Collect coverage
+        run: |
+          coverage run --source "." manage.py test
+          coverage xml
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DATABASE_URL: postgres://tasktracker:tasktracker@postgres:5432/tasktracker
+          PGUSER: tasktracker
+          PGPASSWORD: tasktracker
+          PGDATABASE: tasktracker
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: ./coverage.xml
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
           args:
             -Dsonar.projectKey=edu-python-course_task-tracker-django
             -Dsonar.organization=edu-python-course
+            -Dsonar.python.coverage.reportPaths=coverage.xml -X
+            -Dsonar.coverage.exclusions=**/__init__*,**/tests/** -X
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
