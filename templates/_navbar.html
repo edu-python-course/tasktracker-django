@@ -17,7 +17,12 @@
           {% endif %}
           {% if user.is_authenticated %}
             <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
-            <li class="nav-item"><a href="{% url "users:sign-out" %}" class="nav-link">Sign Out</a></li>
+            <li class="nav-item">
+              <form action="{% url "users:sign-out" %}" method="post">
+                {% csrf_token %}
+                <input type="submit" class="nav-link" value="Sign Out">
+              </form>
+            </li>
           {% else %}
             <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
             <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>

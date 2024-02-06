@@ -130,10 +130,10 @@ class TestSignOutView(test.TestCase):
         self.client = test.Client()
 
     def test_redirect(self):
-        response = self.client.get(self.url_path)
+        response = self.client.post(self.url_path)
         self.assertRedirects(response, reverse("tasks:list"))
 
     def test_user_is_signed_out(self):
         self.client.force_login(UserModel.objects.get(username="butime"))
-        self.client.get(self.url_path)
+        self.client.post(self.url_path)
         self.assertFalse(get_user(self.client).is_authenticated)

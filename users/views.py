@@ -5,6 +5,7 @@ Users application views
 
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -117,3 +118,7 @@ def auth_sign_out_view(request: HttpRequest) -> HttpResponse:
     logout(request)
 
     return redirect("tasks:list")
+
+
+class SignOutView(LogoutView):
+    next_page = reverse_lazy("tasks:list")
