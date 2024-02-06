@@ -38,13 +38,15 @@ This project comes with a minimal list of dependencies, which can be easily
 installed using the command above.
 Here is some detailed information on the dependency list:
 
-+-----------------+---------+----------------------------+
-| Package         | Version | Package homepage           |
-+=================+=========+============================+
-| Django          | ^5.0.1  | https://djangoproject.com/ |
-+-----------------+---------+----------------------------+
-| psycopg2-binary | ^2.9.9  | https://www.psycopg.org/   |
-+-----------------+---------+----------------------------+
++---------------------+---------+---------------------------------------+
+| Package             | Version | Package homepage                      |
++=====================+=========+=======================================+
+| Django              | ^5.0.1  | https://djangoproject.com/            |
++---------------------+---------+---------------------------------------+
+| psycopg2-binary     | ^2.9.9  | https://www.psycopg.org/              |
++---------------------+---------+---------------------------------------+
+| djangorestframework | ^3.14.0 | https://www.django-rest-framework.org |
++---------------------+---------+---------------------------------------+
 
 .. rubric:: Django
 
