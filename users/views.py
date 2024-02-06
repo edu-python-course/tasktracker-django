@@ -10,6 +10,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
+from django.views.generic import FormView
 
 from users.forms import SignInForm, SignUpForm, UserModelForm
 
@@ -74,6 +75,19 @@ def auth_sign_up_view(request: HttpRequest) -> HttpResponse:
     return render(request, "auth/signup.html", {"form": form})
 
 
+class SignUpView(FormView):
+    http_method_names = ["get", "post"]
+    form_class = SignUpForm
+    template_name = "auth/signup.html"
+    success_url = reverse_lazy("users:sign-in")
+
+    def form_valid(self, form):
+        del form.cleaned_data["confirm_password"]
+        UserModel.objects.create_user(**form.cleaned_data)
+
+        return super().form_valid(form)
+
+
 @require_http_methods(["GET", "POST"])
 def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
     """
@@ -101,6 +115,22 @@ def auth_sign_in_view(request: HttpRequest) -> HttpResponse:
         form = SignInForm()
 
     return render(request, "auth/signin.html", {"form": form})
+
+
+class SignInView(FormView):
+    http_method_names = ["get", "post"]
+    template_name = "auth/signin.html"
+    form_class = SignInForm
+    success_url = reverse_lazy("users:profile")
+
+    def form_valid(self, form):
+        user = UserModel.objects.get(username=form.cleaned_data["username"])
+        login(self.request, user)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.request.GET.get("next", self.success_url)
 
 
 def auth_sign_out_view(request: HttpRequest) -> HttpResponse:
