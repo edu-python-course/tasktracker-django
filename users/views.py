@@ -5,12 +5,13 @@ Users application views
 
 from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.decorators.http import require_http_methods
-from django.views.generic import FormView
+from django.views.generic import FormView, UpdateView
 
 from users.forms import SignInForm, SignUpForm, UserModelForm
 
@@ -46,6 +47,18 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
         form = UserModelForm(instance=request.user)
 
     return render(request, "users/profile.html", {"form": form})
+
+
+class UserProfileView(LoginRequiredMixin, UpdateView):
+    http_method_names = ["get", "post"]
+    model = UserModel
+    form_class = UserModelForm
+    template_name = "users/profile.html"
+    success_url = reverse_lazy("users:profile")
+    login_url = reverse_lazy("users:sign-in")
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 @require_http_methods(["GET", "POST"])
