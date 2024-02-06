@@ -16,6 +16,11 @@ __pycache__
 /.vscode/
 /.idea/
 
+# coverage reports
+*.coverage.db
+*.coverage
+coverage.*
+
 # emacs cache and backup files
 \#*\#
 *~
