@@ -1,48 +1,77 @@
 from django import test
 from django.contrib.auth import get_user_model
+from rest_framework.exceptions import ValidationError
 
-from users import serializers
+from users.serializers import UserModelSerializer
 
 UserModel = get_user_model()
 
 
-class TestUserSerializer(test.TestCase):
+class TestUserModelSerializer(test.TestCase):
+    fixtures = ["users"]
+
     @classmethod
-    def setUp(cls):
+    def setUpTestData(cls) -> None:
         cls.data = {
             "username": "test",
             "email": "test@email.org",
             "password": "<PASSWORD>",
-        }
-        cls.updated_data = {
-            "username": "updated",
-            "email": "updated@email.org",
-            "password": "<UPDATED_PASSWORD>",
+            "confirm_password": "<PASSWORD>",
         }
 
-    def test_user_create(self):
-        serializer = serializers.UserSerializer(data=self.data)
+    def test_user_created(self):
+        serializer = UserModelSerializer(data=self.data)
+
         serializer.is_valid(raise_exception=True)
-        serializer.create(serializer.validated_data)
+        serializer.save()
+        qs = UserModel.objects.filter(email=self.data["email"])
+        self.assertTrue(qs.exists())
 
-        self.assertEqual(UserModel.objects.count(), 1)
+    def test_password_hashing_for_created_users(self):
+        serializer = UserModelSerializer(data=self.data)
 
-    def test_user_update(self):
-        instance = UserModel.objects.create_user(**self.data)
-        serializer = serializers.UserSerializer(instance, self.updated_data)
         serializer.is_valid(raise_exception=True)
-        serializer.update(instance, serializer.validated_data)
+        instance = serializer.save()
+        self.assertTrue(instance.check_password(self.data["password"]))
 
+    def test_password_hashing_for_updated_users(self):
+        instance = UserModel.objects.get(username="butime")
+        serializer = UserModelSerializer(instance, data=self.data)
+
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        self.assertTrue(instance.check_password(self.data["password"]))
+
+    def test_username_validation(self):
+        data = self.data.copy()
+        data.update({"username": "butime"})
+        serializer = UserModelSerializer(data=data)
+        self.assertRaises(
+            ValidationError, serializer.is_valid, raise_exception=True
+        )
+        self.assertIn("username", serializer.errors)
+
+    def test_passwords_validation(self):
+        data = self.data.copy()
+        data.update({"confirm_password": "<ANOTHER_PASSWORD>"})
+        serializer = UserModelSerializer(data=data)
+        self.assertRaises(
+            ValidationError, serializer.is_valid, raise_exception=True
+        )
+        self.assertIn("password", serializer.errors)
+        self.assertIn("confirm_password", serializer.errors)
+
+    def test_partial_update(self):
+        # since validate method is modified, this behavior should be tested
+        # to avoid errors
+        instance = UserModel.objects.get(username="butime")
+        data = {"first_name": "Wilcome", "last_name": "Brownlock"}
+        serializer = UserModelSerializer(
+            instance, data, partial=True
+        )
+
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         instance.refresh_from_db()
-        self.assertEqual(instance.username, self.updated_data["username"])
-        self.assertEqual(instance.email, self.updated_data["email"])
-        self.assertTrue(instance.check_password(self.updated_data["password"]))
-
-    def test_user_retrieve(self):
-        instance = UserModel.objects.create_user(**self.data)
-        expected = self.data.copy()
-        del expected["password"]
-        expected.update({"pk": instance.pk})
-
-        serializer = serializers.UserSerializer(instance)
-        self.assertDictEqual(serializer.data, expected)
+        self.assertEqual(instance.first_name, data["first_name"])
+        self.assertEqual(instance.last_name, data["last_name"])
