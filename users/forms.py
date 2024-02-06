@@ -120,7 +120,7 @@ class UserModelForm(forms.ModelForm):
             Field("first_name"),
             Field("last_name"),
             Field("image"),
-            Submit("submit", "Submit")
+            Submit("submit", "Save", css_class="w-100 mt-2")
         )
 
     def clean_image(self):
