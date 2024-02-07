@@ -26,6 +26,11 @@ pgsql/
 *.sqlite3
 *.db
 
+# coverage reports
+*.coverage.db
+*.coverage
+coverage.*
+
 # static files storage
 /static/*
 !/static/index.html
