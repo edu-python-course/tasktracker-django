@@ -25,6 +25,7 @@ class TaskListView(ListView):
     http_method_names = ["get"]
     model = TaskModel
     template_name = "tasks/task_list.html"
+    paginate_by = 5
 
 
 class TaskCreateView(LoginRequiredMixin, IsNotAdminMixin, CreateView):
