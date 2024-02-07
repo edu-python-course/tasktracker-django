@@ -1,0 +1,41 @@
+<nav aria-label="TaskPagination">
+  <ul class="pagination">
+    {% if page.has_previous %}
+      <li class="page-item">
+        <a href="{% url 'tasks:list' %}?page={{ page.previous_page_number }}" class="page-link">
+          <i class="bi bi-chevron-left"></i>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a href="" class="page-link"><i class="bi bi-chevron-left"></i></a>
+      </li>
+    {% endif %}
+    {% for paginator_page in page.paginator %}
+      {% if paginator_page.number == page.number %}
+        <li class="page-item active">
+          <a href="?page={{ paginator_page.number }}" class="page-link">
+            {{ paginator_page.number }}
+          </a>
+        </li>
+      {% elif paginator_page.number < page.number|add:3 and paginator_page.number > page.number|add:-3 %}
+        <li class="page-item">
+          <a href="?page={{ paginator_page.number }}" class="page-link">
+            {{ paginator_page.number }}
+          </a>
+        </li>
+      {% endif %}
+    {% endfor %}
+    {% if page.has_next %}
+      <li class="page-item">
+        <a href="{% url 'tasks:list' %}?page={{ page.next_page_number }}" class="page-link">
+          <i class="bi bi-chevron-right"></i>
+        </a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a href="" class="page-link"><i class="bi bi-chevron-right"></i></a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

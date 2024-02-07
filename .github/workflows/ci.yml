@@ -1,0 +1,63 @@
+name: Run CI
+
+on:
+  push:
+    branches:
+      - master
+      - devel
+
+  pull_request:
+    branches:
+      - master
+      - devel
+
+jobs:
+  django-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: tasktracker
+          POSTGRES_PASSWORD: tasktracker
+          POSTGRES_DB: tasktracker
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Checkout code base
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Cache Poetry virtualenv
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install poetry
+          poetry install --no-root
+
+      - name: Run tests
+        run: poetry run python manage.py test
+        env:
+          DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DATABASE_URL: postgres://tasktracker:tasktracker@postgres:5432/tasktracker
+          PGUSER: tasktracker
+          PGPASSWORD: tasktracker
+          PGDATABASE: tasktracker

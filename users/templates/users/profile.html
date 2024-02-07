@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}User Profile | {{ block.super|default:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <div class="card shadow">
+    <div class="card-header">
+      <h1 class="card-title text-center">{{ user }}</h1>
+      <p class="h5 text-center">{{ user.email }}</p>
+    </div>
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-lg-2">
+        <section class="col d-flex justify-content-center">
+          <img src="{{ user.image.url }}" alt="avatar" class="rounded-circle shadow avatar">
+        </section>
+        <section class="col mt-3 mt-lg-0" aria-labelledby="formUserdata">
+          <h2 class="text-center">Change user data</h2>
+          {% crispy form %}
+        </section>
+      </div>
+    </div>
+  </div>
+{% endblock %}

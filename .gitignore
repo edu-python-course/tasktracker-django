@@ -6,12 +6,20 @@
 /venv/
 /env/
 
+# environment settings file
+/.env
+
 # python byte-compiled
 __pycache__
 
 # ide configs
 /.vscode/
 /.idea/
+
+# coverage reports
+*.coverage.db
+*.coverage
+coverage.*
 
 # emacs cache and backup files
 \#*\#
@@ -26,6 +34,10 @@ pgsql/
 # static files storage
 /static/*
 !/static/index.html
+
+# media files storage
+/media/avatars/*
+!/media/avatars/default.svg
 
 # temporary files storage
 /temp/
