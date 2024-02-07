@@ -17,7 +17,7 @@ UserModel = get_user_model()
 @api_view(["GET", "POST"])
 def users_resource(request: Request) -> Response:
     """
-    Handle requests to users resource
+    Handle requests to users (list) api
 
     """
 
