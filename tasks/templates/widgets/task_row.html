@@ -1,9 +1,10 @@
 <tr class="task" id="{{ object.pk }}"
     data-task-completed="{% if object.completed %}true{% else %}false{% endif %}">
   <td class="align-middle" aria-label="TaskAssignee">
-    <img src="{{ object.assignee.image.url }}" alt="avatar" class="rounded-circle shadow avatar">
+    <img src="{{ object.assignee.image.url|default:"/media/avatars/default.svg" }}"
+         alt="avatar" class="rounded-circle shadow avatar">
     <br>
-    <span class="d-none d-md-inline ms-2 text-nowrap">{{ object.assignee }}</span>
+    <span class="d-none d-md-inline ms-2 text-nowrap">{{ object.assignee|default_if_none:"" }}</span>
   </td>
   <td class="align-middle" aria-label="TaskDetails">
     <div>
