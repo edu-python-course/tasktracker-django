@@ -21,17 +21,20 @@
       {% if object.completed %}
         <i class="bi bi-arrow-repeat{% if not user == object.assignee and not user == object.reporter %} disabled{% endif %}"
            role="button"
-           hx-patch="" hx-vals="js:{completed:false}" hx-swap="none"
+           hx-patch="{% url "tasks-api:detail" object.pk %}" hx-vals="js:{completed:false}" hx-swap="none"
+           hx-headers="js:{'X-CSRFToken':getCookie('csrftoken')}"
            data-task-target="{{ pk }}" data-task-action="patch"></i>
       {% else %}
         <i class="bi bi-check-lg{% if not user == object.assignee and not user == object.reporter %} disabled{% endif %}"
            role="button"
-           hx-patch="" hx-vals="js:{completed:true}" hx-swap="none"
+           hx-patch="{% url "tasks-api:detail" object.pk %}" hx-vals="js:{completed:true}" hx-swap="none"
+           hx-headers="js:{'X-CSRFToken':getCookie('csrftoken')}"
            data-task-target="{{ pk }}" data-task-action="patch"></i>
       {% endif %}
       <i class="bi bi-trash{% if not user == object.reporter %} disabled{% endif %}"
          role="button"
-         hx-delete="" hx-target="closest tr" hx-swap="outerHTML"
+         hx-delete="{% url "tasks-api:detail" object.pk %}" hx-target="closest tr" hx-swap="outerHTML"
+         hx-headers="js:{'X-CSRFToken':getCookie('csrftoken')}"
          data-task-target="{{ pk }}" data-task-action="delete"></i>
     </div>
   </td>

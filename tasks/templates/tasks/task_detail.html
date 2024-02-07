@@ -42,9 +42,11 @@
     <div class="card-footer" aria-label="TaskActions">
       <div class="d-flex justify-content-end align-items-center">
         {% if object.completed %}
-          <button class="mx-3 btn {% if user == object.assignee or user == object.reporter %}btn-outline-warning{% else %}disabled{% endif %}"
-              {# hx-patch="" hx-swap="none" hx-vals="js:{completed:false}"#}
-                  data-task-target="{{ object.pk }}" data-task-action="patch">
+          <button
+              class="mx-3 btn {% if user == object.assignee or user == object.reporter %}btn-outline-warning{% else %}disabled{% endif %}"
+              hx-patch="{% url "tasks-api:detail" object.pk %}" hx-swap="none" hx-vals="js:{completed:false}"
+              hx-headers="js:{'X-CSRFToken':getCookie('csrftoken')}"
+              data-task-target="{{ object.pk }}" data-task-action="patch">
             Reopen
           </button>
         {% else %}

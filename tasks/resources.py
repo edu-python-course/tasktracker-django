@@ -58,6 +58,9 @@ def tasks_detail_resource(request: Request, pk: uuid.UUID) -> Response:
     This resource is used to retrieve details on a single tasks,
     delete it, or update (full or partial).
 
+    Success requests to update or delete task will respond with 200 OK,
+    to support HTMX operations.
+
     """
 
     try:
@@ -73,7 +76,7 @@ def tasks_detail_resource(request: Request, pk: uuid.UUID) -> Response:
     if request.method == "DELETE":
         instance.delete()
 
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_200_OK)
 
     if request.method == "PUT":
         serializer = TaskModelWriteSerializer(instance, request.data)
@@ -85,6 +88,6 @@ def tasks_detail_resource(request: Request, pk: uuid.UUID) -> Response:
     if serializer.is_valid():
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
