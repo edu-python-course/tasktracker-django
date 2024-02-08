@@ -22,7 +22,6 @@ But more than just a checklist, it's a platform for learners to observe
 the inner workings of a Django project and to experiment with its extensive
 features.
 
-
 Installing Dependencies
 =======================
 
@@ -60,6 +59,74 @@ offered by PostgreSQL. ``psycopg2-binary`` is intended for beginners to start
 playing with Python and PostgreSQL without needing to meet the build
 requirements for the ``psycopg2`` package. However, this should not be used
 in production. It is suitable, though, for training projects like this one.
+
+.. rubric:: python-dotenv
+
+Python-dotenv reads key-value pairs from a .env file and can set them as
+environment variables. It helps in the development of applications following
+the 12-factor principles. If your application takes its configuration from
+environment variables, like a 12-factor application, launching it in
+development is not very practical because you have to set those environment
+variables yourself.
+
+Project Configuration
+=====================
+
+The Task Tracker project utilizes environment variables for configuration
+settings.
+
++-----------------------+-----------------------------------------------------+
+| Variable Name         | Meaning                                             |
++=======================+=====================================================+
+| ``DJANGO_SECRET_KEY`` | In Django, the SECRET_KEY is an essential setting   |
+|                       | used for cryptographic signing. It should be kept   |
+|                       | secret. This key is used by Django to perform       |
+|                       | cryptographic operations, such as generating        |
+|                       | signatures for CSRF tokens, password reset tokens,  |
+|                       | and other secure data. A strong and unique SECRET   |
+|                       | KEY is vital for the security of Django             |
+|                       | applications.                                       |
+|                       |                                                     |
+|                       | You can generate a new SECRET_KEY using the         |
+|                       | `Djecrety <https://djecrety.ir/>`_ service.         |
++-----------------------+-----------------------------------------------------+
+| ``PGHOST``            | PostgreSQL server host, default to "localhost".     |
++-----------------------+-----------------------------------------------------+
+| ``PGPORT``            | PostgreSQL server port, default to 5432.            |
++-----------------------+-----------------------------------------------------+
+| ``PGUSER``            | PostgreSQL server role name, required.              |
++-----------------------+-----------------------------------------------------+
+| ``PGPASSWORD``        | PostgreSQL server role password, required.          |
++-----------------------+-----------------------------------------------------+
+| ``PGDATABASE``        | PostgreSQL server database, required.               |
++-----------------------+-----------------------------------------------------+
+
+Setting Up Environment Variables
+--------------------------------
+
+Certain settings in the Docker Compose file can be overridden by setting up
+environment variables. If you are not familiar with environment variables,
+you can read more about them on this
+`Wikipedia article <https://en.wikipedia.org/wiki/Environment_variable>`_.
+
+To set an environment variable, type the following into your terminal:
+
+.. code-block:: shell
+
+    SET VARIABLE=value     # for Windows users
+    export VARIABLE=value  # for Unix users (Linux and macOS)
+
+Using an Env File
+-----------------
+
+Instead of setting environment variables manually, you can use a ``.env`` file
+to centrally manage them. Simply place this file at the root of your project
+directory. This file is also used to define environment variables for Docker
+containers, ensuring consistent configurations across different environments.
+
+Refer to the provided ``.env.example`` file as a template for setting up your
+own ``.env`` file. Be sure to customize the variable values according to your
+project's requirements.
 
 Using Docker Compose
 ====================
