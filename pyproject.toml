@@ -1,15 +1,33 @@
 [tool.poetry]
-name = "django-template"
-version = "1.0.1"
-description = "the django training project template"
+name = "tasktracker-django"
+version = "1.1.0"
+description = "the demo django project for education purposes - todo app"
 authors = ["Serhii Horodilov <sgorodil@gmail.com>"]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
+repository = "https://github.com/edu-python-course/tasktracker-django"
+keywords = [
+    "python",
+    "django",
+    "djangorestframework",
+    "web",
+    "development",
+    "training",
+    "education",
+]
+classifiers = [
+    "Framework :: Django",
+    "Framework :: Django :: 5.0",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Education",
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^5.0.1"
 psycopg2-binary = "^2.9.9"
+python-dotenv = "^1.0.1"
 
 [build-system]
 requires = ["poetry-core"]
