@@ -17,6 +17,11 @@ __pycache__
 \#*\#
 *~
 
+# coverage reporst
+*.coverage.db
+*.coverage
+coverage.*
+
 # local databases
 pgdata/
 pgsql/
@@ -30,3 +35,6 @@ pgsql/
 # temporary files storage
 /temp/
 /tmp/
+
+# environment variables file
+.env
