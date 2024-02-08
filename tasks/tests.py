@@ -8,7 +8,7 @@ from tasks import views
 class TestTaskListView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = reverse("list")
+        cls.url_path = reverse("tasks:list")
         cls.response_content = b"task list"
         cls.view = views.task_list_view
         cls.request_factory = test.RequestFactory()
@@ -25,10 +25,12 @@ class TestTaskListView(test.TestCase):
 
 
 class TestTaskDetailView(test.TestCase):
+    pk = None
+
     @classmethod
     def setUpTestData(cls) -> None:
         cls.pk = 42
-        cls.url_path = reverse("detail", kwargs={"pk": cls.pk})
+        cls.url_path = reverse("tasks:detail", kwargs={"pk": cls.pk})
         cls.response_content = b"task detail"
         cls.view = views.task_detail_view
         cls.request_factory = test.RequestFactory()
@@ -47,7 +49,7 @@ class TestTaskDetailView(test.TestCase):
 class TestTaskCreateView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = reverse("create")
+        cls.url_path = reverse("tasks:create")
         cls.response_content = b"task create"
         cls.view = views.task_create_view
         cls.request_factory = test.RequestFactory()
@@ -64,10 +66,12 @@ class TestTaskCreateView(test.TestCase):
 
 
 class TestTaskUpdateView(test.TestCase):
+    pk = None
+
     @classmethod
     def setUpTestData(cls) -> None:
         cls.pk = 42
-        cls.url_path = reverse("update", kwargs={"pk": cls.pk})
+        cls.url_path = reverse("tasks:update", kwargs={"pk": cls.pk})
         cls.response_content = b"task update"
         cls.view = views.task_update_view
         cls.request_factory = test.RequestFactory()
@@ -84,10 +88,12 @@ class TestTaskUpdateView(test.TestCase):
 
 
 class TestTaskDeleteView(test.TestCase):
+    pk = None
+
     @classmethod
     def setUpTestData(cls) -> None:
         cls.pk = 42
-        cls.url_path = reverse("delete", kwargs={"pk": cls.pk})
+        cls.url_path = reverse("tasks:delete", kwargs={"pk": cls.pk})
         cls.response_content = b"task delete"
         cls.view = views.task_delete_view
         cls.request_factory = test.RequestFactory()
