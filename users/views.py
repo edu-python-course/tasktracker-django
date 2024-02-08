@@ -13,7 +13,7 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("users")
+    return HttpResponse("user profile")
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
@@ -22,7 +22,7 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("users")
+    return HttpResponse("sign up")
 
 
 def sign_in_view(request: HttpRequest) -> HttpResponse:
@@ -31,7 +31,7 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("users")
+    return HttpResponse("sign in")
 
 
 def sign_out_view(request: HttpRequest) -> HttpResponse:
@@ -40,4 +40,4 @@ def sign_out_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("users")
+    return HttpResponse("sign out")

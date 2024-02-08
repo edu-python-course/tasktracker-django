@@ -29,7 +29,7 @@ class TestSignUpView(test.TestCase):
     def setUpTestData(cls) -> None:
         cls.url_path = "/sign-up/"
         cls.response_content = b"sign up"
-        cls.view = views.user_profile_view
+        cls.view = views.sign_up_view
         cls.request_factory = test.RequestFactory()
 
     def test_response_200(self):
@@ -46,9 +46,9 @@ class TestSignUpView(test.TestCase):
 class TestSignInView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/sign-out/"
+        cls.url_path = "/sign-in/"
         cls.response_content = b"sign in"
-        cls.view = views.user_profile_view
+        cls.view = views.sign_in_view
         cls.request_factory = test.RequestFactory()
 
     def test_response_200(self):
@@ -67,7 +67,7 @@ class TestSignOutView(test.TestCase):
     def setUpTestData(cls) -> None:
         cls.url_path = "/sign-out/"
         cls.response_content = b"sign out"
-        cls.view = views.user_profile_view
+        cls.view = views.sign_out_view
         cls.request_factory = test.RequestFactory()
 
     def test_response_200(self):

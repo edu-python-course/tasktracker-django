@@ -29,10 +29,10 @@ from users import views as users
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("profile/", users.user_profile_view),
     path("sign-up/", users.sign_up_view),
     path("sign-in/", users.sign_in_view),
     path("sign-out/", users.sign_out_view),
+    path("profile/", users.user_profile_view),
     path("create/", tasks.task_create_view),
     path("<int:pk>/", tasks.task_detail_view),
     path("<int:pk>/update/", tasks.task_update_view),
