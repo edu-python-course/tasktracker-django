@@ -24,6 +24,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from tasks import views as tasks
+from users import views as users
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("profile/", users.user_profile_view),
+    path("sign-up/", users.sign_up_view),
+    path("sign-in/", users.sign_in_view),
+    path("sign-out/", users.sign_out_view),
+    path("create/", tasks.task_create_view),
+    path("<int:pk>/", tasks.task_detail_view),
+    path("<int:pk>/update/", tasks.task_update_view),
+    path("<int:pk>/delete/", tasks.task_delete_view),
+    path("", tasks.task_list_view),
 ]
