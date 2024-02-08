@@ -1,14 +1,14 @@
 from http import HTTPStatus
 
 from django import test
-
+from django.urls import reverse
 from users import views
 
 
 class TestUserProfileView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/profile/"
+        cls.url_path = reverse("profile")
         cls.response_content = b"user profile"
         cls.view = views.user_profile_view
         cls.request_factory = test.RequestFactory()
@@ -27,7 +27,7 @@ class TestUserProfileView(test.TestCase):
 class TestSignUpView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/sign-up/"
+        cls.url_path = reverse("sign-up")
         cls.response_content = b"sign up"
         cls.view = views.sign_up_view
         cls.request_factory = test.RequestFactory()
@@ -46,7 +46,7 @@ class TestSignUpView(test.TestCase):
 class TestSignInView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/sign-in/"
+        cls.url_path = reverse("sign-in")
         cls.response_content = b"sign in"
         cls.view = views.sign_in_view
         cls.request_factory = test.RequestFactory()
@@ -65,7 +65,7 @@ class TestSignInView(test.TestCase):
 class TestSignOutView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/sign-out/"
+        cls.url_path = reverse("sign-out")
         cls.response_content = b"sign out"
         cls.view = views.sign_out_view
         cls.request_factory = test.RequestFactory()

@@ -1,14 +1,14 @@
 from http import HTTPStatus
 
 from django import test
-
+from django.urls import reverse
 from tasks import views
 
 
 class TestTaskListView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/"
+        cls.url_path = reverse("list")
         cls.response_content = b"task list"
         cls.view = views.task_list_view
         cls.request_factory = test.RequestFactory()
@@ -28,7 +28,7 @@ class TestTaskDetailView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.pk = 42
-        cls.url_path = f"/{cls.pk}/"
+        cls.url_path = reverse("detail", kwargs={"pk": cls.pk})
         cls.response_content = b"task detail"
         cls.view = views.task_detail_view
         cls.request_factory = test.RequestFactory()
@@ -47,7 +47,7 @@ class TestTaskDetailView(test.TestCase):
 class TestTaskCreateView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_path = "/create/"
+        cls.url_path = reverse("create")
         cls.response_content = b"task create"
         cls.view = views.task_create_view
         cls.request_factory = test.RequestFactory()
@@ -67,7 +67,7 @@ class TestTaskUpdateView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.pk = 42
-        cls.url_path = f"/{cls.pk}/update/"
+        cls.url_path = reverse("update", kwargs={"pk": cls.pk})
         cls.response_content = b"task update"
         cls.view = views.task_update_view
         cls.request_factory = test.RequestFactory()
@@ -87,7 +87,7 @@ class TestTaskDeleteView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.pk = 42
-        cls.url_path = f"/{cls.pk}/delete/"
+        cls.url_path = reverse("delete", kwargs={"pk": cls.pk})
         cls.response_content = b"task delete"
         cls.view = views.task_delete_view
         cls.request_factory = test.RequestFactory()

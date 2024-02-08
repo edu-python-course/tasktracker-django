@@ -29,13 +29,13 @@ from users import views as users
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("sign-up/", users.sign_up_view),
-    path("sign-in/", users.sign_in_view),
-    path("sign-out/", users.sign_out_view),
-    path("profile/", users.user_profile_view),
-    path("create/", tasks.task_create_view),
-    path("<int:pk>/", tasks.task_detail_view),
-    path("<int:pk>/update/", tasks.task_update_view),
-    path("<int:pk>/delete/", tasks.task_delete_view),
-    path("", tasks.task_list_view),
+    path("sign-up/", users.sign_up_view, name="sign-up"),
+    path("sign-in/", users.sign_in_view, name="sign-in"),
+    path("sign-out/", users.sign_out_view, name="sign-out"),
+    path("profile/", users.user_profile_view, name="profile"),
+    path("create/", tasks.task_create_view, name="create"),
+    path("<int:pk>/", tasks.task_detail_view, name="detail"),
+    path("<int:pk>/update/", tasks.task_update_view, name="update"),
+    path("<int:pk>/delete/", tasks.task_delete_view, name="delete"),
+    path("", tasks.task_list_view, name="list"),
 ]
