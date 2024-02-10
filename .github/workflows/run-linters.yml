@@ -1,6 +1,10 @@
 name: Run code linters
 
 on:
+  push:
+    branches:
+      - master
+
   pull_request:
     types:
       - opened
@@ -13,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code base
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Python
