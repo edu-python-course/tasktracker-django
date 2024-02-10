@@ -160,6 +160,10 @@ where ``<fixture>`` is the fixture file name.
         prombery87,ieZeiSh5k,true,false,`prombery87`_
         wheed1997,enohR4cog,true,false,`wheed1997`_
 
+:tasks:
+    Provides dummy tasks. Should be uploaded after the **users** fixtures,
+    since it uses reference to the user model.
+
 Using Docker Compose
 ====================
 
