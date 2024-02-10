@@ -1,72 +1,38 @@
-<!doctype html>
-<html lang="en" data-bs-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Task tracker templates package - EDU Python course">
-  <meta name="author" content="Serhii Horodilov <sgorodil@gmail.com>">
-  <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
-  <link rel="icon" type="image/png" href="../img/favicon.png">
-  <title>User Profile | Task Tracker</title>
-<script defer src="../js/main.bundle.js"></script><link href="../css/main.min.css" rel="stylesheet"></head>
-<body>
-<div class="container" role="navigation">
-  <nav class="navbar navbar-expand-lg mb-3">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-              aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a href="" class="navbar-brand"><i class="bi bi-list-task"></i>&nbsp;Task Tracker</a>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                                <li class="nav-item"><a href="" class="nav-link">Sign Up</a></li>
-            <li class="nav-item"><a href="" class="nav-link">Sign In</a></li>
-        </ul>
+{% extends "base.html" %}
+{% block title %}User Profile | {{ block.super|default_if_none:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <div class="card shadow">
+    <div class="card-header">
+      <h1 class="card-title text-center">Pippin Sackville-Baggins</h1>
+      <p class="h5 text-center">PippinSackville-Baggins@jourrapide.com</p>
+    </div>
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-lg-2">
+        <div class="col d-flex justify-content-center">
+          <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar"
+               class="rounded-circle shadow avatar">
+        </div>
+        <div class="col mt-3 mt-lg-0" aria-labelledby="formUserdata">
+          <h2 class="text-center">Change user data</h2>
+          <form id="formUserdata">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First name</label>
+              <input type="text" class="form-control" id="firstName" name="first_name">
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="lastName" name="last_name">
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">User image</label>
+              <input type="file" class="form-control" id="image" name="image">
+            </div>
+            <div>
+              <button type="submit" class="w-100 mt-2 btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </nav>
-</div>
-<div class="container">
-  <div class="row row-cols-1 justify-content-center">
-    <main class="col col-md-10 col-lg-9">
-      <div class="card shadow">
-        <div class="card-header">
-          <h1 class="card-title text-center">Pippin Sackville-Baggins</h1>
-          <p class="h5 text-center">PippinSackville-Baggins@jourrapide.com</p>
-        </div>
-        <div class="card-body">
-          <div class="row row-cols-1 row-cols-lg-2">
-            <div class="col d-flex justify-content-center">
-              <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar" class="rounded-circle shadow avatar">
-            </div>
-            <div class="col mt-3 mt-lg-0" aria-labelledby="formUserdata">
-              <h2 class="text-center">Change user data</h2>
-              <form id="formUserdata">
-                <div class="mb-3">
-                  <label for="firstName" class="form-label">First name</label>
-                  <input type="text" class="form-control" id="firstName" name="first_name">
-                </div>
-                <div class="mb-3">
-                  <label for="lastName" class="form-label">Last name</label>
-                  <input type="text" class="form-control" id="lastName" name="last_name">
-                </div>
-                <div class="mb-3">
-                  <label for="image" class="form-label">User image</label>
-                  <input type="file" class="form-control" id="image" name="image">
-                </div>
-                <div>
-                  <button type="submit" class="w-100 mt-2 btn btn-primary">Save</button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
   </div>
-</div>
-</body>
-</html>
+{% endblock %}
