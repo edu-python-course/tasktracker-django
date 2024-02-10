@@ -1,10 +1,14 @@
 {% load tasks %}
 <tr class="task" id="{{ object.pk }}" {{ object.completed|row_completed_mark }}>
   <td class="align-middle task-assignee" aria-labelledby="taskAssignee">
-    <img src="{# TODO: GH-67 #}" alt="avatar" class="rounded-circle shadow avatar">
+    {% if object.assignee %}
+    <img src="{{ object.assignee.image.url }}"
+         alt="avatar"
+         class="rounded-circle shadow avatar">
     <br>
+    {% endif %}
     <span class="d-none d-md-inline ms-2 text-nowrap">
-      {{ object.assignee.get_full_name }}
+      {{ object.assignee|default_if_none:"Unassigned" }}
     </span>
   </td>
   <td class="align-middle task-detail" aria-labelledby="taskDetail">
