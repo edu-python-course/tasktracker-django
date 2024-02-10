@@ -14,7 +14,14 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "users/profile.html")
+    ctx = {
+        "first_name": "Dora",
+        "last_name": "Headstrong",
+        "email": "DoraHeadstrong@dayrep.com",
+        "get_full_name": lambda: "Dora Headstrong",
+    }
+
+    return render(request, "users/profile.html", ctx)
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:

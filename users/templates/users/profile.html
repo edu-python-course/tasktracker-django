@@ -3,13 +3,13 @@
 {% block main %}
   <div class="card shadow">
     <div class="card-header">
-      <h1 class="card-title text-center">Pippin Sackville-Baggins</h1>
-      <p class="h5 text-center">PippinSackville-Baggins@jourrapide.com</p>
+      <h1 class="card-title text-center">{{ get_full_name }}</h1>
+      <p class="h5 text-center">{{ email }}</p>
     </div>
     <div class="card-body">
       <div class="row row-cols-1 row-cols-lg-2">
         <div class="col d-flex justify-content-center">
-          <img src="https://i.pravatar.cc/?u&#x3D;PippinSackville-Baggins@jourrapide.com" alt="avatar"
+          <img src="https://i.pravatar.cc/?u={{ email }}" alt="avatar"
                class="rounded-circle shadow avatar">
         </div>
         <div class="col mt-3 mt-lg-0" aria-labelledby="formUserdata">
@@ -17,11 +17,11 @@
           <form id="formUserdata">
             <div class="mb-3">
               <label for="firstName" class="form-label">First name</label>
-              <input type="text" class="form-control" id="firstName" name="first_name">
+              <input type="text" class="form-control" id="firstName" name="first_name" value="{{ first_name }}">
             </div>
             <div class="mb-3">
               <label for="lastName" class="form-label">Last name</label>
-              <input type="text" class="form-control" id="lastName" name="last_name">
+              <input type="text" class="form-control" id="lastName" name="last_name" value="{{ last_name }}">
             </div>
             <div class="mb-3">
               <label for="image" class="form-label">User image</label>
