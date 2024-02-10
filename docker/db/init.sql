@@ -1,4 +1,4 @@
-CREATE ROLE tasktracker WITH ENCRYPTED PASSWORD 'tasktracker' LOGIN;
+CREATE ROLE tasktracker WITH ENCRYPTED PASSWORD 'tasktracker' LOGIN CREATEDB;
 COMMENT ON ROLE tasktracker IS 'tasktracker database maintenance role';
 
 CREATE DATABASE tasktracker OWNER tasktracker;
