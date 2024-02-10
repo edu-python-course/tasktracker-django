@@ -1,3 +1,8 @@
+.. _acen1999: https://www.fakenamegenerator.com/gen-male-hobbit-nz.php?s=06b3fb87-34ca-4d27-80bf-e9f345a27f6e
+.. _butime: https://www.fakenamegenerator.com/gen-male-hobbit-nz.php?s=280e40ec-2694-43d6-ad4c-61a2c55da8a3
+.. _prombery87: https://www.fakenamegenerator.com/gen-female-hobbit-nz.php?s=acdde07d-08fe-49ad-9e61-484e10e793cd
+.. _wheed1997: https://www.fakenamegenerator.com/gen-male-hobbit-nz.php?s=8956c2c9-8d8c-4f9a-b423-fb2a69bd1e16
+
 ###############################################################################
                          Task Tracker - Django Project
 ###############################################################################
@@ -127,6 +132,33 @@ containers, ensuring consistent configurations across different environments.
 Refer to the provided ``.env.example`` file as a template for setting up your
 own ``.env`` file. Be sure to customize the variable values according to your
 project's requirements.
+
+Project fixtures
+================
+
+There are dummy data included to this repository for testing needs and to use
+within a project in a local dev-sandbox. To upload data to the database apply
+all available migrations and do:
+
+.. code-block:: shell
+
+    python manage.py loaddata <fixture>
+
+where ``<fixture>`` is the fixture file name.
+
+.. rubric:: Available fixtures
+
+:users:
+    Provides users to test project features and play with admin panels while
+    development.
+
+    .. csv-table::
+        :header: username,password,is_active,is_admin,url
+
+        acen1999,cieted3eiPo,false,false,`acen1999`_
+        butime,Zeiriev1oo,true,true,`butime`_
+        prombery87,ieZeiSh5k,true,false,`prombery87`_
+        wheed1997,enohR4cog,true,false,`wheed1997`_
 
 Using Docker Compose
 ====================
