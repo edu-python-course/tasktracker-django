@@ -1,82 +1,54 @@
 {% extends "base.html" %}
+{% load tasks %}
 {% block title %}Task Details | {{ block.super|default_if_none:"Task Tracker" }}{% endblock %}
 {% block main %}
   <div class="card shadow" id="taskDetailContainer">
     <div class="card-header">
       <h1 class="card-title h3 text-center" id="summary">
-
-        <span>Dozens of disconnections will be lost in voyages like stigmas in peaces</span>
+        <span>{{ object.summary }}</span>
       </h1>
       <hr class="border">
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col">
           <strong class="me-1">Assignee:</strong>
-          <span>Pippin Sackville-Baggins</span>
+          <span>{{ object.assignee|default_if_none:"Unassigned" }}</span>
         </div>
         <div class="col">
           <strong class="me-1">Reporter:</strong>
-          <span>Wilcome Brownlock</span>
+          <span>{{ object.reporter }}</span>
         </div>
         <div class="col">
           <strong class="me-1">Created:</strong>
-          <span>2024-01-15T14:49:13</span>
+          <span>{{ object.created_at|task_timestamp:5 }}</span>
         </div>
         <div class="col">
           <strong class="me-1">Updated:</strong>
-          <span>2024-01-15T14:49:17</span>
+          <span>{{ object.updated_at|task_timestamp:5 }}</span>
         </div>
       </div>
     </div>
     <div class="card-body">
-      I destroy this paralysis, it&#x27;s called huge ellipse. All hands go, delighted life! Where is the
-      clear dosi? Procedure, moon, and beauty. The collision course is a chemical ship. This procedure has only been
-      eated by a conscious green people. The reliable teleporter patiently transfers the cosmonaut. The pattern is
-      an ordinary creature. All of those stars travel reliable, strange suns. The assimilation is a futile sun.
-      Go without faith, and we won’t manifest a pathway. The space is rudely quirky. All the sensors will be lost in
-      nuclear fluxs like galaxies in faiths Surprisingly question a planet. Countless adventures will be lost in
-      mysteries like anomalies in minds Real green people, to the solar sphere. The moon is a dead parasite.
-      Shields up, cold modification! The phenomenan is virtually greatly exaggerated.
+      {{ object.description|linebreaksbr }}
     </div>
     <div class="card-footer">
       <div class="d-flex justify-content-end align-items-center">
         <button class="btn btn-outline-success mx-3"
-                hx-patch="/api/v1/tasks/419ed328-b9ca-415b-90a0-6aafc5b0cdd3" hx-swap="none"
-                hx-vals="js:{completed:true}"
-                data-task-target="419ed328-b9ca-415b-90a0-6aafc5b0cdd3" data-task-action="patch">
+                hx-patch="{# TODO: GH-78 #}" hx-swap="none"
+                hx-vals="js:{completed:true}">
           Complete
         </button>
         <div class="btn-group" role="group">
-          <a href="" class="btn btn-outline-primary" role="button">Update</a>
+          <a href="{% url "tasks:update" object.pk %}" class="btn btn-outline-primary" role="button">
+            Update
+          </a>
           <button class="btn btn-outline-danger"
-                  data-bs-toggle="modal" data-bs-target="#modalTaskDelete">
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalTaskDelete">
             Delete
           </button>
         </div>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modalTaskDelete" tabindex="-1"
-       aria-labelledby="modalTaskDeleteLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="modalTaskDeleteLabel">Are you sure you want to delete task?</h1>
-        </div>
-        <div class="modal-body">
-          <p>Task will be permanently deleted.</p>
-          <p class="fw-bold text-center">Dozens of disconnections will be lost in voyages like stigmas in peaces</p>
-          <div class="row row-cols-2">
-            <div class="col">Reporter: Wilcome Brownlock</div>
-            <div class="col">Assignee: Pippin Sackville-Baggins</div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <form action="">
-            <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
-            <button class="btn btn-danger mx-1" type="submit">Confirm</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+  {% include "widgets/modal_task_delete.html" with object=object %}
 {% endblock %}

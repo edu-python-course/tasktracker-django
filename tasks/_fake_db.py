@@ -19,9 +19,7 @@ tasks = [
             "%Y-%m-%d %H:%M:%S"
         ),
         "assignee": None,
-        "reporter": {
-            "get_full_name": lambda: "Pippin Sackville-Baggins",
-        },
+        "reporter": "Pippin Sackville-Baggins",
     },
     {
         "pk": 42,
@@ -39,12 +37,8 @@ tasks = [
             "2023-08-03 04:58:12",
             "%Y-%m-%d %H:%M:%S"
         ),
-        "assignee": {
-            "get_full_name": lambda: "Dora Headstrong",
-        },
-        "reporter": {
-            "get_full_name": lambda: "Pippin Sackville-Baggins",
-        },
+        "assignee": "Dora Headstrong",
+        "reporter": "Pippin Sackville-Baggins",
     },
     {
         "pk": 43,
@@ -60,9 +54,7 @@ tasks = [
             "%Y-%m-%d %H:%M:%S"
         ),
         "assignee": None,
-        "reporter": {
-            "get_full_name": lambda: "Dora Headstrong",
-        },
+        "reporter": "Dora Headstrong",
     },
 ]
 

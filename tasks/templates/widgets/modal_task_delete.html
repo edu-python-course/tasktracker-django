@@ -1,0 +1,24 @@
+<div class="modal fade" id="modalTaskDelete" tabindex="-1"
+     aria-labelledby="modalTaskDeleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalTaskDeleteLabel">Are you sure you want to delete task?</h1>
+      </div>
+      <div class="modal-body">
+        <p>Task will be permanently deleted.</p>
+        <p class="fw-bold text-center">{{ object.summary }}</p>
+        <div class="row row-cols-2">
+          <div class="col">Reporter: {{ object.reporter }}</div>
+          <div class="col">Assignee: {{ object.assignee|default_if_none:"Unassigned" }}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <form action="">
+          <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger mx-1" type="submit">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
