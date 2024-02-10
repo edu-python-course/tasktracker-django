@@ -8,6 +8,7 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <a href="{% url "tasks:list" %}" class="navbar-brand"><i class="bi bi-list-task"></i>&nbsp;Task Tracker</a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          {# TODO: GH-60 #}
           <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
           <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
           <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
