@@ -4,7 +4,7 @@ Users application models
 """
 
 from django.contrib.auth.models import AbstractUser
-from django.db.models import EmailField
+from django.db.models import EmailField, ImageField
 
 
 class UserModel(AbstractUser):
@@ -17,6 +17,11 @@ class UserModel(AbstractUser):
     email = EmailField(
         unique=True,
         verbose_name="email address",
+    )
+    image = ImageField(
+        blank=True,
+        default="avatars/default.svg",
+        upload_to="avatars",
     )
 
     def __str__(self) -> str:
