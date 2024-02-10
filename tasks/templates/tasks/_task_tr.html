@@ -1,5 +1,5 @@
 {% load tasks %}
-<tr class="task" id="{{ object.pk }}" data-task-completed="{{ object|is_completed }}">
+<tr class="task" id="{{ object.pk }}" {{ object.completed|row_completed_mark }}>
   <td class="align-middle task-assignee" aria-labelledby="taskAssignee">
     <img src="{# TODO: GH-67 #}" alt="avatar" class="rounded-circle shadow avatar">
     <br>

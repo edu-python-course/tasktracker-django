@@ -19,11 +19,11 @@
         </div>
         <div class="col">
           <strong class="me-1">Created:</strong>
-          <span>{{ object.created_at|task_timestamp:5 }}</span>
+          <span>{{ object.created_at|is_within_days:5 }}</span>
         </div>
         <div class="col">
           <strong class="me-1">Updated:</strong>
-          <span>{{ object.updated_at|task_timestamp:5 }}</span>
+          <span>{{ object.updated_at|is_within_days:5 }}</span>
         </div>
       </div>
     </div>

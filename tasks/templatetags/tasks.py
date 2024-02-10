@@ -13,15 +13,43 @@ from django.utils import timezone
 register = template.Library()
 
 
-@register.filter(name="is_completed")
-def is_completed(obj):
-    # TODO: GH-77
-    return "true" if obj["completed"] else "false"
+@register.filter(name="row_completed_mark")
+def get_row_completed_mark(completed: bool) -> str:
+    """
+    Return row completed marker based on instance completed status value
+
+    :param completed: task instance completed status
+    :type completed: bool
+
+    :return: rom completed marker
+    :rtype: str
+
+    """
+    if completed:
+        return "data-task-completed=true"
+
+    return "data-task-completed=false"
 
 
-@register.filter(name="task_timestamp")
-def get_task_timestamp(value: datetime.datetime, days: int = 7) -> str:
-    # TODO: GH-77
+@register.filter(name="is_within_days")
+def get_task_humanize_timestamp(value: datetime.datetime, days: int = 7) -> str:
+    """
+    Return human-readable timestamp
+
+    :param value: timestamp
+    :type value: :class: `datetime.datetime`
+    :param days: number of days in threshold, defaults to 7
+    :type days: int
+
+    :return: human-readable timestamp, transformed with humanize app
+    :rtype: str
+
+    If given timestamp is within days from current time range, it will
+    be transformed using ``naturaltime`` filter. Otherwise, ``naturalday``
+    filter will be used.
+
+    """
+
     if not timezone.is_aware(value):
         # make sure ``value`` is timezone-aware
         value = timezone.make_aware(value, timezone.get_current_timezone())
