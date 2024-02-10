@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load tasks %}
+{% block title %}Tasks List | {{ block.super|default_if_none:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <div class="card shadow">
+    <div class="card-header d-flex flex-row justify-content-center">
+      <h1 class="card-title h3 text-capitalize mx-auto my-2"><i class="bi bi-list-task"></i>&nbsp;task list</h1>
+    </div>
+    <div class="card-body">
+      <table class="table">
+        <caption class="visually-hidden">task list</caption>
+        <thead>
+        <tr>
+          <th class="col col-3" id="taskAssignee" scope="col">Assignee</th>
+          <th class="col col-8" id="taskDetail" scope="col">Task Details</th>
+          <th class="col d-flex flex-row justify-content-center" id="taskActions" scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody id="taskContainer">
+        {% for object in object_list %}
+          {% task_row object %}
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer d-flex flex-row justify-content-center">
+      {# TODO: GH-66 #}
+      {% include "widgets/pagination.html" %}
+    </div>
+  </div>
+{% endblock %}

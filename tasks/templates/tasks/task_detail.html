@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load tasks %}
+{% block title %}Task Details | {{ block.super|default_if_none:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <div class="card shadow" id="taskDetailContainer">
+    <div class="card-header">
+      <h1 class="card-title h3 text-center" id="summary">
+        <span>{{ object.summary }}</span>
+      </h1>
+      <hr class="border">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col">
+          <strong class="me-1">Assignee:</strong>
+          <span>{{ object.assignee|default_if_none:"Unassigned" }}</span>
+        </div>
+        <div class="col">
+          <strong class="me-1">Reporter:</strong>
+          <span>{{ object.reporter }}</span>
+        </div>
+        <div class="col">
+          <strong class="me-1">Created:</strong>
+          <span>{{ object.created_at|task_timestamp:5 }}</span>
+        </div>
+        <div class="col">
+          <strong class="me-1">Updated:</strong>
+          <span>{{ object.updated_at|task_timestamp:5 }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      {{ object.description|linebreaksbr }}
+    </div>
+    <div class="card-footer">
+      <div class="d-flex justify-content-end align-items-center">
+        <button class="btn btn-outline-success mx-3"
+                hx-patch="{# TODO: GH-78 #}" hx-swap="none"
+                hx-vals="js:{completed:true}">
+          Complete
+        </button>
+        <div class="btn-group" role="group">
+          <a href="{% url "tasks:update" object.pk %}" class="btn btn-outline-primary" role="button">
+            Update
+          </a>
+          <button class="btn btn-outline-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalTaskDelete">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include "widgets/modal_task_delete.html" with object=object %}
+{% endblock %}

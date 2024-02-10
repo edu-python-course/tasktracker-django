@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}User Profile | {{ block.super|default_if_none:"Task Tracker" }}{% endblock %}
+{% block main %}
+  <div class="card shadow">
+    <div class="card-header">
+      <h1 class="card-title text-center">{{ get_full_name }}</h1>
+      <p class="h5 text-center">{{ email }}</p>
+    </div>
+    <div class="card-body">
+      <div class="row row-cols-1 row-cols-lg-2">
+        <div class="col d-flex justify-content-center">
+          <img src="https://i.pravatar.cc/?u={{ email }}" alt="avatar"
+               class="rounded-circle shadow avatar">
+        </div>
+        <div class="col mt-3 mt-lg-0" aria-labelledby="formUserdata">
+          <h2 class="text-center">Change user data</h2>
+          <form id="formUserdata">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">First name</label>
+              <input type="text" class="form-control" id="firstName" name="first_name" value="{{ first_name }}">
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Last name</label>
+              <input type="text" class="form-control" id="lastName" name="last_name" value="{{ last_name }}">
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label">User image</label>
+              <input type="file" class="form-control" id="image" name="image">
+            </div>
+            <div>
+              <button type="submit" class="w-100 mt-2 btn btn-primary">Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

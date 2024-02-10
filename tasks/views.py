@@ -4,7 +4,11 @@ Tasks application views
 """
 
 from django.http.request import HttpRequest
-from django.http.response import HttpResponse
+from django.http.response import Http404, HttpResponse
+from django.shortcuts import redirect, render
+
+# TODO: blocker GH-62, GH-63
+from tasks import _fake_db
 
 
 def task_list_view(request: HttpRequest) -> HttpResponse:
@@ -13,7 +17,11 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("task list")
+    ctx = {
+        "object_list": _fake_db.tasks,
+    }
+
+    return render(request, "tasks/task_list.html", ctx)
 
 
 def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -22,7 +30,15 @@ def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
 
     """
 
-    return HttpResponse("task detail")
+    task = _fake_db.get_task(pk)
+    if task is None:
+        raise Http404
+
+    ctx = {
+        "object": task,
+    }
+
+    return render(request, "tasks/task_detail.html", ctx)
 
 
 def task_create_view(request: HttpRequest) -> HttpResponse:
@@ -31,7 +47,7 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("task create")
+    return render(request, "tasks/task_form.html")
 
 
 def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -40,7 +56,11 @@ def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
 
     """
 
-    return HttpResponse("task update")
+    task = _fake_db.get_task(pk)
+    if task is None:
+        raise Http404
+
+    return render(request, "tasks/task_form.html")
 
 
 def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
@@ -49,4 +69,8 @@ def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
 
     """
 
-    return HttpResponse("task delete")
+    task = _fake_db.get_task(pk)
+    if task is None:
+        raise Http404
+
+    return redirect("tasks:list")
