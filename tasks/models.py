@@ -7,6 +7,7 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse_lazy
 
 UserModel = get_user_model()
 
@@ -93,3 +94,11 @@ class TaskModel(models.Model):
         """Return a string version of an instance"""
 
         return self.summary
+
+    def get_absolute_url(self) -> str:
+        """
+        Return URL path to the instance detail view
+
+        """
+
+        return reverse_lazy("tasks:detail", args=(self.pk,))

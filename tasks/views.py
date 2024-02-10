@@ -3,12 +3,13 @@ Tasks application views
 
 """
 
+import uuid
+
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
-# TODO: blocker GH-62, GH-63
-from tasks import _fake_db
+from tasks.models import TaskModel
 
 
 def task_list_view(request: HttpRequest) -> HttpResponse:
@@ -18,20 +19,21 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
     """
 
     ctx = {
-        "object_list": _fake_db.tasks,
+        "object_list": TaskModel.objects.all(),
     }
 
     return render(request, "tasks/task_list.html", ctx)
 
 
-def task_detail_view(request: HttpRequest, pk: int) -> HttpResponse:
+def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to task details
 
     """
 
-    task = _fake_db.get_task(pk)
-    if task is None:
+    try:
+        task = TaskModel.objects.get(pk=pk)
+    except TaskModel.DoesNotExist:
         raise Http404
 
     ctx = {
@@ -50,27 +52,23 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
     return render(request, "tasks/task_form.html")
 
 
-def task_update_view(request: HttpRequest, pk: int) -> HttpResponse:
+def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to update an existing task instance
 
     """
 
-    task = _fake_db.get_task(pk)
-    if task is None:
-        raise Http404
+    get_object_or_404(TaskModel, pk=pk)
 
     return render(request, "tasks/task_form.html")
 
 
-def task_delete_view(request: HttpRequest, pk: int) -> HttpResponse:
+def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to delete an existing task instance
 
     """
 
-    task = _fake_db.get_task(pk)
-    if task is None:
-        raise Http404
+    get_object_or_404(TaskModel, pk=pk)
 
     return redirect("tasks:list")
