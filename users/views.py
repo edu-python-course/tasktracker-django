@@ -5,6 +5,7 @@ Users application views
 
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
+from django.shortcuts import redirect, render
 
 
 def user_profile_view(request: HttpRequest) -> HttpResponse:
@@ -13,7 +14,7 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("user profile")
+    return render(request, "profile.html")
 
 
 def sign_up_view(request: HttpRequest) -> HttpResponse:
@@ -22,7 +23,7 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("sign up")
+    return render(request, "signup.html")
 
 
 def sign_in_view(request: HttpRequest) -> HttpResponse:
@@ -31,7 +32,7 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("sign in")
+    return render(request, "signin.html")
 
 
 def sign_out_view(request: HttpRequest) -> HttpResponse:
@@ -40,4 +41,4 @@ def sign_out_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return HttpResponse("sign out")
+    return redirect("tasks:list")
