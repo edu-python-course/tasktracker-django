@@ -6,7 +6,7 @@ class TestTaskListView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.url_path = reverse("tasks:list")
-        cls.template_name = "task_list.html"
+        cls.template_name = "tasks/task_list.html"
 
     def setUp(self) -> None:
         self.client = test.Client()
@@ -23,7 +23,7 @@ class TestTaskDetailView(test.TestCase):
     def setUpTestData(cls) -> None:
         cls.pk = 42
         cls.url_path = reverse("tasks:detail", kwargs={"pk": cls.pk})
-        cls.template_name = "task_detail.html"
+        cls.template_name = "tasks/task_detail.html"
 
     def setUp(self) -> None:
         self.client = test.Client()
@@ -37,7 +37,7 @@ class TestTaskCreateView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.url_path = reverse("tasks:create")
-        cls.template_name = "task_form.html"
+        cls.template_name = "tasks/task_form.html"
 
     def setUp(self) -> None:
         self.client = test.Client()
@@ -54,7 +54,7 @@ class TestTaskUpdateView(test.TestCase):
     def setUpTestData(cls) -> None:
         cls.pk = 42
         cls.url_path = reverse("tasks:update", kwargs={"pk": cls.pk})
-        cls.template_name = "task_form.html"
+        cls.template_name = "tasks/task_form.html"
 
     def setUp(self) -> None:
         self.client = test.Client()

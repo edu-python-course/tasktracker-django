@@ -6,7 +6,7 @@ class TestUserProfileView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.url_path = reverse("users:profile")
-        cls.template_name = "profile.html"
+        cls.template_name = "users/profile.html"
 
     def setUp(self) -> None:
         self.client = test.Client()
@@ -20,7 +20,7 @@ class TestSignUpView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.url_path = reverse("users:sign-up")
-        cls.template_name = "signup.html"
+        cls.template_name = "auth/signup.html"
 
     def setUp(self) -> None:
         self.client = test.Client()
@@ -34,7 +34,7 @@ class TestSignInView(test.TestCase):
     @classmethod
     def setUpTestData(cls) -> None:
         cls.url_path = reverse("users:sign-in")
-        cls.template_name = "signin.html"
+        cls.template_name = "auth/signin.html"
 
     def setUp(self) -> None:
         self.client = test.Client()
