@@ -3,6 +3,9 @@ Users application forms
 
 """
 
+from crispy_bootstrap5.bootstrap5 import FloatingField
+from crispy_forms.helper import FormHelper, Layout
+from crispy_forms.layout import Submit
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
 
@@ -21,6 +24,22 @@ class SignUpForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
     confirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = "w-50 m-auto"
+        self.helper.form_id = "formAuth"
+        self.helper.form_method = "post"
+        self.helper.attrs["aria-label"] = "SignUpForm"
+        self.helper.layout = Layout(
+            FloatingField("username"),
+            FloatingField("email"),
+            FloatingField("password"),
+            FloatingField("confirm_password"),
+            Submit("submit", "Sign Up",
+                   css_class="w-100 my-2 fs-5")
+        )
 
     def clean_username(self) -> str:
         """
@@ -82,6 +101,20 @@ class SignInForm(forms.Form):
 
     username = forms.CharField(max_length=64)
     password = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = "w-50 m-auto"
+        self.helper.form_id = "formAuth"
+        self.helper.form_method = "post"
+        self.helper.attrs["aria-label"] = "SignInForm"
+        self.helper.layout = Layout(
+            FloatingField("username"),
+            FloatingField("password"),
+            Submit("submit", "Sign In",
+                   css_class="w-100 my-2 fs-5")
+        )
 
     def clean(self) -> None:
         """
