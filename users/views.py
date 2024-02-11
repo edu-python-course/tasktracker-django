@@ -4,6 +4,7 @@ Users application views
 """
 
 from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -15,6 +16,7 @@ from users.forms import SignInForm, SignUpForm
 UserModel = get_user_model()
 
 
+@login_required(login_url=reverse_lazy("users:sign-in"))
 def user_profile_view(request: HttpRequest) -> HttpResponse:
     """
     Handle requests to user's profile
@@ -64,8 +66,10 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             login(request, form.instance)
 
-            redirect_to = reverse_lazy("users:profile")
-            redirect_to = request.GET.get("next", redirect_to)
+            redirect_to = request.GET.get(
+                "next",
+                reverse_lazy("users:profile")
+            )
 
             return redirect(redirect_to)
 

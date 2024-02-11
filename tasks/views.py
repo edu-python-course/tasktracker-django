@@ -5,9 +5,11 @@ Tasks application views
 
 import uuid
 
+from django.contrib.auth.decorators import login_required
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse_lazy
 
 from tasks.models import TaskModel
 
@@ -43,6 +45,7 @@ def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_detail.html", ctx)
 
 
+@login_required(login_url=reverse_lazy("users:sign-in"))
 def task_create_view(request: HttpRequest) -> HttpResponse:
     """
     Handle requests to create a new task instance
@@ -52,6 +55,7 @@ def task_create_view(request: HttpRequest) -> HttpResponse:
     return render(request, "tasks/task_form.html")
 
 
+@login_required(login_url=reverse_lazy("users:sign-in"))
 def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to update an existing task instance
@@ -63,6 +67,7 @@ def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_form.html")
 
 
+@login_required(login_url=reverse_lazy("users:sign-in"))
 def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     """
     Handle requests to delete an existing task instance
