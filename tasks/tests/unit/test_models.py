@@ -39,11 +39,11 @@ class TestTaskModelPermissions(test.TestCase):
                                   assignee=self.assignee)
 
     def test_can_edit(self):
-        self.assertTrue(self.instance.can_update(self.reporter))
-        self.assertTrue(self.instance.can_update(self.assignee))
-        self.assertFalse(self.instance.can_update(self.non_user))
+        self.assertTrue(self.instance.has_update_permission(self.reporter))
+        self.assertTrue(self.instance.has_update_permission(self.assignee))
+        self.assertFalse(self.instance.has_update_permission(self.non_user))
 
     def test_can_delete(self):
-        self.assertTrue(self.instance.can_delete(self.reporter))
-        self.assertFalse(self.instance.can_delete(self.assignee))
-        self.assertFalse(self.instance.can_delete(self.non_user))
+        self.assertTrue(self.instance.has_delete_permission(self.reporter))
+        self.assertFalse(self.instance.has_delete_permission(self.assignee))
+        self.assertFalse(self.instance.has_delete_permission(self.non_user))

@@ -36,7 +36,7 @@ class TaskUpdatePermissionMixin(UserPassesTestMixin):
     get_object: Callable
 
     def test_func(self):
-        return self.get_object().can_update(self.request.user)
+        return self.get_object().has_update_permission(self.request.user)
 
 
 class TaskDeletePermissionMixin(UserPassesTestMixin):
@@ -49,4 +49,4 @@ class TaskDeletePermissionMixin(UserPassesTestMixin):
     get_object: Callable
 
     def test_func(self):
-        return self.get_object().can_delete(self.request.user)
+        return self.get_object().has_delete_permission(self.request.user)
