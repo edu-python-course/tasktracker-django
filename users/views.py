@@ -20,7 +20,6 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     form_class = UserModelForm
     template_name = "users/profile.html"
     success_url = reverse_lazy("users:profile")
-    login_url = reverse_lazy("users:sign-in")
 
     def get_object(self, queryset=None):
         return self.request.user
@@ -59,9 +58,6 @@ class SignInView(FormView):
         login(self.request, form.instance)
 
         return super().form_valid(form)
-
-    def get_success_url(self):
-        return self.success_url
 
 
 class SignOutView(LogoutView):

@@ -50,7 +50,6 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = TaskModel
     form_class = TaskModelForm
     template_name = "tasks/task_form.html"
-    login_url = reverse_lazy("users:sign-in")
 
     def form_valid(self, form):
         form.instance.reporter = self.request.user
@@ -78,7 +77,6 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = TaskModel
     form_class = TaskModelForm
     template_name = "tasks/task_form.html"
-    login_url = reverse_lazy("users:sign-in")
 
     def get_cancel_url(self):
         return self.object.get_absolute_url()
@@ -99,4 +97,3 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     http_method_names = ["post"]
     model = TaskModel
     success_url = reverse_lazy("tasks:list")
-    login_url = reverse_lazy("users:sign-in")
