@@ -79,6 +79,8 @@ class TestSignInView(test.TestCase):
 
 
 class TestSignOutView(test.TestCase):
+    fixtures = ["users"]
+
     @classmethod
     def setUpTestData(cls) -> None:
         cls.url_path = reverse("users:sign-out")
@@ -87,6 +89,12 @@ class TestSignOutView(test.TestCase):
     def setUp(self) -> None:
         self.client = test.Client()
 
+    def test_user_signed_out(self):
+        self.client.force_login(UserModel.objects.get(username="butime"))
+        self.client.post(self.url_path)
+        user = get_user(self.client)
+        self.assertFalse(user.is_authenticated)
+
     def test_redirects(self):
-        response = self.client.get(self.url_path)
+        response = self.client.post(self.url_path)
         self.assertRedirects(response, self.url_redirect)

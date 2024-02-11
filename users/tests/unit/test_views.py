@@ -43,16 +43,3 @@ class TestSignInView(test.TestCase):
         request = self.request_factory.get(self.url_path)
         response = self.view(request)
         self.assertEqual(response.status_code, HTTPStatus.OK)
-
-
-class TestSignOutView(test.TestCase):
-    @classmethod
-    def setUpTestData(cls) -> None:
-        cls.url_path = reverse("users:sign-out")
-        cls.view = views.sign_out_view
-        cls.request_factory = test.RequestFactory()
-
-    def test_response_200(self):
-        request = self.request_factory.get(self.url_path)
-        response = self.view(request)
-        self.assertEqual(response.status_code, HTTPStatus.FOUND)
