@@ -5,15 +5,13 @@ Tasks application views
 
 import uuid
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.decorators.http import require_http_methods
 from django.views.generic import (
-    DeleteView,
+    CreateView, DeleteView, UpdateView,
 )
 
 from tasks.forms import TaskModelForm
@@ -51,48 +49,54 @@ def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_detail.html", ctx)
 
 
-@login_required(login_url=reverse_lazy("users:sign-in"))
-@require_http_methods(["GET", "POST"])
-def task_create_view(request: HttpRequest) -> HttpResponse:
+class TaskCreateView(LoginRequiredMixin, CreateView):
     """
-    Handle requests to create a new task instance
+    Used to create a new task instance
 
     """
 
-    if request.method == "POST":
-        form = TaskModelForm(request.POST)
-        if form.is_valid():
-            form.instance.reporter = request.user
-            form.save()
+    http_method_names = ["get", "post"]
+    model = TaskModel
+    form_class = TaskModelForm
+    template_name = "tasks/task_form.html"
+    login_url = reverse_lazy("users:sign-in")
 
-            return redirect(form.instance.get_absolute_url())
+    def form_valid(self, form):
+        form.instance.reporter = self.request.user
 
-    else:
-        form = TaskModelForm()
+        return super().form_valid(form)
 
-    return render(request, "tasks/task_form.html", {"form": form})
+    # noinspection PyMethodMayBeStatic
+    def get_cancel_url(self):
+        return reverse_lazy("tasks:list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["cancel_url"] = self.get_cancel_url()
+
+        return ctx
 
 
-@login_required(login_url=reverse_lazy("users:sign-in"))
-@require_http_methods(["GET", "POST"])
-def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     """
-    Handle requests to update an existing task instance
+    Used to update the existing task instance
 
     """
 
-    instance = get_object_or_404(TaskModel, pk=pk)
-    if request.method == "POST":
-        form = TaskModelForm(request.POST, instance=instance)
-        if form.is_valid():
-            form.save()
+    http_method_names = ["get", "post"]
+    model = TaskModel
+    form_class = TaskModelForm
+    template_name = "tasks/task_form.html"
+    login_url = reverse_lazy("users:sign-in")
 
-            return redirect(form.instance.get_absolute_url())
+    def get_cancel_url(self):
+        return self.object.get_absolute_url()
 
-    else:
-        form = TaskModelForm(instance=instance)
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["cancel_url"] = self.get_cancel_url()
 
-    return render(request, "tasks/task_form.html", {"form": form})
+        return ctx
 
 
 class TaskDeleteView(LoginRequiredMixin, DeleteView):
