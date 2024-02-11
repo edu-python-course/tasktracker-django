@@ -4,7 +4,7 @@ Users application forms
 """
 
 from django import forms
-from django.contrib.auth import get_user_model
+from django.contrib.auth import authenticate, get_user_model
 
 UserModel = get_user_model()
 
@@ -68,3 +68,30 @@ class SignUpForm(forms.Form):
             self.add_error("confirm_password", err_msg)
 
         return confirm_password
+
+
+class SignInForm(forms.Form):
+    """
+    Sign in form
+
+    Collects and validates the user inputs to log in a user.
+
+    """
+
+    instance: UserModel = None
+
+    username = forms.CharField(max_length=64)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self) -> None:
+        """
+        Validate user credentials
+
+        """
+
+        username = self.cleaned_data.get("username")
+        password = self.cleaned_data.get("password")
+        self.instance = authenticate(username=username, password=password)
+
+        if self.instance is None:
+            raise forms.ValidationError("Invalid username or password")
