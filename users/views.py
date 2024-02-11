@@ -40,7 +40,11 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
-            ...
+            del form.cleaned_data["confirm_password"]
+            UserModel.objects.create_user(**form.cleaned_data)
+
+            return redirect("users:sign-in")
+
     else:
         form = SignUpForm()
 
