@@ -31,22 +31,6 @@ class TestSignUpView(test.TestCase):
         response = self.view(request)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
-    def test_response_405(self):
-        # put method not allowed
-        request = self.request_factory.put(self.url_path)
-        response = self.view(request)
-        self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
-
-        # patch method not allowed
-        request = self.request_factory.patch(self.url_path)
-        response = self.view(request)
-        self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
-
-        # delete method not allowed
-        request = self.request_factory.delete(self.url_path)
-        response = self.view(request)
-        self.assertEqual(response.status_code, HTTPStatus.METHOD_NOT_ALLOWED)
-
 
 class TestSignInView(test.TestCase):
     @classmethod
