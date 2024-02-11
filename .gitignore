@@ -32,6 +32,10 @@ pgsql/
 /static/*
 !/static/index.html
 
+# non-default avatars
+/media/avatars/*
+!/media/avatars/default.svg
+
 # temporary files storage
 /temp/
 /tmp/
