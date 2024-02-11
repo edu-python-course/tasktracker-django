@@ -3,8 +3,9 @@ Users application views
 
 """
 
-from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth import get_user_model, login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LogoutView
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -79,13 +80,11 @@ def sign_in_view(request: HttpRequest) -> HttpResponse:
     return render(request, "auth/signin.html", {"form": form})
 
 
-@require_http_methods(["POST"])
-def sign_out_view(request: HttpRequest) -> HttpResponse:
+class SignOutView(LogoutView):
     """
-    Sing out the authenticated user
+    Handle requests to log out the user
 
     """
 
-    logout(request)
-
-    return redirect("tasks:list")
+    http_method_names = ["post"]
+    next_page = reverse_lazy("tasks:list")
