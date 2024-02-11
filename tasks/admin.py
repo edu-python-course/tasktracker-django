@@ -33,3 +33,6 @@ class TaskModelAdmin(admin.ModelAdmin):
     @admin.display(description="reported by")
     def get_reporter(self, obj: TaskModel) -> str:
         return obj.reporter.get_full_name() or obj.reporter.username
+
+    def has_add_permission(self, request):
+        return False
