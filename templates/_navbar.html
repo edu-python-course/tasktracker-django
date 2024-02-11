@@ -16,7 +16,7 @@
           {% if user.is_authenticated %}
             <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
             <li class="nav-item">
-              <form action="{% url "users:sign-out" %}">
+              <form action="{% url "users:sign-out" %}" method="post">
                 {% csrf_token %}
                 <input type="submit" class="nav-link" value="Sign Out">
               </form>
