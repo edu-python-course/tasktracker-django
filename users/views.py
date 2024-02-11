@@ -7,6 +7,8 @@ from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 
+from users.forms import SignUpForm
+
 
 def user_profile_view(request: HttpRequest) -> HttpResponse:
     """
@@ -30,7 +32,9 @@ def sign_up_view(request: HttpRequest) -> HttpResponse:
 
     """
 
-    return render(request, "auth/signup.html")
+    form = SignUpForm()
+
+    return render(request, "auth/signup.html", {"form": form})
 
 
 def sign_in_view(request: HttpRequest) -> HttpResponse:
