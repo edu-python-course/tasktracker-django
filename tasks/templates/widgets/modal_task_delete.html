@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <form action="">
-          <button class="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
+        <form action="{% url "tasks:delete" object.pk %}" method="post">
+          {% csrf_token %}
           <button class="btn btn-danger mx-1" type="submit">Confirm</button>
         </form>
       </div>

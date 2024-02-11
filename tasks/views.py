@@ -6,10 +6,14 @@ Tasks application views
 import uuid
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.request import HttpRequest
 from django.http.response import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse_lazy
+from django.views.generic import (
+    DeleteView,
+)
 
 from tasks.models import TaskModel
 
@@ -67,13 +71,13 @@ def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
     return render(request, "tasks/task_form.html")
 
 
-@login_required(login_url=reverse_lazy("users:sign-in"))
-def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     """
-    Handle requests to delete an existing task instance
+    Delete task instance
 
     """
 
-    get_object_or_404(TaskModel, pk=pk)
-
-    return redirect("tasks:list")
+    http_method_names = ["post"]
+    model = TaskModel
+    success_url = reverse_lazy("tasks:list")
+    login_url = reverse_lazy("users:sign-in")
