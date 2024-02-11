@@ -13,7 +13,7 @@ UserModel = get_user_model()
 
 
 class TestTaskUpdateView(test.TestCase):
-    fixtures = ["users", "tasks"]
+    fixtures = ["users"]
     url_path = None
     assignee = None
 
@@ -25,27 +25,40 @@ class TestTaskUpdateView(test.TestCase):
             [reverse("users:sign-in"), "?next=", cls.url_path]
         )
         cls.template_name = "tasks/task_form.html"
-        cls.user = UserModel.objects.get(username="wheed1997")
+        cls.admin = UserModel.objects.get(username="butime")
+        cls.reporter = UserModel.objects.get(username="wheed1997")
         cls.assignee = UserModel.objects.get(username="prombery87")
         cls.payload = {
             "summary": "Updated summary",
             "assignee": cls.assignee.pk,
         }
-        cls.instance = TaskModel.objects.get(pk=PK_EXISTS)
 
     def setUp(self) -> None:
         self.client = test.Client()
-        self.client.force_login(self.user)
+        self.client.force_login(self.reporter)
+        self.instance = TaskModel.objects.create(
+            uuid=PK_EXISTS,
+            summary="Test task",
+            reporter=self.reporter,
+        )
 
     def test_template_used(self):
         response = self.client.get(self.url_path)
         self.assertTemplateUsed(response, self.template_name)
 
-    def test_task_updated(self):
+    def test_task_updated_by_reporter(self):
         self.client.post(self.url_path, self.payload)
         self.instance.refresh_from_db()
         self.assertEqual(self.instance.summary, self.payload["summary"])
         self.assertEqual(self.instance.assignee, self.assignee)
+
+    def test_task_updated_by_assignee(self):
+        self.instance.assignee = self.assignee
+        self.instance.save()
+        self.client.force_login(self.assignee)
+        self.client.post(self.url_path, self.payload)
+        self.instance.refresh_from_db()
+        self.assertEqual(self.instance.summary, self.payload["summary"])
 
     def test_not_found(self):
         response = self.client.get(self.url_404)
@@ -55,3 +68,13 @@ class TestTaskUpdateView(test.TestCase):
         self.client.logout()
         response = self.client.get(self.url_path)
         self.assertRedirects(response, self.url_sign_in)
+
+    def test_permission_denied(self):
+        # test authenticated user
+        self.client.force_login(self.assignee)
+        response = self.client.post(self.url_path, self.payload)
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+        # test superuser
+        self.client.force_login(self.admin)
+        response = self.client.post(self.url_path, self.payload)
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)

@@ -14,6 +14,11 @@ from django.views.generic import (
 )
 
 from tasks.forms import TaskModelForm
+from tasks.mixins import (
+    TaskCreatePermissionMixin,
+    TaskDeletePermissionMixin,
+    TaskUpdatePermissionMixin,
+)
 from tasks.models import TaskModel
 
 
@@ -40,7 +45,7 @@ class TaskDetailView(DetailView):
     template_name = "tasks/task_detail.html"
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(LoginRequiredMixin, TaskCreatePermissionMixin, CreateView):
     """
     Used to create a new task instance
 
@@ -67,7 +72,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return ctx
 
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, TaskUpdatePermissionMixin, UpdateView):
     """
     Used to update the existing task instance
 
@@ -88,7 +93,7 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
         return ctx
 
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, TaskDeletePermissionMixin, DeleteView):
     """
     Delete task instance
 

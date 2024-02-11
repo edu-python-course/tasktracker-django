@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 from django import test
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -42,3 +44,8 @@ class TestTaskCreateView(test.TestCase):
         self.assertRedirects(response, self.url_sign_in)
         response = self.client.post(self.url_path, self.payload)
         self.assertRedirects(response, self.url_sign_in)
+
+    def test_permission_denied(self):
+        self.client.force_login(UserModel.objects.get(username="butime"))
+        response = self.client.post(self.url_path, self.payload)
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
