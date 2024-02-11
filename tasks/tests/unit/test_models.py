@@ -1,4 +1,7 @@
+import uuid
+
 from django import test
+from django.urls import reverse
 
 from tasks.models import TaskModel
 
@@ -13,3 +16,9 @@ class TestTaskModel(test.TestCase):
         summary = "Arrr, madness!"
         instance = TaskModel(summary=summary)
         self.assertEqual(str(instance), instance.title)
+
+    def test_get_url(self):
+        pk = uuid.uuid4()
+        instance = TaskModel(pk=pk)
+        expected = reverse("tasks:detail", args=(pk,))
+        self.assertEqual(instance.get_absolute_url(), expected)

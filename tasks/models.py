@@ -7,6 +7,7 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse_lazy
 
 UserModel = get_user_model()
 
@@ -38,6 +39,12 @@ class TaskModel(models.Model):
     Each task updates its ``updated_at`` timestamp on each task save.
 
     """
+
+    class Meta:
+        db_table = "task"
+        verbose_name = "task"
+        verbose_name_plural = "tasks"
+        ordering = ("-updated_at", "-created_at")
 
     uuid = models.UUIDField(
         default=uuid.uuid4,
@@ -87,3 +94,11 @@ class TaskModel(models.Model):
         """Return a string version of an instance"""
 
         return self.summary
+
+    def get_absolute_url(self) -> str:
+        """
+        Return URL path to the instance detail view
+
+        """
+
+        return reverse_lazy("tasks:detail", args=(self.pk,))
