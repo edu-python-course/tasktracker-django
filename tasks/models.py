@@ -95,6 +95,22 @@ class TaskModel(models.Model):
 
         return self.summary
 
+    def can_delete(self, user: UserModel) -> bool:
+        """
+        Check if the user permitted to delete this instance
+
+        """
+
+        return self.reporter == user
+
+    def can_update(self, user: UserModel) -> bool:
+        """
+        Check if the user permitted to edit this instance
+
+        """
+
+        return self.assignee == user or self.reporter == user
+
     def get_absolute_url(self) -> str:
         """
         Return URL path to the instance detail view
