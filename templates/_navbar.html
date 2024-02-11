@@ -8,18 +8,23 @@
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <a href="{% url "tasks:list" %}" class="navbar-brand"><i class="bi bi-list-task"></i>&nbsp;Task Tracker</a>
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          {# TODO: GH-60 #}
-          <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
-          <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
-          <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
-          <li class="nav-item">
-            <form action="{% url "users:sign-out" %}">
-              {% csrf_token %}
-              <input type="submit" class="nav-link" value="Sign Out">
-            </form>
-          </li>
-          <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
-          <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
+          {% if user.is_superuser %}
+            <li class="nav-item"><a href="{% url "admin:index" %}" class="nav-link">Administration</a></li>
+          {% elif user.is_authenticated %}
+            <li class="nav-item"><a href="{% url "tasks:create" %}" class="nav-link">Create new</a></li>
+          {% endif %}
+          {% if user.is_authenticated %}
+            <li class="nav-item"><a href="{% url "users:profile" %}" class="nav-link">Profile</a></li>
+            <li class="nav-item">
+              <form action="{% url "users:sign-out" %}">
+                {% csrf_token %}
+                <input type="submit" class="nav-link" value="Sign Out">
+              </form>
+              {% else %}
+            </li>
+            <li class="nav-item"><a href="{% url "users:sign-up" %}" class="nav-link">Sign Up</a></li>
+            <li class="nav-item"><a href="{% url "users:sign-in" %}" class="nav-link">Sign In</a></li>
+          {% endif %}
         </ul>
       </div>
     </div>
