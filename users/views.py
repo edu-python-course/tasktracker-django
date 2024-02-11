@@ -3,11 +3,15 @@ Users application views
 
 """
 
+from django.contrib.auth import get_user_model
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_http_methods
 
 from users.forms import SignUpForm
+
+UserModel = get_user_model()
 
 
 def user_profile_view(request: HttpRequest) -> HttpResponse:
@@ -26,13 +30,19 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
     return render(request, "users/profile.html", ctx)
 
 
+@require_http_methods(["GET", "POST"])
 def sign_up_view(request: HttpRequest) -> HttpResponse:
     """
     Register a new user in the system
 
     """
 
-    form = SignUpForm()
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            ...
+    else:
+        form = SignUpForm()
 
     return render(request, "auth/signup.html", {"form": form})
 
