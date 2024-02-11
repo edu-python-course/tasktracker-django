@@ -8,9 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LogoutView
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.decorators.http import require_http_methods
+from django.views.generic import FormView
 
 from users.forms import SignInForm, SignUpForm
 
@@ -34,50 +34,42 @@ def user_profile_view(request: HttpRequest) -> HttpResponse:
     return render(request, "users/profile.html", ctx)
 
 
-@require_http_methods(["GET", "POST"])
-def sign_up_view(request: HttpRequest) -> HttpResponse:
+class SignUpView(FormView):
     """
-    Register a new user in the system
-
-    """
-
-    if request.method == "POST":
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            del form.cleaned_data["confirm_password"]
-            UserModel.objects.create_user(**form.cleaned_data)
-
-            return redirect("users:sign-in")
-
-    else:
-        form = SignUpForm()
-
-    return render(request, "auth/signup.html", {"form": form})
-
-
-@require_http_methods(["GET", "POST"])
-def sign_in_view(request: HttpRequest) -> HttpResponse:
-    """
-    Authenticate a user
+    Handle a new user registration
 
     """
 
-    if request.method == "POST":
-        form = SignInForm(request.POST)
-        if form.is_valid():
-            login(request, form.instance)
+    http_method_names = ["get", "post"]
+    form_class = SignUpForm
+    template_name = "auth/signup.html"
+    success_url = reverse_lazy("users:sign-in")
 
-            redirect_to = request.GET.get(
-                "next",
-                reverse_lazy("users:profile")
-            )
+    def form_valid(self, form):
+        del form.cleaned_data["confirm_password"]
+        UserModel.objects.create_user(**form.cleaned_data)
 
-            return redirect(redirect_to)
+        return super().form_valid(form)
 
-    else:
-        form = SignInForm()
 
-    return render(request, "auth/signin.html", {"form": form})
+class SignInView(FormView):
+    """
+    Handle existing users authentication
+
+    """
+
+    http_method_names = ["get", "post"]
+    template_name = "auth/signin.html"
+    form_class = SignInForm
+    success_url = reverse_lazy("users:profile")
+
+    def form_valid(self, form):
+        login(self.request, form.instance)
+
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.success_url
 
 
 class SignOutView(LogoutView):
