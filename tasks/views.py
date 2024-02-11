@@ -4,40 +4,29 @@ Tasks application views
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
-from django.http.request import HttpRequest
-from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
+    ListView,
     UpdateView,
 )
 
 from tasks.forms import TaskModelForm
 from tasks.models import TaskModel
 
-PAGINATED_BY = 5
 
-
-def task_list_view(request: HttpRequest) -> HttpResponse:
+class TaskListView(ListView):
     """
-    Handle requests to tasks list
+    Used to provide the list of tasks
 
     """
 
-    qs = TaskModel.objects.all()
-    paginator = Paginator(qs, PAGINATED_BY)
-    page_obj = paginator.get_page(request.GET.get("page"))
-    ctx = {
-        "object_list": page_obj.object_list,
-        "is_paginated": True,
-        "page_obj": page_obj,
-    }
-
-    return render(request, "tasks/task_list.html", ctx)
+    http_method_names = ["get"]
+    model = TaskModel
+    template_name = "tasks/task_list.html"
+    paginate_by = 5
 
 
 class TaskDetailView(DetailView):
