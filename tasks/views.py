@@ -4,6 +4,7 @@ Tasks application views
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from django.http.request import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render
@@ -18,6 +19,8 @@ from django.views.generic import (
 from tasks.forms import TaskModelForm
 from tasks.models import TaskModel
 
+PAGINATED_BY = 5
+
 
 def task_list_view(request: HttpRequest) -> HttpResponse:
     """
@@ -25,8 +28,13 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
 
     """
 
+    qs = TaskModel.objects.all()
+    paginator = Paginator(qs, PAGINATED_BY)
+    page_obj = paginator.get_page(request.GET.get("page"))
     ctx = {
-        "object_list": TaskModel.objects.all(),
+        "object_list": page_obj.object_list,
+        "is_paginated": True,
+        "page_obj": page_obj,
     }
 
     return render(request, "tasks/task_list.html", ctx)
