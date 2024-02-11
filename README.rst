@@ -47,6 +47,8 @@ Here is some detailed information on the dependency list:
 +---------------------+---------+---------------------------------------------+
 | python-dotenv       | ^1.0.1  | https://pypi.org/project/python-dotenv/     |
 +---------------------+---------+---------------------------------------------+
+| pillow              | ^10.2.0 | https://pypi.org/project/pillow/            |
++---------------------+---------+---------------------------------------------+
 
 .. rubric:: Django
 
