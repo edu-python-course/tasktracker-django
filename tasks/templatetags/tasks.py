@@ -10,6 +10,8 @@ from django import template
 from django.contrib.humanize.templatetags import humanize
 from django.utils import timezone
 
+from tasks.models import TaskModel
+
 register = template.Library()
 
 
@@ -60,7 +62,23 @@ def get_task_humanize_timestamp(value: datetime.datetime, days: int = 7) -> str:
     return humanize.naturalday(value)
 
 
+def get_context(context, obj: TaskModel) -> Dict[str, Any]:
+    user = context["user"]
+    can_delete = "disabled" if not obj.has_delete_permission(user) else ""
+    can_update = "disabled" if not obj.has_update_permission(user) else ""
+
+    return {
+        "object": obj,
+        "update_permission": can_update,
+        "delete_permission": can_delete,
+    }
+
+
 @register.inclusion_tag("tasks/_task_tr.html", takes_context=True)
-def task_row(context: Dict[str, Any], obj):
-    # TODO: GH-78
-    return {"object": obj}
+def task_row(context: Dict[str, Any], obj: TaskModel) -> Dict[str, Any]:
+    return get_context(context, obj)
+
+
+@register.inclusion_tag("tasks/_actions.html", takes_context=True)
+def detail_actions(context: Dict[str, Any], obj: TaskModel) -> Dict[str, Any]:
+    return get_context(context, obj)
