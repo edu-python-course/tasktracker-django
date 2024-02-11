@@ -24,8 +24,9 @@
       </table>
     </div>
     <div class="card-footer d-flex flex-row justify-content-center">
-      {# TODO: GH-66 #}
-      {% include "widgets/pagination.html" %}
+      {% if is_paginated %}
+        {% include "widgets/pagination.html" with page=page_obj %}
+      {% endif %}
     </div>
   </div>
 {% endblock %}

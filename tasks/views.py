@@ -3,77 +3,97 @@ Tasks application views
 
 """
 
-import uuid
-
-from django.contrib.auth.decorators import login_required
-from django.http.request import HttpRequest
-from django.http.response import Http404, HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
 
+from tasks.forms import TaskModelForm
 from tasks.models import TaskModel
 
 
-def task_list_view(request: HttpRequest) -> HttpResponse:
+class TaskListView(ListView):
     """
-    Handle requests to tasks list
-
-    """
-
-    ctx = {
-        "object_list": TaskModel.objects.all(),
-    }
-
-    return render(request, "tasks/task_list.html", ctx)
-
-
-def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
-    """
-    Handle requests to task details
+    Used to provide the list of tasks
 
     """
 
-    try:
-        task = TaskModel.objects.get(pk=pk)
-    except TaskModel.DoesNotExist:
-        raise Http404
-
-    ctx = {
-        "object": task,
-    }
-
-    return render(request, "tasks/task_detail.html", ctx)
+    http_method_names = ["get"]
+    model = TaskModel
+    template_name = "tasks/task_list.html"
+    paginate_by = 5
 
 
-@login_required(login_url=reverse_lazy("users:sign-in"))
-def task_create_view(request: HttpRequest) -> HttpResponse:
+class TaskDetailView(DetailView):
     """
-    Handle requests to create a new task instance
+    Used to provide details on the task instance
 
     """
 
-    return render(request, "tasks/task_form.html")
+    http_method_names = ["get"]
+    model = TaskModel
+    template_name = "tasks/task_detail.html"
 
 
-@login_required(login_url=reverse_lazy("users:sign-in"))
-def task_update_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
+class TaskCreateView(LoginRequiredMixin, CreateView):
     """
-    Handle requests to update an existing task instance
-
-    """
-
-    get_object_or_404(TaskModel, pk=pk)
-
-    return render(request, "tasks/task_form.html")
-
-
-@login_required(login_url=reverse_lazy("users:sign-in"))
-def task_delete_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
-    """
-    Handle requests to delete an existing task instance
+    Used to create a new task instance
 
     """
 
-    get_object_or_404(TaskModel, pk=pk)
+    http_method_names = ["get", "post"]
+    model = TaskModel
+    form_class = TaskModelForm
+    template_name = "tasks/task_form.html"
 
-    return redirect("tasks:list")
+    def form_valid(self, form):
+        form.instance.reporter = self.request.user
+
+        return super().form_valid(form)
+
+    # noinspection PyMethodMayBeStatic
+    def get_cancel_url(self):
+        return reverse_lazy("tasks:list")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["cancel_url"] = self.get_cancel_url()
+
+        return ctx
+
+
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    Used to update the existing task instance
+
+    """
+
+    http_method_names = ["get", "post"]
+    model = TaskModel
+    form_class = TaskModelForm
+    template_name = "tasks/task_form.html"
+
+    def get_cancel_url(self):
+        return self.object.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["cancel_url"] = self.get_cancel_url()
+
+        return ctx
+
+
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    Delete task instance
+
+    """
+
+    http_method_names = ["post"]
+    model = TaskModel
+    success_url = reverse_lazy("tasks:list")
