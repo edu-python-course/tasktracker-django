@@ -102,3 +102,19 @@ class TaskModel(models.Model):
         """
 
         return reverse_lazy("tasks:detail", args=(self.pk,))
+
+    def has_delete_permission(self, user: UserModel) -> bool:
+        """
+        Check if the user permitted to delete this instance
+
+        """
+
+        return self.reporter == user
+
+    def has_update_permission(self, user: UserModel) -> bool:
+        """
+        Check if the user permitted to edit this instance
+
+        """
+
+        return self.assignee == user or self.reporter == user

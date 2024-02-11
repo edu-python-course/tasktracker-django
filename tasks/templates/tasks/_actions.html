@@ -1,0 +1,23 @@
+{% if object.completed %}
+  <button class="btn btn-outline-warning mx-3 {{ update_permission }}"
+          hx-patch="{# TODO: GH-73 #}" hx-swap="none"
+          hx-vals="js:{completed:true}">
+    Reopen
+  </button>
+{% else %}
+  <button class="btn btn-outline-success mx-3 {{ update_permission }}"
+          hx-patch="{# TODO: GH-73 #}" hx-swap="none"
+          hx-vals="js:{completed:true}">
+    Complete
+  </button>
+{% endif %}
+<div class="btn-group" role="group">
+  <a href="{% url "tasks:update" object.pk %}" class="btn btn-outline-primary {{ update_permission }}" role="button">
+    Update
+  </a>
+  <button class="btn btn-outline-danger {{ delete_permission }}"
+          data-bs-toggle="modal"
+          data-bs-target="#modalTaskDelete">
+    Delete
+  </button>
+</div>

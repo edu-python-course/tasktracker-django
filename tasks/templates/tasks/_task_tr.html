@@ -2,10 +2,10 @@
 <tr class="task" id="{{ object.pk }}" {{ object.completed|row_completed_mark }}>
   <td class="align-middle task-assignee" aria-labelledby="taskAssignee">
     {% if object.assignee %}
-    <img src="{{ object.assignee.image.url }}"
-         alt="avatar"
-         class="rounded-circle shadow avatar">
-    <br>
+      <img src="{{ object.assignee.image.url }}"
+           alt="avatar"
+           class="rounded-circle shadow avatar">
+      <br>
     {% endif %}
     <span class="d-none d-md-inline ms-2 text-nowrap">
       {{ object.assignee|default_if_none:"Unassigned" }}
@@ -24,16 +24,16 @@
   <td class="align-middle task-actions" aria-labelledby="taskActions">
     <div class="d-flex flex-row justify-content-between align-items-center">
       {% if object.completed %}
-        <i class="bi bi-arrow-repeat{# TODO: GH-78 #}" role="button"
-           hx-patch="{# TODO: GH-78 #}" hx-swap="none"
+        <i class="bi bi-arrow-repeat {{ update_permission }}" role="button"
+           hx-patch="{# TODO: GH-73 #}" hx-swap="none"
            hx-vals="js:{completed:false}" hx-headers="js:{}"></i>
       {% else %}
-        <i class="bi bi-check-lg{# TODO: GH-78 #}" role="button"
-           hx-patch="{# TODO: GH-78 #}" hx-swap="none"
+        <i class="bi bi-check-lg {{ update_permission }}" role="button"
+           hx-patch="{# TODO: GH-73 #}" hx-swap="none"
            hx-vals="js:{completed:true}" hx-headers="js:{}"></i>
       {% endif %}
-      <i class="bi bi-trash{# TODO: GH-78 #}" role="button"
-         hx-delete="{# TODO: GH-78 #}" hx-target="closest tr" hx-swap="outerHTML"></i>
+      <i class="bi bi-trash {{ delete_permission }}" role="button"
+         hx-delete="{# TODO: GH-74 #}" hx-target="closest tr" hx-swap="outerHTML"></i>
     </div>
   </td>
 </tr>

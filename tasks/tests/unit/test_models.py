@@ -1,9 +1,12 @@
 import uuid
 
 from django import test
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 from tasks.models import TaskModel
+
+UserModel = get_user_model()
 
 
 class TestTaskModel(test.TestCase):
@@ -22,3 +25,25 @@ class TestTaskModel(test.TestCase):
         instance = TaskModel(pk=pk)
         expected = reverse("tasks:detail", args=(pk,))
         self.assertEqual(instance.get_absolute_url(), expected)
+
+
+class TestTaskModelPermissions(test.TestCase):
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.assignee = UserModel(username="assignee")
+        cls.reporter = UserModel(username="reporter")
+        cls.non_user = UserModel(username="none")
+
+    def setUp(self) -> None:
+        self.instance = TaskModel(reporter=self.reporter,
+                                  assignee=self.assignee)
+
+    def test_can_edit(self):
+        self.assertTrue(self.instance.has_update_permission(self.reporter))
+        self.assertTrue(self.instance.has_update_permission(self.assignee))
+        self.assertFalse(self.instance.has_update_permission(self.non_user))
+
+    def test_can_delete(self):
+        self.assertTrue(self.instance.has_delete_permission(self.reporter))
+        self.assertFalse(self.instance.has_delete_permission(self.assignee))
+        self.assertFalse(self.instance.has_delete_permission(self.non_user))

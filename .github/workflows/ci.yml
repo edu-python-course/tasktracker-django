@@ -75,6 +75,7 @@ jobs:
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION_KEY }}
             -Dsonar.python.coverage.reportPaths=coverage.xml -X
             -Dsonar.coverage.exclusions=**/__init__*,**/tests/**,manage.py,**/asgi.py,**/wsgi.py -X
+            -Dsonar.cpd.exclusions=**/tests/** -X
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
