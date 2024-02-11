@@ -22,6 +22,7 @@
   {#    </div>#}
   {#  </form>#}
   <form method="post">
+    {% csrf_token %}
     {{ form }}
     <button class="btn btn-primary w-100 my-2 fs-5">Sign Up</button>
   </form>
