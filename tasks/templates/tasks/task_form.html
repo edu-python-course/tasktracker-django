@@ -1,38 +1,12 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}Task Form | {{ block.super|default_if_none:"Task Tracker" }}{% endblock %}
 {% block main %}
   <h1 class="h3 fw-normal mb-3 text-center">Task details</h1>
-  <form class="w-75 m-auto" aria-label="TaskForm">
-    <div class="mb-3">
-      <label for="summary" class="form-label">Summary</label>
-      <input type="text" class="form-control" id="summary" name="summary">
-    </div>
-    <div class="mb-3">
-      <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="completed" name="completed">
-        <label for="completed" class="form-check-label">Completed</label>
-      </div>
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea class="form-control" id="description" name="description" rows="10"></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="assignee" class="form-label">Assignee</label>
-      <select class="form-select" id="assignee" name="assignee">
-        <option value="" class="selected">-- Select assignee --</option>
-        <option value="PippinSackville-Baggins@jourrapide.com">Pippin Sackville-Baggins</option>
-        <option value="TobyMugwort@armyspy.com">Toby Mugwort</option>
-        <option value="WilcomeBrownlock@teleworm.us">Wilcome Brownlock</option>
-      </select>
-    </div>
-    <div class="mb-3 justify-content-center">
-      <input type="submit" class="btn btn-primary w-100 mt-3" name="submit" value="Submit">
-    </div>
-  </form>
+  {% crispy form %}
   <div class="d-flex flex-row justify-content-center">
     <div class="w-75">
-      <a href="" class="w-100 btn btn-secondary">Cancel</a>
+      <a href="{# TODO: #}" class="w-100 btn btn-secondary">Cancel</a>
     </div>
   </div>
 {% endblock %}
