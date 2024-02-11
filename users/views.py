@@ -4,34 +4,26 @@ Users application views
 """
 
 from django.contrib.auth import get_user_model, login
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView
-from django.http.request import HttpRequest
-from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView
+from django.views.generic import FormView, UpdateView
 
-from users.forms import SignInForm, SignUpForm
+from users.forms import SignInForm, SignUpForm, UserModelForm
 
 UserModel = get_user_model()
 
 
-@login_required(login_url=reverse_lazy("users:sign-in"))
-def user_profile_view(request: HttpRequest) -> HttpResponse:
-    """
-    Handle requests to user's profile
+class UserProfileView(LoginRequiredMixin, UpdateView):
+    http_method_names = ["get", "post"]
+    model = UserModel
+    form_class = UserModelForm
+    template_name = "users/profile.html"
+    success_url = reverse_lazy("users:profile")
+    login_url = reverse_lazy("users:sign-in")
 
-    """
-
-    ctx = {
-        "first_name": "Dora",
-        "last_name": "Headstrong",
-        "email": "DoraHeadstrong@dayrep.com",
-        "get_full_name": lambda: "Dora Headstrong",
-    }
-
-    return render(request, "users/profile.html", ctx)
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 class SignUpView(FormView):

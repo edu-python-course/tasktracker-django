@@ -30,3 +30,12 @@ class TestUserProfileView(test.TestCase):
         self.client.logout()
         response = self.client.get(self.url_path)
         self.assertRedirects(response, self.url_sign_in)
+
+    def test_user_updated(self):
+        self.client.post(self.url_path, {
+            "first_name": "John",
+            "last_name": "Doe"
+        })
+        self.assertTrue(UserModel.objects.filter(
+            first_name="John", last_name="Doe"
+        ).exists())

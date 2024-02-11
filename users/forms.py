@@ -5,7 +5,7 @@ Users application forms
 
 from crispy_bootstrap5.bootstrap5 import FloatingField
 from crispy_forms.helper import FormHelper, Layout
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Field, Submit
 from django import forms
 from django.contrib.auth import authenticate, get_user_model
 
@@ -128,3 +128,32 @@ class SignInForm(forms.Form):
 
         if self.instance is None:
             raise forms.ValidationError("Invalid username or password")
+
+
+class UserModelForm(forms.ModelForm):
+    """
+    Used to set up user data
+
+    """
+
+    class Meta:
+        model = UserModel
+        fields = ("first_name", "last_name", "image")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Field("first_name"),
+            Field("last_name"),
+            Field("image"),
+            Submit("submit", "Submit", css_class="w-100")
+        )
+
+    def clean_image(self):
+        """
+        Return a new image or the default one, if not provided
+
+        """
+
+        return self.cleaned_data.get("image") or UserModel.get_default_image()
