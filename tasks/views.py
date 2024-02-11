@@ -3,15 +3,16 @@ Tasks application views
 
 """
 
-import uuid
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.request import HttpRequest
-from django.http.response import Http404, HttpResponse
+from django.http.response import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
-    CreateView, DeleteView, UpdateView,
+    CreateView,
+    DeleteView,
+    DetailView,
+    UpdateView,
 )
 
 from tasks.forms import TaskModelForm
@@ -31,22 +32,15 @@ def task_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "tasks/task_list.html", ctx)
 
 
-def task_detail_view(request: HttpRequest, pk: uuid.UUID) -> HttpResponse:
+class TaskDetailView(DetailView):
     """
-    Handle requests to task details
+    Used to provide details on the task instance
 
     """
 
-    try:
-        task = TaskModel.objects.get(pk=pk)
-    except TaskModel.DoesNotExist:
-        raise Http404
-
-    ctx = {
-        "object": task,
-    }
-
-    return render(request, "tasks/task_detail.html", ctx)
+    http_method_names = ["get"]
+    model = TaskModel
+    template_name = "tasks/task_detail.html"
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
