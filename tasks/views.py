@@ -3,6 +3,8 @@ Tasks application views
 
 """
 
+from http import HTTPStatus
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -71,6 +73,12 @@ class TaskCreateView(LoginRequiredMixin, TaskCreatePermissionMixin, CreateView):
 
         return ctx
 
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(form=form),
+            status=HTTPStatus.BAD_REQUEST
+        )
+
 
 class TaskUpdateView(LoginRequiredMixin, TaskUpdatePermissionMixin, UpdateView):
     """
@@ -91,6 +99,12 @@ class TaskUpdateView(LoginRequiredMixin, TaskUpdatePermissionMixin, UpdateView):
         ctx["cancel_url"] = self.get_cancel_url()
 
         return ctx
+
+    def form_invalid(self, form):
+        return self.render_to_response(
+            self.get_context_data(form=form),
+            status=HTTPStatus.BAD_REQUEST
+        )
 
 
 class TaskDeleteView(LoginRequiredMixin, TaskDeletePermissionMixin, DeleteView):

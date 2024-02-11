@@ -25,9 +25,10 @@ class TestTaskUpdateView(test.TestCase):
             [reverse("users:sign-in"), "?next=", cls.url_path]
         )
         cls.template_name = "tasks/task_form.html"
-        cls.admin = UserModel.objects.get(username="butime")
         cls.reporter = UserModel.objects.get(username="wheed1997")
         cls.assignee = UserModel.objects.get(username="prombery87")
+        cls.inactive = UserModel.objects.filter(is_active=False).first()
+        cls.admin = UserModel.objects.filter(is_superuser=True).first()
         cls.payload = {
             "summary": "Updated summary",
             "assignee": cls.assignee.pk,
@@ -78,3 +79,15 @@ class TestTaskUpdateView(test.TestCase):
         self.client.force_login(self.admin)
         response = self.client.post(self.url_path, self.payload)
         self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+
+    def test_admin_assignee(self):
+        payload = self.payload.copy()
+        payload["assignee"] = self.admin.pk
+        response = self.client.post(self.url_path, payload)
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)
+
+    def test_inactive_assignee(self):
+        payload = self.payload.copy()
+        payload["assignee"] = self.inactive.pk
+        response = self.client.post(self.url_path, payload)
+        self.assertEqual(response.status_code, HTTPStatus.BAD_REQUEST)

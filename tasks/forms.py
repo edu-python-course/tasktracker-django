@@ -6,6 +6,7 @@ Tasks application forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
+from django.contrib.auth import get_user_model
 
 from tasks.models import TaskModel
 
@@ -15,6 +16,13 @@ class TaskModelForm(forms.ModelForm):
     Used to create and update tasks
 
     """
+
+    assignee = forms.ModelChoiceField(
+        required=False,
+        queryset=get_user_model().objects
+        .exclude(is_superuser=True)
+        .exclude(is_active=False)
+    )
 
     class Meta:
         model = TaskModel
