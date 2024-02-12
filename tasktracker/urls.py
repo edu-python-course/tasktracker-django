@@ -28,6 +28,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include("tasks.routes", namespace="api")),
     path("", include("users.urls", namespace="users")),
     path("", include("tasks.urls", namespace="tasks")),
 ]
