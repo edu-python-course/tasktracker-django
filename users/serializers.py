@@ -23,4 +23,6 @@ class UserSerializer(serializers.Serializer):
 
     first_name = serializers.CharField(max_length=150, required=False)
     last_name = serializers.CharField(max_length=150, required=False)
-    email = serializers.EmailField()
+
+    def create(self, validated_data):
+        return UserModel.objects.create_user(**validated_data)
