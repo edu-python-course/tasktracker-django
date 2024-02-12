@@ -5,6 +5,9 @@
   <div class="card shadow" id="taskDetailContainer">
     <div class="card-header">
       <h1 class="card-title h3 text-center" id="summary">
+        {% if object.completed %}
+          <i class="bi bi-check-lg text-success"></i>
+        {% endif %}
         <span>{{ object.summary }}</span>
       </h1>
       <hr class="border">
