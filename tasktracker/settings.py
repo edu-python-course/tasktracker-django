@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     "crispy_forms",
     "crispy_bootstrap5",
+    "rest_framework",
 
     "tasks.apps.TasksAppConfig",
     "users.apps.UsersAppConfig",
