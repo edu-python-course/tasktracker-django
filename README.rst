@@ -80,6 +80,29 @@ environment variables, like a 12-factor application, launching it in
 development is not very practical because you have to set those environment
 variables yourself.
 
+.. rubric:: pillow
+
+Pillow is the friendly :abbr:`PIL (Python Imaging Library)` fork.
+The Python Imaging Library adds image processing capabilities to your Python
+interpreter.
+
+This library provides extensive file format support, an efficient internal
+representation, and fairly powerful image processing capabilities.
+
+The core image library is designed for fast access to data stored in a few
+basic pixel formats. It should provide a solid foundation for a general image
+processing tool.
+
+.. rubric:: Django crispy-forms and crispy-bootstrap5
+
+*django-crispy-forms* provides you with a ``|crispy`` filter and
+``{% crispy %}`` tag that will let you control the rendering behavior of your
+Django forms in a very elegant and DRY way. Have full control without writing
+custom form templates. All this without breaking the standard way of doing
+things in Django, so it plays nice with any other form application.
+
+*crispy-bootstrap5* is a Bootstrap5 template pack for django-crispy-forms.
+
 Project Configuration
 =====================
 
