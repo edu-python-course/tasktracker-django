@@ -9,48 +9,39 @@ from rest_framework import serializers
 UserModel = get_user_model()
 
 
-class UserSerializer(serializers.Serializer):
+class UserModelSerializer(serializers.ModelSerializer):
     """
     User serializer
 
     """
 
     pk = serializers.IntegerField(read_only=True)
-
     password = serializers.CharField(write_only=True)
     username = serializers.CharField(max_length=150, write_only=True)
-    email = serializers.EmailField()
 
-    first_name = serializers.CharField(max_length=150, required=False)
-    last_name = serializers.CharField(max_length=150, required=False)
+    class Meta:
+        model = UserModel
+        fields = (
+            "pk", "username", "password", "email",
+            "first_name", "last_name",
+        )
 
     def create(self, validated_data):
         return UserModel.objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.username = validated_data["username"]
-        instance.email = validated_data["email"]
-        instance.set_password(validated_data["password"])
-
-        first_name = validated_data.get("first_name", instance.first_name)
-        instance.first_name = first_name
-        last_name = validated_data.get("last_name", instance.last_name)
-        instance.last_name = last_name
-
-        instance.save()
+        instance = super().update(instance, validated_data)
+        if "password" in validated_data:
+            instance.set_password(validated_data["password"])
+            instance.save()
 
         return instance
 
-    # noinspection PyMethodMayBeStatic
-    def validate_username(self, value: str) -> str:
-        if UserModel.objects.filter(username=value).exists():
-            raise serializers.ValidationError("Username is already taken")
+    def validate(self, attrs):
+        username = attrs.get("username")
+        if UserModel.objects.filter(username=username).exists():
+            raise serializers.ValidationError({
+                "username": "Username is already taken",
+            })
 
-        return value
-
-    # noinspection PyMethodMayBeStatic
-    def validate_email(self, value: str) -> str:
-        if UserModel.objects.filter(email=value).exists():
-            raise serializers.ValidationError("Email is already registered")
-
-        return value
+        return attrs
