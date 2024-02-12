@@ -40,3 +40,17 @@ class UserSerializer(serializers.Serializer):
         instance.save()
 
         return instance
+
+    # noinspection PyMethodMayBeStatic
+    def validate_username(self, value: str) -> str:
+        if UserModel.objects.filter(username=value).exists():
+            raise serializers.ValidationError("Username is already taken")
+
+        return value
+
+    # noinspection PyMethodMayBeStatic
+    def validate_email(self, value: str) -> str:
+        if UserModel.objects.filter(email=value).exists():
+            raise serializers.ValidationError("Email is already registered")
+
+        return value

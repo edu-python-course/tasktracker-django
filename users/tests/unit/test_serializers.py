@@ -56,3 +56,17 @@ class TestUserSerializer(test.APITestCase):
         instance = serializer.update(instance, serializer.validated_data)
 
         self.assertTrue(instance.check_password(self.new_data["password"]))
+
+    def test_username_validator(self):
+        data = self.data.copy()
+        data["username"] = "butime"
+        serializer = UserSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("username", serializer.errors)
+
+    def test_email_validator(self):
+        data = self.data.copy()
+        data["email"] = "WilcomeBrownlock@teleworm.us"
+        serializer = UserSerializer(data=data)
+        self.assertFalse(serializer.is_valid())
+        self.assertIn("email", serializer.errors)
