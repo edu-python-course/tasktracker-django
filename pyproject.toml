@@ -31,6 +31,7 @@ python-dotenv = "^1.0.1"
 pillow = "^10.2.0"
 django-crispy-forms = "^2.1"
 crispy-bootstrap5 = "^2023.10"
+djangorestframework = "^3.14.0"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "^7.4.1"

@@ -53,6 +53,8 @@ Here is some detailed information on the dependency list:
 +---------------------+----------+--------------------------------------------+
 | crispy-bootstrap5   | ^2023.10 | https://pypi.org/project/crispy-bootstrap5/|
 +---------------------+----------+--------------------------------------------+
+| djangorestframework | ^3.14.0  | https://www.django-rest-framework.org/     |
++---------------------+----------+--------------------------------------------+
 
 .. rubric:: Django
 
@@ -102,6 +104,10 @@ custom form templates. All this without breaking the standard way of doing
 things in Django, so it plays nice with any other form application.
 
 *crispy-bootstrap5* is a Bootstrap5 template pack for django-crispy-forms.
+
+.. rubric:: Django REST Framework
+
+Django REST framework is a powerful and flexible toolkit for building Web APIs.
 
 Project Configuration
 =====================
