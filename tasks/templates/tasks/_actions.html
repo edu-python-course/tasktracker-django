@@ -1,13 +1,13 @@
 {% if object.completed %}
   <button class="btn btn-outline-warning mx-3 {{ update_permission }}"
-          hx-patch="{# TODO: GH-73 #}" hx-swap="none"
-          hx-vals="js:{completed:true}">
+          hx-patch="{% url "api:tasks-detail" object.pk %}" hx-swap="none"
+          hx-vals="js:{completed:false}" hx-headers="js:{'X-CSRFToken': getCookieValue('csrftoken')}">
     Reopen
   </button>
 {% else %}
   <button class="btn btn-outline-success mx-3 {{ update_permission }}"
-          hx-patch="{# TODO: GH-73 #}" hx-swap="none"
-          hx-vals="js:{completed:true}">
+          hx-patch="{% url "api:tasks-detail" object.pk %}" hx-swap="none"
+          hx-vals="js:{completed:true}" hx-headers="js:{'X-CSRFToken': getCookieValue('csrftoken')}">
     Complete
   </button>
 {% endif %}
