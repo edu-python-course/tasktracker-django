@@ -15,8 +15,8 @@ class TestTaskModelViewSet(test.APITestCase):
 
     @classmethod
     def setUpTestData(cls) -> None:
-        cls.url_list = reverse("api:tasks-list")
-        cls.url_detail = reverse("api:tasks-detail", args=(PK_EXISTS,))
+        cls.url_list = reverse("api:tasks:list")
+        cls.url_detail = reverse("api:tasks:detail", args=(PK_EXISTS,))
         cls.data = {
             "summary": "Test task model view set",
             "reporter": 2,
