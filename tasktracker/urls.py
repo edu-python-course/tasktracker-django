@@ -26,9 +26,15 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+api_urlpatterns = [
+    path("", include("users.routes", namespace="users")),
+    path("", include("tasks.routes", namespace="tasks")),
+]
+api_routes = (api_urlpatterns, "api")
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("tasks.routes", namespace="api")),
+    path("api/", include(api_routes, namespace="api")),
     path("", include("users.urls", namespace="users")),
     path("", include("tasks.urls", namespace="tasks")),
 ]

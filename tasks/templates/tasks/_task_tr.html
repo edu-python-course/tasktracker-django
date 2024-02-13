@@ -25,15 +25,15 @@
     <div class="d-flex flex-row justify-content-between align-items-center">
       {% if object.completed %}
         <i class="bi bi-arrow-repeat {{ update_permission }}" role="button"
-           hx-patch="{% url "api:tasks-detail" object.pk %}" hx-swap="none"
+           hx-patch="{% url "api:tasks:detail" object.pk %}" hx-swap="none"
            hx-vals="js:{completed:false}" hx-headers="js:{'X-CSRFToken': getCookieValue('csrftoken')}"></i>
       {% else %}
         <i class="bi bi-check-lg {{ update_permission }}" role="button"
-           hx-patch="{% url "api:tasks-detail" object.pk %}" hx-swap="none"
+           hx-patch="{% url "api:tasks:detail" object.pk %}" hx-swap="none"
            hx-vals="js:{completed:true}" hx-headers="js:{'X-CSRFToken': getCookieValue('csrftoken')}"></i>
       {% endif %}
       <i class="bi bi-trash {{ delete_permission }}" role="button"
-         hx-delete="{% url "api:tasks-detail" object.pk %}" hx-target="closest tr" hx-swap="outerHTML"
+         hx-delete="{% url "api:tasks:detail" object.pk %}" hx-target="closest tr" hx-swap="outerHTML"
          hx-headers="js:{'X-CSRFToken': getCookieValue('csrftoken')}"></i>
     </div>
   </td>
