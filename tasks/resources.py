@@ -6,6 +6,7 @@ Tasks application API resources
 from rest_framework import permissions, viewsets
 
 from tasks.models import TaskModel
+from tasks.permissions import TasksResourcePermission
 from tasks.serializers import TaskModelReadSerializer, TaskModelWriteSerializer
 
 
@@ -15,6 +16,10 @@ class TaskModelViewSet(viewsets.ModelViewSet):
 
     """
 
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        TasksResourcePermission,
+    )
     queryset = TaskModel.objects.all()
 
     def get_serializer_class(self):
@@ -22,3 +27,6 @@ class TaskModelViewSet(viewsets.ModelViewSet):
             return TaskModelReadSerializer
 
         return TaskModelWriteSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(reporter=self.request.user)
