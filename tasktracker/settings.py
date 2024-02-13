@@ -164,5 +164,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ),
 }
