@@ -23,6 +23,10 @@ class TestTasksResourceListAPI(test.APITestCase):
     def setUp(self) -> None:
         self.client = test.APIClient()
 
+    def test_safe_methods(self):
+        response = self.client.get(self.url_path)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
     def test_unauthorized_restricted_to_create(self):
         response = self.client.post(self.url_path, self.data)
         self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)

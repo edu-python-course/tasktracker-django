@@ -44,6 +44,15 @@ class TaskModelWriteSerializer(serializers.ModelSerializer):
 
     """
 
+    reporter = serializers.PrimaryKeyRelatedField(
+        queryset=UserModel.objects.exclude(
+            is_active=False
+        ).exclude(
+            is_superuser=True,
+        ),
+        required=False
+    )
+
     class Meta:
         model = TaskModel
         fields = "__all__"

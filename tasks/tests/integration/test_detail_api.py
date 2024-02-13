@@ -9,7 +9,7 @@ from rest_framework.reverse import reverse
 from tasks.models import TaskModel
 
 UserModel = get_user_model()
-PK_EXISTS = uuid.UUID("1b79ca87-203a-4944-ada0-a6a8b9b154be")
+PK_EXISTS = uuid.UUID("9c3cc08c-a0ca-4ccf-8eab-47ec515dd30e")
 
 
 class TestTasksResourceDetailAPIView(test.APITestCase):
@@ -32,12 +32,26 @@ class TestTasksResourceDetailAPIView(test.APITestCase):
         )
         Token.objects.create(user=self.user)
 
+    def test_safe_methods(self):
+        response = self.client.get(self.url_path)
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+
     def test_assignee_restricted_to_delete(self):
         self.client.force_authenticate(token=self.assignee.auth_token)
         response = self.client.delete(self.url_path)
         self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
 
-    def test_user_cannot_modify(self):
+    def test_non_reporter_non_assignee_cannot_modify(self):
         self.client.force_authenticate(token=self.user.auth_token)
         response = self.client.put(self.url_path, self.data)
         self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+
+    def test_reporter_can_delete(self):
+        self.client.force_authenticate(self.reporter, self.reporter.auth_token)
+        response = self.client.delete(self.url_path)
+        self.assertEqual(response.status_code, HTTPStatus.NO_CONTENT)
+
+    def test_assignee_can_modify(self):
+        self.client.force_authenticate(self.assignee, self.assignee.auth_token)
+        response = self.client.put(self.url_path, self.data)
+        self.assertEqual(response.status_code, HTTPStatus.OK)

@@ -27,3 +27,6 @@ class TaskModelViewSet(viewsets.ModelViewSet):
             return TaskModelReadSerializer
 
         return TaskModelWriteSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(reporter=self.request.user)
